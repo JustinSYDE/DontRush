@@ -9,8 +9,7 @@
 #import "GameView.h"
 
 @interface GameView()
-@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
-@property(nonatomic, strong) OverlayView *overlayView;
+//@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @end
 
 @implementation GameView
@@ -26,23 +25,24 @@
 
 #pragma mark - Initialization
 
-- (NSMutableArray *)arrayOfSubviews {
-    if (!_arrayOfSubviews) {
-        _arrayOfSubviews = [[NSMutableArray alloc] init];
+- (NSMutableArray *)listOfShapes {
+    if (!_listOfShapes) {
+        _listOfShapes = [[NSMutableArray alloc] init];
     }
     
-    return _arrayOfSubviews;
+    return _listOfShapes;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (!self) return nil;
-    [self setBackgroundColor:[UIColor whiteColor]];
+    [self setBackgroundColor:[UIColor clearColor]];
     [self drawGrid:frame];
-    
-    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
-    [self addGestureRecognizer:self.panGestureRecognizer];
+    [self generateColoredShapesForList:self.listOfShapes];
+    self.overlayView = [[OverlayView alloc] initWithFrame:self.bounds];
+    self.overlayView.alpha = 0;
+    [self addSubview:self.overlayView];
     
     return self;
 }
@@ -85,13 +85,6 @@
     [roundedRect addClip]; // dont ever want to draw outside the rounded rect
     [[self colorFromHexString:@"#f2eedc"] setFill];
     UIRectFill(self.bounds); //fills the rectangle
-    
-    //[[UIColor blackColor] setStroke];
-    //[roundedRect stroke];
-    
-    CGRect testRect;
-    testRect.origin = CGPointMake([self cornerOffSet], [self cornerOffSet]);
-    //testRect.size = [testText size];
 }
 
 - (void)drawGrid:(CGRect)frame {
@@ -102,20 +95,20 @@
     
     for (int row = 0; row < NUM_ROWS; row++) {
         for (int column = 0 ; column < NUM_COLUMNS; column++) {
-            int randNum = rand() % 5;
+            //int randNum = rand() % 5;
             
             CGRect newCell = CGRectMake(x, y, width, height);
             
             UILabel *shapeLabel = [[UILabel alloc] initWithFrame:newCell];
             shapeLabel.text = @"●";
             shapeLabel.textAlignment = NSTextAlignmentCenter;
-            [shapeLabel setTextColor:[self colorFromHexString:[GameView validColors][randNum]]];
+            //[shapeLabel setTextColor:[self colorFromHexString:[GameView validColors][randNum]]];
             [shapeLabel setBackgroundColor:[UIColor clearColor]];
             [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 100.0f]];
             [self addSubview:shapeLabel];
             
-            [self.arrayOfSubviews addObject:shapeLabel];
-            [self addSubview:[self.arrayOfSubviews lastObject]];
+            [self.listOfShapes addObject:shapeLabel];
+            [self addSubview:[self.listOfShapes lastObject]];
             x += width + 6;
         }
         
@@ -124,44 +117,23 @@
     }
  }
 
-- (void)dragged:(UIPanGestureRecognizer *)gestureRecognizer {
-    CGFloat xDistance = [gestureRecognizer translationInView:self].x;
-    CGFloat yDistance = [gestureRecognizer translationInView:self].y;
-    
-    switch (gestureRecognizer.state) {
-        case UIGestureRecognizerStateBegan:{
-            self.originalPoint = self.center;
-            break;
-        };
-        case UIGestureRecognizerStateChanged:{
-            CGFloat rotationStrength = MIN(xDistance / 320, 1);
-            CGFloat rotationAngel = (CGFloat) (2*M_PI * rotationStrength / 16);
-            CGFloat scaleStrength = 1 - fabsf(rotationStrength) / 4;
-            CGFloat scale = MAX(scaleStrength, 0.93);
-            CGAffineTransform transform = CGAffineTransformMakeRotation(rotationAngel);
-            CGAffineTransform scaleTransform = CGAffineTransformScale(transform, scale, scale);
-            self.transform = scaleTransform;
-            self.center = CGPointMake(self.originalPoint.x + xDistance, self.originalPoint.y + yDistance);
-            break;
-        };
-        case UIGestureRecognizerStateEnded: {
-            [self resetViewPositionAndTransformations];
-            break;
-        };
-        case UIGestureRecognizerStatePossible:break;
-        case UIGestureRecognizerStateCancelled:break;
-        case UIGestureRecognizerStateFailed:break;
+- (void)generateColoredShapesForList:(NSMutableArray *)list {
+    for (UILabel *shapeLabel in list) {
+        int randNum = arc4random() % [[GameView validColors] count];
+        
+        [shapeLabel setTextColor:[self colorFromHexString:[GameView validColors][randNum]]];
     }
 }
 
-- (void)resetViewPositionAndTransformations
+- (void)updateOverlay:(CGFloat)distance
 {
-    [UIView animateWithDuration:0.2
-                     animations:^{
-                         self.center = self.originalPoint;
-                         self.transform = CGAffineTransformMakeRotation(0);
-                     }];
+    if (distance > 0) {
+        self.overlayView.mode = OverlayViewModeRight;
+    } else if (distance <= 0) {
+        self.overlayView.mode = OverlayViewModeLeft;
+    }
+    CGFloat overlayStrength = MIN(fabsf(distance) / 100, 0.4);
+    self.overlayView.alpha = overlayStrength;
 }
-
 
 @end

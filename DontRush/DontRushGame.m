@@ -9,18 +9,15 @@
 #import "DontRushGame.h"
 
 @interface DontRushGame()
-
-@property (nonatomic) DontRushPlayingCard *topCard;
-@property (nonatomic) DontRushPlayingCard *nextCard;
 @end
 
 @implementation DontRushGame
 
-- (instancetype)initWithCard:(DontRushPlayingCard *)card {
+- (instancetype)init {
     self = [super init];
     
     if (self) {
-        self.topCard = card;
+       // do stuff
     }
     
     return self;

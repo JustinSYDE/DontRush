@@ -9,16 +9,14 @@
 #import "GameViewController.h"
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
 #import "DontRushGame.h"
-#import "DontRushPlayingCard.h"
 #import "GameView.h"
 
 @interface GameViewController ()
 @property (weak, nonatomic) IBOutlet UIView *gameCardView;
 @property (nonatomic) DontRushGame *game;
-@property (nonatomic) DontRushPlayingCard *card;
 @property (nonatomic) GameView *gameView;
-@property (nonatomic) NSMutableDictionary *colorsOnCard;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
+@property (nonatomic) NSMutableDictionary *colorsOnCard;
 @end
 
 @implementation GameViewController
@@ -36,18 +34,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.colorsOnCard = [[self card] colorsOnCard];
-    self.gameView = [[GameView alloc] initWithFrame:CGRectMake(16, 233, 288, 288)];
     [self.view addSubview:self.gameView];
-    [self updateUI];
-}
+    
+    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
+    [self.gameView addGestureRecognizer:self.panGestureRecognizer];
 
-- (void)updateUI {
-    /*for (UILabel *shapeLabel in self.shapeLabels) {
-        int i = rand() % [[DontRushPlayingCard validColors] count];
-        UIColor *color = [GameViewController colorFromHexString:[DontRushPlayingCard validColors][i]];
-        shapeLabel.textColor = color;
-    }*/
 }
 
 #pragma mark - Initializers
@@ -55,6 +46,7 @@
 - (GameView *)gameView {
     if (!_gameView) {
         _gameView = [[GameView alloc] initWithFrame:CGRectMake(16, 233, 288, 288)];
+        
     }
     
     return _gameView;
@@ -69,30 +61,18 @@
 
 - (DontRushGame *)game {
     if (!_game) {
-        _game = [[DontRushGame alloc]initWithCard:[self card]];
+        _game = [[DontRushGame alloc] init];
     }
     
     return _game;
 }
 
-- (DontRushPlayingCard *)card {
-    if (!_card) {
-        _card = [[DontRushPlayingCard alloc] init];
-    }
-    
-    return _card;
-}
-
-#pragma mark - Dragging
-
-- (IBAction)dragGesture:(UIPanGestureRecognizer *)sender {
-    [self dragged:sender];
-}
+#pragma mark - Drag Gesture
 
 - (void)dragged:(UIPanGestureRecognizer *)gestureRecognizer {
     CGFloat xDistance = [gestureRecognizer translationInView:self.gameView].x;
     CGFloat yDistance = [gestureRecognizer translationInView:self.gameView].y;
-    //NSLog(@"%f, %f", xDistance, yDistance);
+    
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:{
             self.gameView.originalPoint = self.gameView.center;
@@ -103,19 +83,23 @@
             CGFloat rotationAngel = (CGFloat) (2*M_PI * rotationStrength / 16);
             CGFloat scaleStrength = 1 - fabsf(rotationStrength) / 4;
             CGFloat scale = MAX(scaleStrength, 0.93);
-            //NSLog(@"Center: %f, %f", self.gameView.originalPoint.x + xDistance, self.gameView.originalPoint.y + yDistance);
             CGAffineTransform transform = CGAffineTransformMakeRotation(rotationAngel);
             CGAffineTransform scaleTransform = CGAffineTransformScale(transform, scale, scale);
             self.gameView.transform = scaleTransform;
-            NSLog(@"Before: %f, %f", self.gameView.center.x, self.gameView.center.y);
             self.gameView.center = CGPointMake(self.gameView.originalPoint.x + xDistance, self.gameView.originalPoint.y + yDistance);
-            
-            NSLog(@"After: %f, %f", self.gameView.center.x, self.gameView.center.y);
+            [self.gameView updateOverlay:xDistance];
             
             break;
         };
         case UIGestureRecognizerStateEnded: {
-            //[self resetViewPositionAndTransformations];
+            if (xDistance > (self.gameView.bounds.size.width * (4.0/5))) {
+                self.gameView.alpha = 0;
+            } else if (xDistance < - (self.gameView.bounds.size.width * (4.0/5))) {
+                self.gameView.alpha = 0;
+            } else {
+                [self resetViewPositionAndTransformations];
+            }
+            
             break;
         };
         case UIGestureRecognizerStatePossible:break;
@@ -130,6 +114,7 @@
                      animations:^{
                          self.gameView.center = self.gameView.originalPoint;
                          self.gameView.transform = CGAffineTransformMakeRotation(0);
+                         self.gameView.overlayView.alpha = 0;
                      }];
 }
 

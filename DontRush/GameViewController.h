@@ -10,8 +10,6 @@
 #import "GameView.h"
 
 @interface GameViewController : UIViewController
-@property (nonatomic, strong) GameView *frontCardView;
-@property (nonatomic, strong) GameView *backCardView;
 
 + (UIColor *)colorFromHexString:(NSString *)hexString;
 @end

@@ -8,14 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
+#import "OverlayView.h"
 
 @interface GameView : UIView
 
 @property (nonatomic) NSDictionary *shapesOnCard;
 @property(nonatomic) CGPoint originalPoint;
-@property (nonatomic, strong) NSMutableArray *arrayOfSubviews;
+@property (nonatomic, strong) NSMutableArray *listOfShapes;
+@property(nonatomic, strong) OverlayView *overlayView;
 
-- (instancetype)initWithFrame:(CGRect)frame;
 + (NSArray *)validColors;
+- (void)updateOverlay:(CGFloat)distance;
+- (instancetype)initWithFrame:(CGRect)frame;
+- (void)generateColoredShapesForList:(NSMutableArray *)list;
 
 @end

@@ -1,10 +1,11 @@
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSUInteger , GGOverlayViewMode) {
-    GGOverlayViewModeLeft,
-    GGOverlayViewModeRight
+typedef NS_ENUM(NSUInteger , OverlayViewMode) {
+    OverlayViewModeLeft,
+    OverlayViewModeRight
 };
 
-@interface GGOverlayView : UIView
-@property (nonatomic) GGOverlayViewMode mode;
+@interface OverlayView : UIView
+@property (nonatomic) OverlayViewMode mode;
 @end

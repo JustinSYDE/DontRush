@@ -7,12 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "dontRushPlayingCard.h"
 
 @interface DontRushGame : NSObject
 
 //- (void) chooseCard;
-- (instancetype) initWithCard: (DontRushPlayingCard *)card;
+- (instancetype) init;
 //@property (nonatomic) NSInteger score;
 
 @end
