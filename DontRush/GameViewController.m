@@ -92,10 +92,10 @@
             break;
         };
         case UIGestureRecognizerStateEnded: {
-            if (xDistance > (self.gameView.bounds.size.width * (4.0/5))) {
-                self.gameView.alpha = 0;
-            } else if (xDistance < - (self.gameView.bounds.size.width * (4.0/5))) {
-                self.gameView.alpha = 0;
+            if (xDistance > (self.gameView.bounds.size.width * (3.5/5))) {
+                [self popNewCard];
+            } else if (xDistance < - (self.gameView.bounds.size.width * (3.5/5))) {
+                [self popNewCard];
             } else {
                 [self resetViewPositionAndTransformations];
             }
@@ -108,14 +108,24 @@
     }
 }
 
+- (void)popNewCard {
+    self.gameView.alpha = 0;
+    [self.gameView generateColoredShapesForList: self.gameView.listOfShapes];
+    self.gameView.transform = CGAffineTransformMakeRotation(0);
+    self.gameView.center = self.gameView.originalPoint;
+    self.gameView.overlayView.alpha = 0;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.gameView.alpha = 1;
+    }];
+}
+
 - (void)resetViewPositionAndTransformations
 {
-    [UIView animateWithDuration:0.2
-                     animations:^{
-                         self.gameView.center = self.gameView.originalPoint;
-                         self.gameView.transform = CGAffineTransformMakeRotation(0);
-                         self.gameView.overlayView.alpha = 0;
-                     }];
+    [UIView animateWithDuration:0.2 animations:^{
+         self.gameView.center = self.gameView.originalPoint;
+         self.gameView.transform = CGAffineTransformMakeRotation(0);
+         self.gameView.overlayView.alpha = 0;
+     }];
 }
 
 @end
