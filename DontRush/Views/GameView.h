@@ -12,7 +12,6 @@
 
 @interface GameView : UIView
 
-@property (nonatomic) NSDictionary *shapesOnCard;
 @property(nonatomic) CGPoint originalPoint;
 @property (nonatomic, strong) NSMutableArray *listOfShapes;
 @property(nonatomic, strong) OverlayView *overlayView;
@@ -20,6 +19,9 @@
 + (NSArray *)validColors;
 - (void)updateOverlay:(CGFloat)distance;
 - (instancetype)initWithFrame:(CGRect)frame;
-- (void)generateColoredShapesForList:(NSMutableArray *)list;
+- (void)resetViewPositionAndTransformations;
 
+- (void)dragBeganEvent;
+- (void)dragFinishedEventWithxDistance:(CGFloat)xDistance;
+- (void)draggingEventwithxDistance:(CGFloat)xDistance andWithYDistance:(CGFloat)yDistance;
 @end

@@ -39,7 +39,7 @@
     if (!self) return nil;
     [self setBackgroundColor:[UIColor clearColor]];
     [self drawGrid:frame];
-    [self generateColoredShapesForList:self.listOfShapes];
+    //[self generateColoredShapesForList:self.listOfShapes];
     self.overlayView = [[OverlayView alloc] initWithFrame:self.bounds];
     self.overlayView.alpha = 0;
     [self addSubview:self.overlayView];
@@ -53,13 +53,6 @@
     [scanner setScanLocation:1]; // bypass '#' character
     [scanner scanHexInt:&rgbValue];
     return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
-}
-
-#pragma mark - Properties
-
-- (void)setShapesOnCard:(NSDictionary *)shapesOnCard {
-    _shapesOnCard = shapesOnCard;
-    [self setNeedsDisplay];
 }
 
 #pragma mark - Drawing
@@ -102,7 +95,6 @@
             UILabel *shapeLabel = [[UILabel alloc] initWithFrame:newCell];
             shapeLabel.text = @"●";
             shapeLabel.textAlignment = NSTextAlignmentCenter;
-            //[shapeLabel setTextColor:[self colorFromHexString:[GameView validColors][randNum]]];
             [shapeLabel setBackgroundColor:[UIColor clearColor]];
             [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 100.0f]];
             [self addSubview:shapeLabel];
@@ -117,14 +109,6 @@
     }
  }
 
-- (void)generateColoredShapesForList:(NSMutableArray *)list {
-    for (UILabel *shapeLabel in list) {
-        int randNum = arc4random() % [[GameView validColors] count];
-        
-        [shapeLabel setTextColor:[self colorFromHexString:[GameView validColors][randNum]]];
-    }
-}
-
 - (void)updateOverlay:(CGFloat)distance
 {
     if (distance > 0) {
@@ -135,5 +119,57 @@
     CGFloat overlayStrength = MIN(fabsf(distance) / 100, 0.4);
     self.overlayView.alpha = overlayStrength;
 }
+
+- (void)resetViewPositionAndTransformations
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.center = self.originalPoint;
+        self.transform = CGAffineTransformMakeRotation(0);
+        self.overlayView.alpha = 0;
+    }];
+}
+
+#pragma mark - Event handlers
+
+- (void)dragBeganEvent {
+    self.originalPoint = self.center;
+};
+
+- (void)draggingEventwithxDistance:(CGFloat)xDistance andWithYDistance:(CGFloat)yDistance {
+    CGFloat rotationStrength = MIN(xDistance / 320, 1);
+    CGFloat rotationAngel = (CGFloat) (2*M_PI * rotationStrength / 16);
+    CGFloat scaleStrength = 1 - fabsf(rotationStrength) / 4;
+    CGFloat scale = MAX(scaleStrength, 0.93);
+    CGAffineTransform transform = CGAffineTransformMakeRotation(rotationAngel);
+    CGAffineTransform scaleTransform = CGAffineTransformScale(transform, scale, scale);
+    self.transform = scaleTransform;
+    self.center = CGPointMake(self.originalPoint.x + xDistance, self.originalPoint.y + yDistance);
+    [self updateOverlay:xDistance];
+};
+
+- (void)dragFinishedEventWithxDistance:(CGFloat)xDistance {
+    if (xDistance > (self.bounds.size.width * (3.5/5))) {
+        self.alpha = 0;
+        //[self generateColoredShapesForList: self.listOfShapes];
+        self.transform = CGAffineTransformMakeRotation(0);
+        self.center = self.originalPoint;
+        self.overlayView.alpha = 0;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.alpha = 1;
+        }];
+
+    } else if (xDistance < - (self.bounds.size.width * (3.5/5))) {
+        self.alpha = 0;
+        //[self generateColoredShapesForList: self.listOfShapes];
+        self.transform = CGAffineTransformMakeRotation(0);
+        self.center = self.originalPoint;
+        self.overlayView.alpha = 0;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.alpha = 1;
+        }];
+    } else {
+        [self resetViewPositionAndTransformations];
+    }
+};
 
 @end

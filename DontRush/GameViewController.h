@@ -11,6 +11,5 @@
 
 @interface GameViewController : UIViewController
 
-+ (UIColor *)colorFromHexString:(NSString *)hexString;
 @end
 

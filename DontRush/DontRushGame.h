@@ -9,9 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @interface DontRushGame : NSObject
+@property (nonatomic) NSInteger score;
+@property (nonatomic) NSMutableDictionary *collectionOfColors;
+@property (nonatomic) NSMutableArray *orderedListOfColors;
++ (NSArray *)validColors;
 
 //- (void) chooseCard;
 - (instancetype) init;
-//@property (nonatomic) NSInteger score;
+- (void) generateColorSet;
+- (NSString *) generateNewQuestion;
 
 @end

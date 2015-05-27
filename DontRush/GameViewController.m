@@ -14,6 +14,7 @@
 @interface GameViewController ()
 @property (weak, nonatomic) IBOutlet UIView *gameCardView;
 @property (nonatomic) DontRushGame *game;
+@property (weak, nonatomic) IBOutlet UILabel *questionLabel;
 @property (nonatomic) GameView *gameView;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic) NSMutableDictionary *colorsOnCard;
@@ -22,7 +23,7 @@
 @implementation GameViewController
 
 // Assumes input like "#00FF00" (#RRGGBB).
-+ (UIColor *)colorFromHexString:(NSString *)hexString {
+- (UIColor *)colorFromHexString:(NSString *)hexString {
     unsigned rgbValue = 0;
     NSScanner *scanner = [NSScanner scannerWithString:hexString];
     [scanner setScanLocation:1]; // bypass '#' character
@@ -38,7 +39,17 @@
     
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
     [self.gameView addGestureRecognizer:self.panGestureRecognizer];
+    [self popNewQuestion];
+    [self popNewCard];
+}
 
+- (void)applyColorToShapesInList:(NSMutableArray *)list {
+    int i = 0;
+    for (UILabel *shapeLabel in list) {
+        UIColor *color = [self colorFromHexString:self.game.orderedListOfColors[i]];
+        [shapeLabel setTextColor:color];
+        i++;
+    }
 }
 
 #pragma mark - Initializers
@@ -46,7 +57,6 @@
 - (GameView *)gameView {
     if (!_gameView) {
         _gameView = [[GameView alloc] initWithFrame:CGRectMake(16, 233, 288, 288)];
-        
     }
     
     return _gameView;
@@ -75,29 +85,31 @@
     
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:{
-            self.gameView.originalPoint = self.gameView.center;
+            [self.gameView dragBeganEvent];
             break;
         };
         case UIGestureRecognizerStateChanged:{
-            CGFloat rotationStrength = MIN(xDistance / 320, 1);
-            CGFloat rotationAngel = (CGFloat) (2*M_PI * rotationStrength / 16);
-            CGFloat scaleStrength = 1 - fabsf(rotationStrength) / 4;
-            CGFloat scale = MAX(scaleStrength, 0.93);
-            CGAffineTransform transform = CGAffineTransformMakeRotation(rotationAngel);
-            CGAffineTransform scaleTransform = CGAffineTransformScale(transform, scale, scale);
-            self.gameView.transform = scaleTransform;
-            self.gameView.center = CGPointMake(self.gameView.originalPoint.x + xDistance, self.gameView.originalPoint.y + yDistance);
-            [self.gameView updateOverlay:xDistance];
-            
+            [self.gameView draggingEventwithxDistance:xDistance andWithYDistance:yDistance];
             break;
         };
         case UIGestureRecognizerStateEnded: {
+            [self.gameView dragFinishedEventWithxDistance:xDistance];
+            
+            // Match
             if (xDistance > (self.gameView.bounds.size.width * (3.5/5))) {
+                // do something
+                [self popNewQuestion];
                 [self popNewCard];
-            } else if (xDistance < - (self.gameView.bounds.size.width * (3.5/5))) {
+            }
+            
+            // No Match
+            else if (xDistance < - (self.gameView.bounds.size.width * (3.5/5))) {
                 [self popNewCard];
-            } else {
-                [self resetViewPositionAndTransformations];
+            }
+            
+            // Cancel
+            else {
+                [self.gameView resetViewPositionAndTransformations];
             }
             
             break;
@@ -109,23 +121,20 @@
 }
 
 - (void)popNewCard {
-    self.gameView.alpha = 0;
-    [self.gameView generateColoredShapesForList: self.gameView.listOfShapes];
-    self.gameView.transform = CGAffineTransformMakeRotation(0);
-    self.gameView.center = self.gameView.originalPoint;
-    self.gameView.overlayView.alpha = 0;
-    [UIView animateWithDuration:0.5 animations:^{
-        self.gameView.alpha = 1;
-    }];
+    [self.game generateColorSet];
+    [self applyColorToShapesInList: self.gameView.listOfShapes];
 }
 
-- (void)resetViewPositionAndTransformations
-{
-    [UIView animateWithDuration:0.2 animations:^{
-         self.gameView.center = self.gameView.originalPoint;
-         self.gameView.transform = CGAffineTransformMakeRotation(0);
-         self.gameView.overlayView.alpha = 0;
-     }];
+- (void)popNewQuestion {
+    NSString *question = [self.game generateNewQuestion];
+    int randNum = arc4random() % 5;
+    NSString *randomColor = [GameView validColors][randNum];
+    UIFont *font = [UIFont fontWithName:@"Palatino-Roman" size:60.0];
+    NSDictionary *attributes = @{NSForegroundColorAttributeName : [self colorFromHexString:randomColor],
+                                 NSFontAttributeName : font};
+    
+    NSAttributedString *newQuestion = [[NSAttributedString alloc] initWithString:question attributes:attributes];
+    self.questionLabel.attributedText = newQuestion;
 }
 
 @end
