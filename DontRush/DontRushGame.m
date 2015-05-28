@@ -14,7 +14,7 @@
 @implementation DontRushGame
 
 + (NSArray *)validColors {
-    return @[@"#f8ae6c", @"#cae59c", @"#6b3b4e", @"#dd465f", @"#475358"];
+    return @[@"#6dac76", @"#f67860", @"#dd465f", @"#475358"];
 }
 
 + (NSArray *)validNumberStrings {
@@ -55,7 +55,10 @@
 #pragma mark - Question
 
 - (NSString *)drawRandomColor {
-    int random = arc4random()%[DontRushGame.validColors count];
+    int random = arc4random()%([DontRushGame.validColors count]);
+    if (random > 3) {
+        NSLog(@"Break");
+    }
     return DontRushGame.validColors[random];
 }
 
@@ -75,7 +78,7 @@
     int i = arc4random() % 10;
     NSString *number = [[NSString alloc] initWithString:[DontRushGame validNumberStrings][i]];
     
-    int randNum = arc4random() % 5;
+    int randNum = arc4random() % 4;
     NSString *randomColor = [DontRushGame validColors][randNum];
     
     self.questionObject =  (NSMutableDictionary *)@{randomColor: number};

@@ -67,7 +67,7 @@
     UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:[self cornerRadius]];
     
     [roundedRect addClip]; // dont ever want to draw outside the rounded rect
-    [[self colorFromHexString:@"#f2eedc"] setFill];
+    [[self colorFromHexString:@"#e3d4c3"] setFill];
     UIRectFill(self.bounds); //fills the rectangle
 }
 

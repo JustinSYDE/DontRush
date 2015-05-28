@@ -44,7 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [self colorFromHexString:@"#f8f6ee"];
+    self.view.backgroundColor = [self colorFromHexString:@"#f2eedc"];
     [self roundLabelCorners];
     [self.view addSubview:self.gameView];
     
