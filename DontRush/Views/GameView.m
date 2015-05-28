@@ -8,20 +8,12 @@
 
 #import "GameView.h"
 
-@interface GameView()
-//@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
-@end
-
 @implementation GameView
 
 #define CORNER_FONT_STANDARD_HEIGHT 180.0
 #define CORNER_RADIUS 6.0
 #define NUM_COLUMNS 4
 #define NUM_ROWS 4
-
-+ (NSArray *)validColors {
-    return @[@"#f8ae6c", @"#cae59c", @"#6b3b4e", @"#dd465f", @"#475358"];
-}
 
 #pragma mark - Initialization
 
@@ -39,7 +31,6 @@
     if (!self) return nil;
     [self setBackgroundColor:[UIColor clearColor]];
     [self drawGrid:frame];
-    //[self generateColoredShapesForList:self.listOfShapes];
     self.overlayView = [[OverlayView alloc] initWithFrame:self.bounds];
     self.overlayView.alpha = 0;
     [self addSubview:self.overlayView];
@@ -88,17 +79,13 @@
     
     for (int row = 0; row < NUM_ROWS; row++) {
         for (int column = 0 ; column < NUM_COLUMNS; column++) {
-            //int randNum = rand() % 5;
-            
             CGRect newCell = CGRectMake(x, y, width, height);
-            
             UILabel *shapeLabel = [[UILabel alloc] initWithFrame:newCell];
             shapeLabel.text = @"●";
             shapeLabel.textAlignment = NSTextAlignmentCenter;
             [shapeLabel setBackgroundColor:[UIColor clearColor]];
             [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 100.0f]];
             [self addSubview:shapeLabel];
-            
             [self.listOfShapes addObject:shapeLabel];
             [self addSubview:[self.listOfShapes lastObject]];
             x += width + 6;
@@ -150,7 +137,6 @@
 - (void)dragFinishedEventWithxDistance:(CGFloat)xDistance {
     if (xDistance > (self.bounds.size.width * (3.5/5))) {
         self.alpha = 0;
-        //[self generateColoredShapesForList: self.listOfShapes];
         self.transform = CGAffineTransformMakeRotation(0);
         self.center = self.originalPoint;
         self.overlayView.alpha = 0;
@@ -160,7 +146,6 @@
 
     } else if (xDistance < - (self.bounds.size.width * (3.5/5))) {
         self.alpha = 0;
-        //[self generateColoredShapesForList: self.listOfShapes];
         self.transform = CGAffineTransformMakeRotation(0);
         self.center = self.originalPoint;
         self.overlayView.alpha = 0;

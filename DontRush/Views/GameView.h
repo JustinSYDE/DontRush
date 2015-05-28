@@ -16,11 +16,9 @@
 @property (nonatomic, strong) NSMutableArray *listOfShapes;
 @property(nonatomic, strong) OverlayView *overlayView;
 
-+ (NSArray *)validColors;
 - (void)updateOverlay:(CGFloat)distance;
 - (instancetype)initWithFrame:(CGRect)frame;
 - (void)resetViewPositionAndTransformations;
-
 - (void)dragBeganEvent;
 - (void)dragFinishedEventWithxDistance:(CGFloat)xDistance;
 - (void)draggingEventwithxDistance:(CGFloat)xDistance andWithYDistance:(CGFloat)yDistance;

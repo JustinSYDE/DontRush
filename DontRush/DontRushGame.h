@@ -12,11 +12,12 @@
 @property (nonatomic) NSInteger score;
 @property (nonatomic) NSMutableDictionary *collectionOfColors;
 @property (nonatomic) NSMutableArray *orderedListOfColors;
-+ (NSArray *)validColors;
+@property (nonatomic) NSMutableDictionary *questionObject;
 
-//- (void) chooseCard;
-- (instancetype) init;
++ (NSArray *)validColors;
++ (NSArray *)validNumberStrings;
 - (void) generateColorSet;
-- (NSString *) generateNewQuestion;
+- (NSDictionary *) generateNewQuestion;
+- (BOOL) match;
 
 @end

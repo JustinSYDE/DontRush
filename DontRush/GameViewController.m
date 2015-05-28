@@ -8,19 +8,27 @@
 
 #import "GameViewController.h"
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
+//#import <QuartzCore/CALayer.h>
 #import "DontRushGame.h"
 #import "GameView.h"
 
 @interface GameViewController ()
-@property (weak, nonatomic) IBOutlet UIView *gameCardView;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *highScoreLabel;
 @property (nonatomic) DontRushGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *questionLabel;
 @property (nonatomic) GameView *gameView;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (nonatomic) NSMutableDictionary *colorsOnCard;
+@property (nonatomic) NSArray *validFonts;
 @end
 
 @implementation GameViewController
+
+- (NSArray *) validFonts {
+    return @[@"HelveticaNeue", @"Palatino-Roman", @"AmericanTypewriter", @"HiraKakuProN-W3", @"MarkerFelt-Thin", @"TrebuchetMS", @"Courier"];
+}
 
 // Assumes input like "#00FF00" (#RRGGBB).
 - (UIColor *)colorFromHexString:(NSString *)hexString {
@@ -35,6 +43,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = [self colorFromHexString:@"#f8f6ee"];
+    [self roundLabelCorners];
     [self.view addSubview:self.gameView];
     
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
@@ -50,6 +61,26 @@
         [shapeLabel setTextColor:color];
         i++;
     }
+}
+
+- (void)roundLabelCorners {
+    self.scoreLabel.backgroundColor = [self colorFromHexString:@"#475358"];
+    self.scoreLabel.layer.cornerRadius = 4;
+    self.scoreLabel.layer.borderWidth = 1.0;
+    self.scoreLabel.layer.borderColor = [[self colorFromHexString:@"#475358"] CGColor];
+    self.scoreLabel.clipsToBounds = YES;
+    
+    self.highScoreLabel.backgroundColor = [self colorFromHexString:@"#475358"];
+    self.highScoreLabel.layer.cornerRadius = 4;
+    self.highScoreLabel.layer.borderWidth = 1.0;
+    self.highScoreLabel.layer.borderColor = [[self colorFromHexString:@"#475358"] CGColor];
+    self.highScoreLabel.clipsToBounds = YES;
+    
+    self.timeLabel.backgroundColor = [self colorFromHexString:@"#f6ac6a"];
+    self.timeLabel.layer.cornerRadius = 4;
+    self.timeLabel.layer.borderWidth = 1.0;
+    self.timeLabel.layer.borderColor = [[self colorFromHexString:@"#f6ac6a"] CGColor];
+    self.timeLabel.clipsToBounds = YES;
 }
 
 #pragma mark - Initializers
@@ -77,6 +108,13 @@
     return _game;
 }
 
+#pragma mark - UI
+
+- (void)updateUI {
+    // Update score label
+    self.scoreLabel.text = [NSString stringWithFormat:@"SCORE \n%ld",(long)self.game.score];
+}
+
 #pragma mark - Drag Gesture
 
 - (void)dragged:(UIPanGestureRecognizer *)gestureRecognizer {
@@ -95,14 +133,20 @@
         case UIGestureRecognizerStateEnded: {
             [self.gameView dragFinishedEventWithxDistance:xDistance];
             
-            // Match
+            // Swipe right to match
             if (xDistance > (self.gameView.bounds.size.width * (3.5/5))) {
-                // do something
+                if ([self.game match]) {
+                    self.game.score += 1;
+                } else {
+                    self.game.score += -1;
+                }
+                
+                [self updateUI];
                 [self popNewQuestion];
                 [self popNewCard];
             }
             
-            // No Match
+            // Swipe left for no match
             else if (xDistance < - (self.gameView.bounds.size.width * (3.5/5))) {
                 [self popNewCard];
             }
@@ -126,14 +170,16 @@
 }
 
 - (void)popNewQuestion {
-    NSString *question = [self.game generateNewQuestion];
-    int randNum = arc4random() % 5;
-    NSString *randomColor = [GameView validColors][randNum];
-    UIFont *font = [UIFont fontWithName:@"Palatino-Roman" size:60.0];
-    NSDictionary *attributes = @{NSForegroundColorAttributeName : [self colorFromHexString:randomColor],
+    NSDictionary *questionObject = [self.game generateNewQuestion];
+    NSString *color = [questionObject allKeys][0];
+    NSString *number = questionObject[color];
+    int randNum = arc4random() % [self.validFonts count];
+    NSString *randomFont = self.validFonts[randNum];
+    UIFont *font = [UIFont fontWithName:randomFont size:75.0];
+    NSDictionary *attributes = @{NSForegroundColorAttributeName : [self colorFromHexString:color],
                                  NSFontAttributeName : font};
     
-    NSAttributedString *newQuestion = [[NSAttributedString alloc] initWithString:question attributes:attributes];
+    NSAttributedString *newQuestion = [[NSAttributedString alloc] initWithString:number attributes:attributes];
     self.questionLabel.attributedText = newQuestion;
 }
 

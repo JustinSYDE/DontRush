@@ -17,16 +17,18 @@
     return @[@"#f8ae6c", @"#cae59c", @"#6b3b4e", @"#dd465f", @"#475358"];
 }
 
++ (NSArray *)validNumberStrings {
+    return @[@"Zero", @"One", @"Two", @"Three", @"Four", @"Five", @"Six", @"Seven", @"Eight", @"Nine"];
+}
+
 #pragma mark - Initializers
 
-- (instancetype)init {
-    self = [super init];
-    
-    if (self) {
-       // do stuff
+- (NSMutableDictionary *)questionObject {
+    if (!_questionObject) {
+        _questionObject = [[NSMutableDictionary alloc] init];
     }
     
-    return self;
+    return _questionObject;
 }
 
 - (NSMutableArray *)orderedListOfColors {
@@ -50,6 +52,8 @@
     return _collectionOfColors;
 }
 
+#pragma mark - Question
+
 - (NSString *)drawRandomColor {
     int random = arc4random()%[DontRushGame.validColors count];
     return DontRushGame.validColors[random];
@@ -57,6 +61,7 @@
 
 - (void) generateColorSet {
     [self.orderedListOfColors removeAllObjects];
+    [self.collectionOfColors removeAllObjects];
     for (int i = 0; i < 16; i++) {
         NSString *randomColor = [self drawRandomColor];
         NSNumber *countForColor = [self collectionOfColors][randomColor];
@@ -66,13 +71,33 @@
     }
 }
 
-- (NSString *)generateNewQuestion {
+- (NSDictionary *)generateNewQuestion {
     int i = arc4random() % 10;
-    NSArray *arrayOfNumberStrings = @[@"Zero", @"One", @"Two", @"Three", @"Four", @"Five", @"Six", @"Seven", @"Eight", @"Nine"];
-    NSString *question = [[NSString alloc] initWithString:arrayOfNumberStrings[i]];
+    NSString *number = [[NSString alloc] initWithString:[DontRushGame validNumberStrings][i]];
     
-    return question;
+    int randNum = arc4random() % 5;
+    NSString *randomColor = [DontRushGame validColors][randNum];
+    
+    self.questionObject =  (NSMutableDictionary *)@{randomColor: number};
+    return self.questionObject;
 }
 
+#pragma mark - Game Rules
+
+- (BOOL) match {
+    NSString *questionColor = [self.questionObject allKeys][0];
+    NSString *questionNumber = self.questionObject[questionColor];
+    int answeredNumber = [self.collectionOfColors[questionColor] intValue];
+    
+    if (answeredNumber > 10)
+        return false;
+    
+    NSString *answeredNumberString = [DontRushGame validNumberStrings][answeredNumber];
+    
+    if ([answeredNumberString isEqualToString:questionNumber])
+        return true;
+
+    return false;
+}
 
 @end
