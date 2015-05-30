@@ -14,6 +14,7 @@
 @property (nonatomic) NSMutableDictionary *collectionOfColors;
 @property (nonatomic) NSMutableArray *orderedListOfColors;
 @property (nonatomic) NSMutableDictionary *questionObject;
+@property (nonatomic) NSInteger timeCount;
 
 + (NSArray *)validColors;
 + (NSArray *)validNumberStrings;

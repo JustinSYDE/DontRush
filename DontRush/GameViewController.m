@@ -17,6 +17,7 @@
 
 @property (nonatomic) DontRushGame *game;
 @property (nonatomic) GameView *gameView;
+@property (nonatomic) NSTimer *timer;
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *highScoreLabel;
@@ -58,7 +59,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [self colorFromHexString:@"#f2eedc"];
-    [self roundCorners];
+    [self setupStats];
     [self setupPopupView];
     [self setupGameView];
     
@@ -88,6 +89,26 @@
     self.shadowView.backgroundColor = [UIColor blackColor];
     self.shadowView.alpha = 0.6;
     [self.view insertSubview:self.shadowView belowSubview:self.popupView];
+}
+
+- (void)setupStats {
+    self.scoreLabel.backgroundColor = [self colorFromHexString:@"#475358"];
+    self.scoreLabel.layer.cornerRadius = 4;
+    self.scoreLabel.layer.borderWidth = 1.0;
+    self.scoreLabel.layer.borderColor = [[self colorFromHexString:@"#475358"] CGColor];
+    self.scoreLabel.clipsToBounds = YES;
+    
+    self.highScoreLabel.backgroundColor = [self colorFromHexString:@"#475358"];
+    self.highScoreLabel.layer.cornerRadius = 4;
+    self.highScoreLabel.layer.borderWidth = 1.0;
+    self.highScoreLabel.layer.borderColor = [[self colorFromHexString:@"#475358"] CGColor];
+    self.highScoreLabel.clipsToBounds = YES;
+    
+    self.timeLabel.backgroundColor = [self colorFromHexString:@"#f6ac6a"];
+    self.timeLabel.layer.cornerRadius = 4;
+    self.timeLabel.layer.borderWidth = 1.0;
+    self.timeLabel.layer.borderColor = [[self colorFromHexString:@"#f6ac6a"] CGColor];
+    self.timeLabel.clipsToBounds = YES;
 }
 
 - (void)setupGameView {
@@ -125,6 +146,26 @@
     return _game;
 }
 
+- (void) startTimer {
+    self.game.timeCount = 0;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0/10.0
+                                                 target:self
+                                               selector:@selector(updateTimer)
+                                               userInfo:nil
+                                                repeats:YES];
+}
+
+- (void)restartTimer {
+    [self.timer invalidate];
+    self.game.timeCount = 0;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0/10.0
+                                                  target:self
+                                                selector:@selector(updateTimer)
+                                                userInfo:nil
+                                                 repeats:YES];
+    
+}
+
 #pragma mark - UI
 
 - (void)applyColorToShapesInList:(NSMutableArray *)list {
@@ -134,26 +175,6 @@
         [shapeLabel setTextColor:color];
         i++;
     }
-}
-
-- (void)roundCorners {
-    self.scoreLabel.backgroundColor = [self colorFromHexString:@"#475358"];
-    self.scoreLabel.layer.cornerRadius = 4;
-    self.scoreLabel.layer.borderWidth = 1.0;
-    self.scoreLabel.layer.borderColor = [[self colorFromHexString:@"#475358"] CGColor];
-    self.scoreLabel.clipsToBounds = YES;
-    
-    self.highScoreLabel.backgroundColor = [self colorFromHexString:@"#475358"];
-    self.highScoreLabel.layer.cornerRadius = 4;
-    self.highScoreLabel.layer.borderWidth = 1.0;
-    self.highScoreLabel.layer.borderColor = [[self colorFromHexString:@"#475358"] CGColor];
-    self.highScoreLabel.clipsToBounds = YES;
-    
-    self.timeLabel.backgroundColor = [self colorFromHexString:@"#f6ac6a"];
-    self.timeLabel.layer.cornerRadius = 4;
-    self.timeLabel.layer.borderWidth = 1.0;
-    self.timeLabel.layer.borderColor = [[self colorFromHexString:@"#f6ac6a"] CGColor];
-    self.timeLabel.clipsToBounds = YES;
 }
 
 - (void)updateScoreUI {
@@ -166,6 +187,12 @@
     [self.startButton setTitle:@"Again!" forState:UIControlStateNormal];
 
 }
+
+- (void)updateTimer {
+    self.game.timeCount++;
+    self.timeLabel.text = [NSString stringWithFormat:@"TIME\n%ld", (long)self.game.timeCount];
+}
+
 - (void)gameOver {
     if (self.game.score > self.game.highScore) {
         [[NSUserDefaults standardUserDefaults] setInteger:self.game.score forKey:@"HighScoreSaved"];
@@ -178,11 +205,19 @@
 
 - (IBAction)touchStartButton:(id)sender {
     
-    [self popNewQuestion];
-    [self popNewCard];
     self.popupView.hidden = YES;
     self.shadowView.hidden = YES;
     self.game.score = 0;
+    
+    [self popNewQuestion];
+    [self popNewCard];
+    [self restartTimer];
+    
+    /*[UIView animateWithDuration:2.0 animations:^{
+        self.popupView.center = CGPointMake(self.popupView.center.x, 100);
+        self.popupView.transform = CGAffineTransformMakeRotation(0);
+        //self.popupView.alpha = 0;
+    }];*/
 }
 
 #pragma mark - Drag Gesture
@@ -207,31 +242,35 @@
             if (xDistance > (self.gameView.bounds.size.width * (3.5/5))) {
                 if ([self.game match]) {
                     self.game.score += 1;
+                    [self popNewQuestion];
+                    [self popNewCard];
+                    [self restartTimer];
                 } else {
                     // end game
+                    [self.timer invalidate];
                     self.shadowView.hidden = NO;
                     [self gameOver];
                     self.popupView.hidden = NO;
                 }
                 
                 [self updateScoreUI];
-                [self popNewQuestion];
-                [self popNewCard];
             }
             
             // Swipe left for no match
             else if (xDistance < - (self.gameView.bounds.size.width * (3.5/5))) {
                 if (![self.game match]) {
                     self.game.score += 1;
+                    [self popNewCard];
+                    [self restartTimer];
                 } else {
                     // end game
+                    [self.timer invalidate];
                     self.shadowView.hidden = NO;
                     [self gameOver];
                     self.popupView.hidden = NO;
                 }
                 
                 [self updateScoreUI];
-                [self popNewCard];
             }
             
             // Cancel

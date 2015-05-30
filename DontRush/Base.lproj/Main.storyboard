@@ -9,8 +9,8 @@
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="GameViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
-                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                        <viewControllerLayoutGuide type="top" id="QH7-Z1-fHJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="J2t-Ae-zlH"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -101,7 +101,7 @@ Swipe ☞ to match</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="jef-ew-deV"/>
             </objects>
-            <point key="canvasLocation" x="-156" y="323"/>
+            <point key="canvasLocation" x="-156" y="322.99999999999994"/>
         </scene>
     </scenes>
 </document>

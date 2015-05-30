@@ -14,7 +14,7 @@
 @implementation DontRushGame
 
 + (NSArray *)validColors {
-    return @[@"#6dac76", @"#f67860", @"#dd465f", @"#475358"];
+    return @[@"#6dac76", @"#f6ac6a", @"#dd465f", @"#475358"];
 }
 
 + (NSArray *)validNumberStrings {
