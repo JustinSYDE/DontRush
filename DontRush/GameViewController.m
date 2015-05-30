@@ -241,7 +241,10 @@
             // Swipe right to match
             if (xDistance > (self.gameView.bounds.size.width * (3.5/5))) {
                 if ([self.game match]) {
-                    self.game.score += 1;
+                    // Only reward points if player determined an answer in under 100 time units
+                    if ((100 - self.game.timeCount) > 0) {
+                        self.game.score += 100 - self.game.timeCount;
+                    }
                     [self popNewQuestion];
                     [self popNewCard];
                     [self restartTimer];
@@ -259,7 +262,10 @@
             // Swipe left for no match
             else if (xDistance < - (self.gameView.bounds.size.width * (3.5/5))) {
                 if (![self.game match]) {
-                    self.game.score += 1;
+                    // Only reward points if player determined an answer in under 100 time units
+                    if ((100 - self.game.timeCount) > 0) {
+                        self.game.score += 100 - self.game.timeCount;
+                    }
                     [self popNewCard];
                     [self restartTimer];
                 } else {
