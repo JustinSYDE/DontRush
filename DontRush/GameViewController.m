@@ -18,10 +18,14 @@
 @property (nonatomic) DontRushGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *questionLabel;
 @property (nonatomic) GameView *gameView;
+@property (weak, nonatomic) IBOutlet UIButton *startButton;
+@property (weak, nonatomic) IBOutlet UILabel *instructionsLabel;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
+@property (weak, nonatomic) IBOutlet UIView *instructionsView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (nonatomic) NSMutableDictionary *colorsOnCard;
 @property (nonatomic) NSArray *validFonts;
+@property (nonatomic) UIView *shadowView;
 @end
 
 @implementation GameViewController
@@ -45,42 +49,43 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [self colorFromHexString:@"#f2eedc"];
-    [self roundLabelCorners];
-    [self.view addSubview:self.gameView];
+    [self roundCorners];
+    [self setupInstructionsView];
+    [self setupGameView];
+}
+
+- (void)setupInstructionsView {
+    self.startButton.backgroundColor = [self colorFromHexString:@"#6dac76"];
+    self.startButton.layer.borderColor = [[self colorFromHexString:@"6dac76"] CGColor];
+    self.startButton.layer.borderWidth = 1;
+    self.startButton.layer.cornerRadius = 8;
+    self.startButton.clipsToBounds = YES;
     
+    self.instructionsView.layer.borderWidth = 1;
+    self.instructionsView.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.instructionsView.layer.cornerRadius = 8;
+    self.startButton.clipsToBounds = YES;
+    
+    self.instructionsLabel.layer.cornerRadius = 8;
+    self.instructionsLabel.layer.borderColor = [[self colorFromHexString:@"#f0f0f0"] CGColor];
+    self.instructionsLabel.layer.backgroundColor = [[self colorFromHexString:@"#f6f6f6"] CGColor];
+    self.instructionsLabel.layer.borderWidth = 4;
+    self.instructionsLabel.clipsToBounds = YES;
+    
+    self.shadowView = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.shadowView.backgroundColor = [UIColor blackColor];
+    self.shadowView.alpha = 0.6;
+    [self.view insertSubview:self.shadowView belowSubview:self.instructionsView];
+}
+
+- (void)setupGameView {
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
     [self.gameView addGestureRecognizer:self.panGestureRecognizer];
-    [self popNewQuestion];
-    [self popNewCard];
-}
-
-- (void)applyColorToShapesInList:(NSMutableArray *)list {
-    int i = 0;
-    for (UILabel *shapeLabel in list) {
-        UIColor *color = [self colorFromHexString:self.game.orderedListOfColors[i]];
-        [shapeLabel setTextColor:color];
-        i++;
-    }
-}
-
-- (void)roundLabelCorners {
-    self.scoreLabel.backgroundColor = [self colorFromHexString:@"#475358"];
-    self.scoreLabel.layer.cornerRadius = 4;
-    self.scoreLabel.layer.borderWidth = 1.0;
-    self.scoreLabel.layer.borderColor = [[self colorFromHexString:@"#475358"] CGColor];
-    self.scoreLabel.clipsToBounds = YES;
-    
-    self.highScoreLabel.backgroundColor = [self colorFromHexString:@"#475358"];
-    self.highScoreLabel.layer.cornerRadius = 4;
-    self.highScoreLabel.layer.borderWidth = 1.0;
-    self.highScoreLabel.layer.borderColor = [[self colorFromHexString:@"#475358"] CGColor];
-    self.highScoreLabel.clipsToBounds = YES;
-    
-    self.timeLabel.backgroundColor = [self colorFromHexString:@"#f6ac6a"];
-    self.timeLabel.layer.cornerRadius = 4;
-    self.timeLabel.layer.borderWidth = 1.0;
-    self.timeLabel.layer.borderColor = [[self colorFromHexString:@"#f6ac6a"] CGColor];
-    self.timeLabel.clipsToBounds = YES;
+    self.gameView.layer.borderColor = [[self colorFromHexString:@"#dbc8b2"] CGColor];
+    self.gameView.layer.borderWidth = 4;
+    self.gameView.layer.cornerRadius = 8;
+    [self.view addSubview:self.gameView];
+    [self.view sendSubviewToBack:self.gameView];
 }
 
 #pragma mark - Initializers
@@ -110,9 +115,48 @@
 
 #pragma mark - UI
 
+- (void)applyColorToShapesInList:(NSMutableArray *)list {
+    int i = 0;
+    for (UILabel *shapeLabel in list) {
+        UIColor *color = [self colorFromHexString:self.game.orderedListOfColors[i]];
+        [shapeLabel setTextColor:color];
+        i++;
+    }
+}
+
+- (void)roundCorners {
+    self.scoreLabel.backgroundColor = [self colorFromHexString:@"#475358"];
+    self.scoreLabel.layer.cornerRadius = 4;
+    self.scoreLabel.layer.borderWidth = 1.0;
+    self.scoreLabel.layer.borderColor = [[self colorFromHexString:@"#475358"] CGColor];
+    self.scoreLabel.clipsToBounds = YES;
+    
+    self.highScoreLabel.backgroundColor = [self colorFromHexString:@"#475358"];
+    self.highScoreLabel.layer.cornerRadius = 4;
+    self.highScoreLabel.layer.borderWidth = 1.0;
+    self.highScoreLabel.layer.borderColor = [[self colorFromHexString:@"#475358"] CGColor];
+    self.highScoreLabel.clipsToBounds = YES;
+    
+    self.timeLabel.backgroundColor = [self colorFromHexString:@"#f6ac6a"];
+    self.timeLabel.layer.cornerRadius = 4;
+    self.timeLabel.layer.borderWidth = 1.0;
+    self.timeLabel.layer.borderColor = [[self colorFromHexString:@"#f6ac6a"] CGColor];
+    self.timeLabel.clipsToBounds = YES;
+}
+
 - (void)updateUI {
     // Update score label
     self.scoreLabel.text = [NSString stringWithFormat:@"SCORE \n%ld",(long)self.game.score];
+}
+
+#pragma mark - Touch Gesture
+
+- (IBAction)touchStartButton:(id)sender {
+    
+    [self popNewQuestion];
+    [self popNewCard];
+    self.instructionsView.hidden = YES;
+    self.shadowView.alpha = 0;
 }
 
 #pragma mark - Drag Gesture
@@ -138,7 +182,7 @@
                 if ([self.game match]) {
                     self.game.score += 1;
                 } else {
-                    self.game.score += -1;
+                    // end game
                 }
                 
                 [self updateUI];
@@ -148,6 +192,13 @@
             
             // Swipe left for no match
             else if (xDistance < - (self.gameView.bounds.size.width * (3.5/5))) {
+                if (![self.game match]) {
+                    self.game.score += 1;
+                } else {
+                    // end game
+                }
+                
+                [self updateUI];
                 [self popNewCard];
             }
             

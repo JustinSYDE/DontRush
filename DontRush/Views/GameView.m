@@ -57,7 +57,7 @@
 }
 
 - (CGFloat)cornerOffSet {
-    return [self cornerRadius] / 3.0;
+    return [self cornerRadius] / 8.0;
 }
 
 // Only override drawRect: if you perform custom drawing.
