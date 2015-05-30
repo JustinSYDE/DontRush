@@ -212,12 +212,6 @@
     [self popNewQuestion];
     [self popNewCard];
     [self restartTimer];
-    
-    /*[UIView animateWithDuration:2.0 animations:^{
-        self.popupView.center = CGPointMake(self.popupView.center.x, 100);
-        self.popupView.transform = CGAffineTransformMakeRotation(0);
-        //self.popupView.alpha = 0;
-    }];*/
 }
 
 #pragma mark - Drag Gesture
