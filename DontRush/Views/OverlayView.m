@@ -12,7 +12,7 @@
     if (!self) return nil;
 
     self.backgroundColor = [UIColor whiteColor];
-    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trollface_300x200"]];
+    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"reject"]];
     [self addSubview:self.imageView];
 
     return self;
@@ -24,16 +24,10 @@
 
     _mode = mode;
     if (mode == OverlayViewModeLeft) {
-        self.imageView.image = [UIImage imageNamed:@"trollface_300x200"];
+        self.imageView.image = [UIImage imageNamed:@"reject"];
     } else {
-        self.imageView.image = [UIImage imageNamed:@"thumbs_up_300x300"];
+        self.imageView.image = [UIImage imageNamed:@"accept"];
     }
-}
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    self.imageView.frame = CGRectMake(50, 50, 100, 100);
 }
 
 @end

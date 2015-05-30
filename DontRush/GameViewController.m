@@ -8,24 +8,33 @@
 
 #import "GameViewController.h"
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
-//#import <QuartzCore/CALayer.h>
 #import "DontRushGame.h"
 #import "GameView.h"
 
 @interface GameViewController ()
+
+#pragma mark - Properties
+
+@property (nonatomic) DontRushGame *game;
+@property (nonatomic) GameView *gameView;
+
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *highScoreLabel;
-@property (nonatomic) DontRushGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *questionLabel;
-@property (nonatomic) GameView *gameView;
-@property (weak, nonatomic) IBOutlet UIButton *startButton;
-@property (weak, nonatomic) IBOutlet UILabel *instructionsLabel;
-@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
-@property (weak, nonatomic) IBOutlet UIView *instructionsView;
+@property (weak, nonatomic) IBOutlet UILabel *popupTextLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *popupSubtitleLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *startButton;
+
+@property (weak, nonatomic) IBOutlet UIView *popupView;
+@property (nonatomic) UIView *shadowView;
+
+
 @property (nonatomic) NSMutableDictionary *colorsOnCard;
 @property (nonatomic) NSArray *validFonts;
-@property (nonatomic) UIView *shadowView;
+
+@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @end
 
 @implementation GameViewController
@@ -50,32 +59,35 @@
     
     self.view.backgroundColor = [self colorFromHexString:@"#f2eedc"];
     [self roundCorners];
-    [self setupInstructionsView];
+    [self setupPopupView];
     [self setupGameView];
+    
+    self.game.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
+    self.highScoreLabel.text = [NSString stringWithFormat:@"BEST: \n%ld", self.game.highScore];
 }
 
-- (void)setupInstructionsView {
+- (void)setupPopupView {
     self.startButton.backgroundColor = [self colorFromHexString:@"#6dac76"];
     self.startButton.layer.borderColor = [[self colorFromHexString:@"6dac76"] CGColor];
     self.startButton.layer.borderWidth = 1;
     self.startButton.layer.cornerRadius = 8;
     self.startButton.clipsToBounds = YES;
     
-    self.instructionsView.layer.borderWidth = 1;
-    self.instructionsView.layer.borderColor = [[UIColor whiteColor] CGColor];
-    self.instructionsView.layer.cornerRadius = 8;
+    self.popupView.layer.borderWidth = 1;
+    self.popupView.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.popupView.layer.cornerRadius = 8;
     self.startButton.clipsToBounds = YES;
     
-    self.instructionsLabel.layer.cornerRadius = 8;
-    self.instructionsLabel.layer.borderColor = [[self colorFromHexString:@"#f0f0f0"] CGColor];
-    self.instructionsLabel.layer.backgroundColor = [[self colorFromHexString:@"#f6f6f6"] CGColor];
-    self.instructionsLabel.layer.borderWidth = 4;
-    self.instructionsLabel.clipsToBounds = YES;
+    self.popupTextLabel.layer.cornerRadius = 8;
+    self.popupTextLabel.layer.borderColor = [[self colorFromHexString:@"#f0f0f0"] CGColor];
+    self.popupTextLabel.layer.backgroundColor = [[self colorFromHexString:@"#f6f6f6"] CGColor];
+    self.popupTextLabel.layer.borderWidth = 4;
+    self.popupTextLabel.clipsToBounds = YES;
     
     self.shadowView = [[UIView alloc] initWithFrame:self.view.bounds];
     self.shadowView.backgroundColor = [UIColor blackColor];
     self.shadowView.alpha = 0.6;
-    [self.view insertSubview:self.shadowView belowSubview:self.instructionsView];
+    [self.view insertSubview:self.shadowView belowSubview:self.popupView];
 }
 
 - (void)setupGameView {
@@ -144,9 +156,22 @@
     self.timeLabel.clipsToBounds = YES;
 }
 
-- (void)updateUI {
-    // Update score label
+- (void)updateScoreUI {
     self.scoreLabel.text = [NSString stringWithFormat:@"SCORE \n%ld",(long)self.game.score];
+}
+
+- (void)updatePopupToGameOver {
+    self.popupSubtitleLabel.text = @"Not too shabby.";
+    self.popupTextLabel.text = [NSString stringWithFormat:@"Your score: %ld\nYour best: %ld", (long)self.game.score, (long)self.game.highScore];
+    [self.startButton setTitle:@"Again!" forState:UIControlStateNormal];
+
+}
+- (void)gameOver {
+    if (self.game.score > self.game.highScore) {
+        [[NSUserDefaults standardUserDefaults] setInteger:self.game.score forKey:@"HighScoreSaved"];
+    }
+    
+    [self updatePopupToGameOver];
 }
 
 #pragma mark - Touch Gesture
@@ -155,8 +180,9 @@
     
     [self popNewQuestion];
     [self popNewCard];
-    self.instructionsView.hidden = YES;
-    self.shadowView.alpha = 0;
+    self.popupView.hidden = YES;
+    self.shadowView.hidden = YES;
+    self.game.score = 0;
 }
 
 #pragma mark - Drag Gesture
@@ -183,9 +209,12 @@
                     self.game.score += 1;
                 } else {
                     // end game
+                    self.shadowView.hidden = NO;
+                    [self gameOver];
+                    self.popupView.hidden = NO;
                 }
                 
-                [self updateUI];
+                [self updateScoreUI];
                 [self popNewQuestion];
                 [self popNewCard];
             }
@@ -196,9 +225,12 @@
                     self.game.score += 1;
                 } else {
                     // end game
+                    self.shadowView.hidden = NO;
+                    [self gameOver];
+                    self.popupView.hidden = NO;
                 }
                 
-                [self updateUI];
+                [self updateScoreUI];
                 [self popNewCard];
             }
             

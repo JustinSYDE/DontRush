@@ -45,7 +45,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ndd-ct-7rV" userLabel="InstructionsView">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ndd-ct-7rV" userLabel="PopupView">
                                 <rect key="frame" x="24" y="102" width="272" height="364"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Don't Rush!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bC8-62-sfL">
@@ -89,20 +89,17 @@ Swipe ☞ to match</string>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="highScoreLabel" destination="8Ow-6t-WCv" id="HrD-xw-WXv"/>
-                        <outlet property="instructionsLabel" destination="ggt-AV-MtP" id="tuq-Jr-eCI"/>
-                        <outlet property="instructionsView" destination="ndd-ct-7rV" id="P99-sJ-gJd"/>
+                        <outlet property="popupSubtitleLabel" destination="lbV-Gw-rsX" id="yNg-gk-MHF"/>
+                        <outlet property="popupTextLabel" destination="ggt-AV-MtP" id="T39-TD-RfI"/>
+                        <outlet property="popupView" destination="ndd-ct-7rV" id="OGP-dw-u3U"/>
                         <outlet property="questionLabel" destination="edI-i0-Tc1" id="A1Y-0X-ABN"/>
                         <outlet property="scoreLabel" destination="yMJ-6p-641" id="5jg-l2-a93"/>
-                        <outlet property="startButton" destination="HSt-Ig-UbG" id="UbE-Vu-mYx"/>
+                        <outlet property="startButton" destination="HSt-Ig-UbG" id="1ZW-7V-Bdp"/>
                         <outlet property="timeLabel" destination="Htm-AF-73S" id="RZg-DJ-A8V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="jef-ew-deV">
-                    <connections>
-                        <action selector="dragGesture:" destination="vXZ-lx-hvc" id="USN-zj-VdN"/>
-                    </connections>
-                </panGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="jef-ew-deV"/>
             </objects>
             <point key="canvasLocation" x="-156" y="323"/>
         </scene>

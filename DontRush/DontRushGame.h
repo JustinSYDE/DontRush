@@ -10,6 +10,7 @@
 
 @interface DontRushGame : NSObject
 @property (nonatomic) NSInteger score;
+@property (nonatomic) NSInteger highScore;
 @property (nonatomic) NSMutableDictionary *collectionOfColors;
 @property (nonatomic) NSMutableArray *orderedListOfColors;
 @property (nonatomic) NSMutableDictionary *questionObject;

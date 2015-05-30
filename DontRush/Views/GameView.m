@@ -103,7 +103,7 @@
     } else if (distance <= 0) {
         self.overlayView.mode = OverlayViewModeLeft;
     }
-    CGFloat overlayStrength = MIN(fabsf(distance) / 100, 0.4);
+    CGFloat overlayStrength = MIN(fabsf(distance) / 100, 0.6);
     self.overlayView.alpha = overlayStrength;
 }
 
