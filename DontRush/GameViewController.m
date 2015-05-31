@@ -64,7 +64,7 @@
     [self setupGameView];
     
     self.game.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
-    self.highScoreLabel.text = [NSString stringWithFormat:@"BEST: \n%ld", self.game.highScore];
+    self.highScoreLabel.text = [NSString stringWithFormat:@"BEST: \n%ld", (long)self.game.highScore];
 }
 
 - (void)setupPopupView {
@@ -196,6 +196,8 @@
 - (void)gameOver {
     if (self.game.score > self.game.highScore) {
         [[NSUserDefaults standardUserDefaults] setInteger:self.game.score forKey:@"HighScoreSaved"];
+        self.highScoreLabel.text = [NSString stringWithFormat: @"BEST:\n%ld", self.game.score];
+        self.game.highScore = self.game.score;
     }
     
     [self updatePopupToGameOver];
@@ -208,6 +210,7 @@
     self.popupView.hidden = YES;
     self.shadowView.hidden = YES;
     self.game.score = 0;
+    [self updateScoreUI];
     
     [self popNewQuestion];
     [self popNewCard];
