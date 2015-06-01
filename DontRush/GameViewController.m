@@ -30,7 +30,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *popupView;
 @property (nonatomic) UIView *shadowView;
-
+@property (weak, nonatomic) IBOutlet UIView *statsView;
+@property (weak, nonatomic) IBOutlet UIView *gameWrapperView;
 
 @property (nonatomic) NSMutableDictionary *colorsOnCard;
 @property (nonatomic) NSArray *validFonts;
@@ -117,7 +118,7 @@
     self.gameView.layer.borderColor = [[self colorFromHexString:@"#dbc8b2"] CGColor];
     self.gameView.layer.borderWidth = 4;
     self.gameView.layer.cornerRadius = 8;
-    [self.view addSubview:self.gameView];
+    [self.gameWrapperView addSubview:self.gameView];
     [self.view sendSubviewToBack:self.gameView];
 }
 
@@ -125,7 +126,7 @@
 
 - (GameView *)gameView {
     if (!_gameView) {
-        _gameView = [[GameView alloc] initWithFrame:CGRectMake(16, 233, 288, 288)];
+        _gameView = [[GameView alloc] initWithFrame:self.gameWrapperView.bounds];
     }
     
     return _gameView;

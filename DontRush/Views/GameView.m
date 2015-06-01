@@ -67,32 +67,40 @@
     UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:[self cornerRadius]];
     
     [roundedRect addClip]; // dont ever want to draw outside the rounded rect
-    [[self colorFromHexString:@"#e3d4c3"] setFill];
+    [[self colorFromHexString:@"#dbc8b2"] setFill];
     UIRectFill(self.bounds); //fills the rectangle
 }
 
 - (void)drawGrid:(CGRect)frame {
-    float width = 60;
-    float height = 60;
+    float width = frame.size.width / 4.0;
+    float height = frame.size.height / 4.0;
     float x = frame.origin.x;
-    float y = frame.origin.y - 223;
+    float y = frame.origin.y;
     
     for (int row = 0; row < NUM_ROWS; row++) {
         for (int column = 0 ; column < NUM_COLUMNS; column++) {
             CGRect newCell = CGRectMake(x, y, width, height);
             UILabel *shapeLabel = [[UILabel alloc] initWithFrame:newCell];
+            //UILabel *shapeLabel = [[UILabel alloc] initWithFrame:newCell];
+            [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 100.0f]];
             shapeLabel.text = @"●";
             shapeLabel.textAlignment = NSTextAlignmentCenter;
-            [shapeLabel setBackgroundColor:[UIColor clearColor]];
-            [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 100.0f]];
+            [shapeLabel setBackgroundColor:[self colorFromHexString:@"#e3d4c3"]];
+            
+            shapeLabel.layer.borderWidth = 2;
+            shapeLabel.layer.borderColor = [[self colorFromHexString:@"#dbc8b2"] CGColor];
+            shapeLabel.layer.cornerRadius = 8;
+            shapeLabel.clipsToBounds = YES;
+            
             [self addSubview:shapeLabel];
             [self.listOfShapes addObject:shapeLabel];
+            
             [self addSubview:[self.listOfShapes lastObject]];
-            x += width + 6;
+            x += width;
         }
         
         x = frame.origin.x;
-        y += height + 6;
+        y += height;
     }
  }
 
