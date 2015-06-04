@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -65,18 +66,20 @@
                                     <constraint firstItem="8Ow-6t-WCv" firstAttribute="firstBaseline" secondItem="Htm-AF-73S" secondAttribute="firstBaseline" id="q87-gK-yto"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edI-i0-Tc1" userLabel="QuestionLabel">
-                                <rect key="frame" x="16" y="86" width="288" height="148"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edI-i0-Tc1" userLabel="QuestionLabel">
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ze7-86-R10" userLabel="gameWrapperView">
                                 <rect key="frame" x="16" y="233" width="288" height="288"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ze7-86-R10" secondAttribute="height" multiplier="1:1" id="GdN-yz-OKq"/>
+                                </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ndd-ct-7rV" userLabel="PopupView">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ndd-ct-7rV" userLabel="PopupView">
                                 <rect key="frame" x="24" y="102" width="272" height="364"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't Rush!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bC8-62-sfL">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Don't Rush!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bC8-62-sfL">
                                         <rect key="frame" x="22" y="26" width="229" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="IQC-7L-rL1"/>
@@ -85,7 +88,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Here's how to play:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbV-Gw-rsX">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Here's how to play:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbV-Gw-rsX">
                                         <rect key="frame" x="22" y="76" width="229" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="f3W-kC-GIc"/>
@@ -94,7 +97,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ggt-AV-MtP">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ggt-AV-MtP">
                                         <rect key="frame" x="22" y="132" width="229" height="99"/>
                                         <string key="text">Swipe ☜ to draw new card
 
@@ -103,7 +106,7 @@ Swipe ☞ to match</string>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HSt-Ig-UbG">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HSt-Ig-UbG">
                                         <rect key="frame" x="76" y="258" width="120" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="SzU-Ff-G3f"/>
@@ -139,35 +142,34 @@ Swipe ☞ to match</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ndd-ct-7rV" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="8" id="0yd-jP-mya"/>
-                            <constraint firstItem="ze7-86-R10" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="233" id="9Lj-Ze-rZr"/>
-                            <constraint firstItem="edI-i0-Tc1" firstAttribute="leading" secondItem="ze7-86-R10" secondAttribute="leading" id="A3H-yc-DAf"/>
                             <constraint firstItem="J2t-Ae-zlH" firstAttribute="top" secondItem="edI-i0-Tc1" secondAttribute="bottom" constant="334" id="Br8-Ph-TVo"/>
                             <constraint firstItem="J2t-Ae-zlH" firstAttribute="top" secondItem="ze7-86-R10" secondAttribute="bottom" constant="47" id="Fpr-6I-wj6"/>
+                            <constraint firstItem="ze7-86-R10" firstAttribute="top" secondItem="edI-i0-Tc1" secondAttribute="bottom" constant="-1" id="NEf-xi-Qfj"/>
                             <constraint firstItem="J2t-Ae-zlH" firstAttribute="top" secondItem="ndd-ct-7rV" secondAttribute="bottom" constant="102" id="WFQ-TL-5Xe"/>
                             <constraint firstAttribute="trailing" secondItem="3Jo-c6-h1r" secondAttribute="trailing" id="XGk-TB-IsB"/>
                             <constraint firstItem="3Jo-c6-h1r" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="YMs-fP-3gP"/>
                             <constraint firstItem="ndd-ct-7rV" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="aRY-GU-6lG"/>
                             <constraint firstItem="edI-i0-Tc1" firstAttribute="centerX" secondItem="ndd-ct-7rV" secondAttribute="centerX" id="csw-W1-DP0"/>
-                            <constraint firstItem="edI-i0-Tc1" firstAttribute="trailing" secondItem="ze7-86-R10" secondAttribute="trailing" id="khI-P1-g23"/>
                             <constraint firstItem="edI-i0-Tc1" firstAttribute="top" secondItem="QH7-Z1-fHJ" secondAttribute="bottom" constant="66" id="oFF-jw-JXv"/>
                             <constraint firstItem="3Jo-c6-h1r" firstAttribute="top" secondItem="QH7-Z1-fHJ" secondAttribute="bottom" id="tEu-kD-pDK"/>
+                            <constraint firstAttribute="centerX" secondItem="ze7-86-R10" secondAttribute="centerX" id="tZf-J2-p19"/>
                             <constraint firstItem="edI-i0-Tc1" firstAttribute="centerX" secondItem="3Jo-c6-h1r" secondAttribute="centerX" id="vPY-Li-JQG"/>
-                            <constraint firstItem="ze7-86-R10" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="w1p-F1-tUn"/>
                             <constraint firstItem="ndd-ct-7rV" firstAttribute="top" secondItem="3Jo-c6-h1r" secondAttribute="bottom" constant="4" id="yAu-6j-8ly"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="3Jo-c6-h1r"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="gameWrapperView" destination="ze7-86-R10" id="vsx-8t-9NU"/>
-                        <outlet property="highScoreLabel" destination="8Ow-6t-WCv" id="HrD-xw-WXv"/>
                         <outlet property="popupSubtitleLabel" destination="lbV-Gw-rsX" id="yNg-gk-MHF"/>
                         <outlet property="popupTextLabel" destination="ggt-AV-MtP" id="T39-TD-RfI"/>
                         <outlet property="popupView" destination="ndd-ct-7rV" id="OGP-dw-u3U"/>
                         <outlet property="questionLabel" destination="edI-i0-Tc1" id="A1Y-0X-ABN"/>
-                        <outlet property="scoreLabel" destination="yMJ-6p-641" id="5jg-l2-a93"/>
                         <outlet property="startButton" destination="HSt-Ig-UbG" id="1ZW-7V-Bdp"/>
-                        <outlet property="statsView" destination="3Jo-c6-h1r" id="ouH-ou-hBk"/>
-                        <outlet property="timeLabel" destination="Htm-AF-73S" id="RZg-DJ-A8V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

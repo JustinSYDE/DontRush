@@ -10,6 +10,7 @@
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
 #import "DontRushGame.h"
 #import "GameView.h"
+#import "StatsView.h"
 
 @interface GameViewController ()
 
@@ -17,20 +18,19 @@
 
 @property (nonatomic) DontRushGame *game;
 @property (nonatomic) GameView *gameView;
+@property (nonatomic) StatsView *statsView;
 @property (nonatomic) NSTimer *timer;
 
-@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-@property (weak, nonatomic) IBOutlet UILabel *highScoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *questionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *popupTextLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *popupSubtitleLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 
 @property (weak, nonatomic) IBOutlet UIView *popupView;
 @property (nonatomic) UIView *shadowView;
-@property (weak, nonatomic) IBOutlet UIView *statsView;
+//@property (weak, nonatomic) IBOutlet UIView *statsView;
+
 @property (weak, nonatomic) IBOutlet UIView *gameWrapperView;
 
 @property (nonatomic) NSMutableDictionary *colorsOnCard;
@@ -62,10 +62,13 @@
     self.view.backgroundColor = [self colorFromHexString:@"#f2eedc"];
     [self setupStats];
     [self setupPopupView];
-    [self setupGameView];
     
     self.game.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
-    self.highScoreLabel.text = [NSString stringWithFormat:@"BEST: \n%ld", (long)self.game.highScore];
+    self.statsView.highScoreLabel.text = [NSString stringWithFormat:@"BEST: \n%ld", (long)self.game.highScore];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self setupGameView]; // want to use the frame bounds of the newly constrained gameView, not the one from the main.storyboard
 }
 
 - (void)setupPopupView {
@@ -93,23 +96,7 @@
 }
 
 - (void)setupStats {
-    self.scoreLabel.backgroundColor = [self colorFromHexString:@"#475358"];
-    self.scoreLabel.layer.cornerRadius = 4;
-    self.scoreLabel.layer.borderWidth = 1.0;
-    self.scoreLabel.layer.borderColor = [[self colorFromHexString:@"#475358"] CGColor];
-    self.scoreLabel.clipsToBounds = YES;
-    
-    self.highScoreLabel.backgroundColor = [self colorFromHexString:@"#475358"];
-    self.highScoreLabel.layer.cornerRadius = 4;
-    self.highScoreLabel.layer.borderWidth = 1.0;
-    self.highScoreLabel.layer.borderColor = [[self colorFromHexString:@"#475358"] CGColor];
-    self.highScoreLabel.clipsToBounds = YES;
-    
-    self.timeLabel.backgroundColor = [self colorFromHexString:@"#f6ac6a"];
-    self.timeLabel.layer.cornerRadius = 4;
-    self.timeLabel.layer.borderWidth = 1.0;
-    self.timeLabel.layer.borderColor = [[self colorFromHexString:@"#f6ac6a"] CGColor];
-    self.timeLabel.clipsToBounds = YES;
+    [self.view addSubview:self.statsView];
 }
 
 - (void)setupGameView {
@@ -130,6 +117,15 @@
     }
     
     return _gameView;
+}
+
+- (StatsView *)statsView {
+    if (!_statsView) {
+        CGRect newFrame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 15, self.view.frame.size.width, self.view.frame.size.height / 10.0);
+        _statsView = [[StatsView alloc] initWithFrame:newFrame];
+    }
+    
+    return _statsView;
 }
 
 - (NSMutableDictionary *)colorsOnCard {
@@ -179,7 +175,7 @@
 }
 
 - (void)updateScoreUI {
-    self.scoreLabel.text = [NSString stringWithFormat:@"SCORE \n%ld",(long)self.game.score];
+    self.statsView.scoreLabel.text = [NSString stringWithFormat:@"SCORE \n%ld",(long)self.game.score];
 }
 
 - (void)updatePopupToGameOver {
@@ -191,13 +187,13 @@
 
 - (void)updateTimer {
     self.game.timeCount++;
-    self.timeLabel.text = [NSString stringWithFormat:@"TIME\n%ld", (long)self.game.timeCount];
+    self.statsView.timerLabel.text = [NSString stringWithFormat:@"TIME\n%ld", (long)self.game.timeCount];
 }
 
 - (void)gameOver {
     if (self.game.score > self.game.highScore) {
         [[NSUserDefaults standardUserDefaults] setInteger:self.game.score forKey:@"HighScoreSaved"];
-        self.highScoreLabel.text = [NSString stringWithFormat: @"BEST:\n%ld", self.game.score];
+        self.statsView.highScoreLabel.text = [NSString stringWithFormat: @"BEST:\n%ld", (long)self.game.score];
         self.game.highScore = self.game.score;
     }
     
@@ -237,7 +233,7 @@
             [self.gameView dragFinishedEventWithxDistance:xDistance];
             
             // Swipe right to match
-            if (xDistance > (self.gameView.bounds.size.width * (3.5/5))) {
+            if (xDistance > (self.gameView.bounds.size.width * (2.5/5))) {
                 if ([self.game match]) {
                     // Only reward points if player determined an answer in under 100 time units
                     if ((100 - self.game.timeCount) > 0) {
@@ -258,7 +254,7 @@
             }
             
             // Swipe left for no match
-            else if (xDistance < - (self.gameView.bounds.size.width * (3.5/5))) {
+            else if (xDistance < - (self.gameView.bounds.size.width * (2.5/5))) {
                 if (![self.game match]) {
                     // Only reward points if player determined an answer in under 100 time units
                     if ((100 - self.game.timeCount) > 0) {

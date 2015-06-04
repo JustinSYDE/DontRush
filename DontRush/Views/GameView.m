@@ -143,21 +143,21 @@
 };
 
 - (void)dragFinishedEventWithxDistance:(CGFloat)xDistance {
-    if (xDistance > (self.bounds.size.width * (3.5/5))) {
+    if (xDistance > (self.bounds.size.width * (2.5/5))) {
         self.alpha = 0;
         self.transform = CGAffineTransformMakeRotation(0);
         self.center = self.originalPoint;
         self.overlayView.alpha = 0;
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.25 animations:^{
             self.alpha = 1;
         }];
 
-    } else if (xDistance < - (self.bounds.size.width * (3.5/5))) {
+    } else if (xDistance < - (self.bounds.size.width * (2.5/5))) {
         self.alpha = 0;
         self.transform = CGAffineTransformMakeRotation(0);
         self.center = self.originalPoint;
         self.overlayView.alpha = 0;
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.25 animations:^{
             self.alpha = 1;
         }];
     } else {

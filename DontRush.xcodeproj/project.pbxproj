@@ -17,6 +17,9 @@
 		E81C365A1B0AFFB90090F79E /* DontRushTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C36591B0AFFB90090F79E /* DontRushTests.m */; };
 		E824B3461B13B9FC00B71F11 /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = E824B3451B13B9FC00B71F11 /* OverlayView.m */; };
 		E824B3491B13BA1000B71F11 /* GameView.m in Sources */ = {isa = PBXBuildFile; fileRef = E824B3481B13BA1000B71F11 /* GameView.m */; };
+		E83F2D061B1ED3000073E60C /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = E83F2D051B1ED3000073E60C /* Entitlements.plist */; };
+		E83F2D091B1FFCEF0073E60C /* StatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E83F2D081B1FFCEF0073E60C /* StatsView.m */; };
+		E83F2D0C1B2001B20073E60C /* StatsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E83F2D0B1B2001B20073E60C /* StatsLabel.m */; };
 		E8A56B761B1A56650076AF38 /* accept.png in Resources */ = {isa = PBXBuildFile; fileRef = E8A56B741B1A56650076AF38 /* accept.png */; };
 		E8A56B771B1A56650076AF38 /* reject.png in Resources */ = {isa = PBXBuildFile; fileRef = E8A56B751B1A56650076AF38 /* reject.png */; };
 		E8BF26541B0C5053009E6446 /* DontRushGame.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BF26531B0C5053009E6446 /* DontRushGame.m */; };
@@ -53,6 +56,11 @@
 		E824B3451B13B9FC00B71F11 /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OverlayView.m; path = Views/OverlayView.m; sourceTree = "<group>"; };
 		E824B3471B13BA1000B71F11 /* GameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameView.h; path = Views/GameView.h; sourceTree = "<group>"; };
 		E824B3481B13BA1000B71F11 /* GameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameView.m; path = Views/GameView.m; sourceTree = "<group>"; };
+		E83F2D051B1ED3000073E60C /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		E83F2D071B1FFCEF0073E60C /* StatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatsView.h; path = Views/StatsView.h; sourceTree = "<group>"; };
+		E83F2D081B1FFCEF0073E60C /* StatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StatsView.m; path = Views/StatsView.m; sourceTree = "<group>"; };
+		E83F2D0A1B2001B20073E60C /* StatsLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatsLabel.h; path = Views/StatsLabel.h; sourceTree = "<group>"; };
+		E83F2D0B1B2001B20073E60C /* StatsLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StatsLabel.m; path = Views/StatsLabel.m; sourceTree = "<group>"; };
 		E8A56B741B1A56650076AF38 /* accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accept.png; sourceTree = "<group>"; };
 		E8A56B751B1A56650076AF38 /* reject.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reject.png; sourceTree = "<group>"; };
 		E8BF26521B0C5053009E6446 /* DontRushGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DontRushGame.h; sourceTree = "<group>"; };
@@ -90,6 +98,7 @@
 		E81C36311B0AFFB90090F79E = {
 			isa = PBXGroup;
 			children = (
+				E83F2D051B1ED3000073E60C /* Entitlements.plist */,
 				E81C363C1B0AFFB90090F79E /* DontRush */,
 				E81C36561B0AFFB90090F79E /* DontRushTests */,
 				E81C363B1B0AFFB90090F79E /* Products */,
@@ -156,6 +165,10 @@
 			children = (
 				E824B3471B13BA1000B71F11 /* GameView.h */,
 				E824B3481B13BA1000B71F11 /* GameView.m */,
+				E83F2D071B1FFCEF0073E60C /* StatsView.h */,
+				E83F2D081B1FFCEF0073E60C /* StatsView.m */,
+				E83F2D0A1B2001B20073E60C /* StatsLabel.h */,
+				E83F2D0B1B2001B20073E60C /* StatsLabel.m */,
 				E824B3441B13B9FC00B71F11 /* OverlayView.h */,
 				E824B3451B13B9FC00B71F11 /* OverlayView.m */,
 			);
@@ -271,6 +284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E83F2D061B1ED3000073E60C /* Entitlements.plist in Resources */,
 				E81C36491B0AFFB90090F79E /* Main.storyboard in Resources */,
 				E8A56B761B1A56650076AF38 /* accept.png in Resources */,
 				E81C364E1B0AFFB90090F79E /* LaunchScreen.xib in Resources */,
@@ -332,6 +346,8 @@
 				E8BF26541B0C5053009E6446 /* DontRushGame.m in Sources */,
 				E81C36401B0AFFB90090F79E /* main.m in Sources */,
 				E824B3491B13BA1000B71F11 /* GameView.m in Sources */,
+				E83F2D0C1B2001B20073E60C /* StatsLabel.m in Sources */,
+				E83F2D091B1FFCEF0073E60C /* StatsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,7 +406,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "-";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -431,7 +449,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "-";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
