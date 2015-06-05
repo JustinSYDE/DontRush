@@ -11,6 +11,9 @@
 #import "DontRushGame.h"
 #import "GameView.h"
 #import "StatsView.h"
+#import "PopupView.h"
+#import "ShadowView.h"
+#import "QuestionView.h"
 
 @interface GameViewController ()
 
@@ -19,17 +22,18 @@
 @property (nonatomic) DontRushGame *game;
 @property (nonatomic) GameView *gameView;
 @property (nonatomic) StatsView *statsView;
+@property (nonatomic) PopupView *popupView;
+@property (nonatomic) ShadowView *shadowView;
+@property (nonatomic) QuestionView *questionView;
 @property (nonatomic) NSTimer *timer;
+
+@property (nonatomic) float const headerPadding;
 
 @property (weak, nonatomic) IBOutlet UILabel *questionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *popupTextLabel;
 @property (weak, nonatomic) IBOutlet UILabel *popupSubtitleLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
-
-@property (weak, nonatomic) IBOutlet UIView *popupView;
-@property (nonatomic) UIView *shadowView;
-//@property (weak, nonatomic) IBOutlet UIView *statsView;
 
 @property (weak, nonatomic) IBOutlet UIView *gameWrapperView;
 
@@ -60,11 +64,13 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [self colorFromHexString:@"#f2eedc"];
-    [self setupStats];
+    [self setupStatsView];
+    [self setupQuestionView];
+    [self setupShadowView];
     [self setupPopupView];
     
     self.game.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
-    self.statsView.highScoreLabel.text = [NSString stringWithFormat:@"BEST: \n%ld", (long)self.game.highScore];
+    self.statsView.highScoreLabel.text = [NSString stringWithFormat:@"BEST \n%ld", (long)self.game.highScore];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -72,30 +78,11 @@
 }
 
 - (void)setupPopupView {
-    self.startButton.backgroundColor = [self colorFromHexString:@"#6dac76"];
-    self.startButton.layer.borderColor = [[self colorFromHexString:@"6dac76"] CGColor];
-    self.startButton.layer.borderWidth = 1;
-    self.startButton.layer.cornerRadius = 8;
-    self.startButton.clipsToBounds = YES;
-    
-    self.popupView.layer.borderWidth = 1;
-    self.popupView.layer.borderColor = [[UIColor whiteColor] CGColor];
-    self.popupView.layer.cornerRadius = 8;
-    self.startButton.clipsToBounds = YES;
-    
-    self.popupTextLabel.layer.cornerRadius = 8;
-    self.popupTextLabel.layer.borderColor = [[self colorFromHexString:@"#f0f0f0"] CGColor];
-    self.popupTextLabel.layer.backgroundColor = [[self colorFromHexString:@"#f6f6f6"] CGColor];
-    self.popupTextLabel.layer.borderWidth = 4;
-    self.popupTextLabel.clipsToBounds = YES;
-    
-    self.shadowView = [[UIView alloc] initWithFrame:self.view.bounds];
-    self.shadowView.backgroundColor = [UIColor blackColor];
-    self.shadowView.alpha = 0.6;
-    [self.view insertSubview:self.shadowView belowSubview:self.popupView];
+    [self.view addSubview:self.popupView];
+    [self.popupView.playButton addTarget:self action:@selector(touchStartButton) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)setupStats {
+- (void)setupStatsView {
     [self.view addSubview:self.statsView];
 }
 
@@ -109,6 +96,14 @@
     [self.view sendSubviewToBack:self.gameView];
 }
 
+- (void)setupShadowView {
+    [self.view addSubview:self.shadowView];
+}
+
+- (void)setupQuestionView {
+    [self.view addSubview:self.questionView];
+}
+
 #pragma mark - Initializers
 
 - (GameView *)gameView {
@@ -119,13 +114,51 @@
     return _gameView;
 }
 
+- (float const)headerPadding {
+    return self.view.frame.size.height / 25.0;
+}
+
+- (QuestionView *)questionView {
+    if (!_questionView) {
+        float const x = self.view.frame.origin.x;
+        float const y = self.view.frame.size.height / 10.0 + self.headerPadding;
+        float const width = self.view.frame.size.width;
+        float const height = self.view.frame.size.height / 4.0;
+        CGRect newFrame = CGRectMake(x, y, width, height);
+        _questionView = [[QuestionView alloc] initWithFrame:newFrame];
+    }
+    
+    return _questionView;
+}
+
 - (StatsView *)statsView {
     if (!_statsView) {
-        CGRect newFrame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 15, self.view.frame.size.width, self.view.frame.size.height / 10.0);
+        CGRect newFrame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + self.headerPadding, self.view.frame.size.width, self.view.frame.size.height / 10.0);
         _statsView = [[StatsView alloc] initWithFrame:newFrame];
     }
     
     return _statsView;
+}
+
+- (ShadowView *)shadowView {
+    if (!_shadowView) {
+        _shadowView = [[ShadowView alloc] initWithFrame:self.view.frame];
+    }
+    
+    return _shadowView;
+}
+
+- (PopupView *)popupView {
+    if (!_popupView) {
+        float const width = self.view.frame.size.width * 0.8;
+        float const height = self.view.frame.size.height * 0.6;
+        float const x = (self.view.frame.size.width - width) / 2.0;
+        float const y = (self.view.frame.size.height - height) / 2.0;
+        CGRect newFrame = CGRectMake(x, y, width, height);
+        _popupView = [[PopupView alloc] initWithFrame:newFrame];
+    }
+    
+    return _popupView;
 }
 
 - (NSMutableDictionary *)colorsOnCard {
@@ -193,7 +226,7 @@
 - (void)gameOver {
     if (self.game.score > self.game.highScore) {
         [[NSUserDefaults standardUserDefaults] setInteger:self.game.score forKey:@"HighScoreSaved"];
-        self.statsView.highScoreLabel.text = [NSString stringWithFormat: @"BEST:\n%ld", (long)self.game.score];
+        self.statsView.highScoreLabel.text = [NSString stringWithFormat: @"BEST\n%ld", (long)self.game.score];
         self.game.highScore = self.game.score;
     }
     
@@ -202,7 +235,7 @@
 
 #pragma mark - Touch Gesture
 
-- (IBAction)touchStartButton:(id)sender {
+- (void)touchStartButton {
     
     self.popupView.hidden = YES;
     self.shadowView.hidden = YES;
@@ -302,7 +335,7 @@
                                  NSFontAttributeName : font};
     
     NSAttributedString *newQuestion = [[NSAttributedString alloc] initWithString:number attributes:attributes];
-    self.questionLabel.attributedText = newQuestion;
+    self.questionView.questionLabel.attributedText = newQuestion;
 }
 
 @end

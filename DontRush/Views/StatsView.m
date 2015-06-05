@@ -16,6 +16,7 @@
         [self setBackgroundColor:[UIColor clearColor]];
         [self setupStatsLabels];
         [self addLabelsToViewUsingFrame:frame];
+        self.clipsToBounds = YES;
     }
     
     return self;
@@ -30,27 +31,28 @@
 }
 
 - (void)setupStatsLabels {
-    self.timerLabel = [[StatsLabel alloc] initWithText:@"TIME: \n0" withBackgroundColor:@"#f6ac6a"];
-    self.highScoreLabel = [[StatsLabel alloc] initWithText:@"BEST: \n0" withBackgroundColor:@"#475358"];
-    self.scoreLabel = [[StatsLabel alloc] initWithText:@"SCORE: \n0" withBackgroundColor:@"#475358"];
+    self.timerLabel = [[StatsLabel alloc] initWithText:@"TIME \n0" withBackgroundColor:@"#f6ac6a"];
+    self.highScoreLabel = [[StatsLabel alloc] initWithText:@"BEST \n0" withBackgroundColor:@"#475358"];
+    self.scoreLabel = [[StatsLabel alloc] initWithText:@"SCORE \n0" withBackgroundColor:@"#475358"];
     [self.listOfStatsLabels addObject:self.timerLabel];
     [self.listOfStatsLabels addObject:self.highScoreLabel];
     [self.listOfStatsLabels addObject:self.scoreLabel];
 }
 
 - (void)addLabelsToViewUsingFrame:(CGRect)frame {
-    float const padding = 5;
-    float widthOfLabel = (frame.size.width - (padding * (1 + [self.listOfStatsLabels count]))) / [self.listOfStatsLabels count];
+    float const gapBetweenLabels = 5;
+    float const padding = frame.size.width / 20.0;
+    float widthOfLabel = (frame.size.width - (2*padding) - (gapBetweenLabels * ([self.listOfStatsLabels count] - 1))) / [self.listOfStatsLabels count];
     float heightOfLabel = frame.size.height;
-    float x = frame.origin.x + padding;
-    float y = frame.origin.y;
+    float x = 0 + padding;
+    float y = 0;
     
     for (int i = 0; i < [self.listOfStatsLabels count]; i++) {
         UILabel *statsLabel = [self.listOfStatsLabels objectAtIndex:i];
         CGRect newFrame = CGRectMake(x, y, widthOfLabel, heightOfLabel);
         statsLabel.frame = newFrame;
         [self addSubview:statsLabel];
-        x = x + padding + widthOfLabel;
+        x = x + gapBetweenLabels + widthOfLabel;
     }
 }
 
