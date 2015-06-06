@@ -29,14 +29,6 @@
 
 @property (nonatomic) float const headerPadding;
 
-@property (weak, nonatomic) IBOutlet UILabel *questionLabel;
-@property (weak, nonatomic) IBOutlet UILabel *popupTextLabel;
-@property (weak, nonatomic) IBOutlet UILabel *popupSubtitleLabel;
-
-@property (weak, nonatomic) IBOutlet UIButton *startButton;
-
-@property (weak, nonatomic) IBOutlet UIView *gameWrapperView;
-
 @property (nonatomic) NSMutableDictionary *colorsOnCard;
 @property (nonatomic) NSArray *validFonts;
 
@@ -66,6 +58,8 @@
     self.view.backgroundColor = [self colorFromHexString:@"#f2eedc"];
     [self setupStatsView];
     [self setupQuestionView];
+    
+    [self setupGameView];
     [self setupShadowView];
     [self setupPopupView];
     
@@ -92,8 +86,7 @@
     self.gameView.layer.borderColor = [[self colorFromHexString:@"#dbc8b2"] CGColor];
     self.gameView.layer.borderWidth = 4;
     self.gameView.layer.cornerRadius = 8;
-    [self.gameWrapperView addSubview:self.gameView];
-    [self.view sendSubviewToBack:self.gameView];
+    [self.view insertSubview:self.gameView belowSubview:self.shadowView];
 }
 
 - (void)setupShadowView {
@@ -108,7 +101,13 @@
 
 - (GameView *)gameView {
     if (!_gameView) {
-        _gameView = [[GameView alloc] initWithFrame:self.gameWrapperView.bounds];
+        float const height = self.view.frame.size.height / 2.0;
+        float const width = height;
+        float const padding = self.view.frame.size.width - width;
+        float const x = self.view.frame.origin.x + (padding/2.0);
+        float const y = (self.view.frame.size.height * 7 / 20.0) + self.headerPadding;
+        CGRect newFrame = CGRectMake(x, y, width, height);
+        _gameView = [[GameView alloc] initWithFrame:newFrame];
     }
     
     return _gameView;
@@ -212,9 +211,9 @@
 }
 
 - (void)updatePopupToGameOver {
-    self.popupSubtitleLabel.text = @"Not too shabby.";
-    self.popupTextLabel.text = [NSString stringWithFormat:@"Your score: %ld\nYour best: %ld", (long)self.game.score, (long)self.game.highScore];
-    [self.startButton setTitle:@"Again!" forState:UIControlStateNormal];
+    self.popupView.subtitleLabel.text = @"Not too shabby.";
+    self.popupView.subtitleLabel.text = [NSString stringWithFormat:@"Your score: %ld\nYour best: %ld", (long)self.game.score, (long)self.game.highScore];
+    [self.popupView.playButton setTitle:@"Again!" forState:UIControlStateNormal];
 
 }
 

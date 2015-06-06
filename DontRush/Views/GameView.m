@@ -28,12 +28,13 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (!self) return nil;
-    [self setBackgroundColor:[UIColor clearColor]];
-    [self drawGrid:frame];
-    self.overlayView = [[OverlayView alloc] initWithFrame:self.bounds];
-    self.overlayView.alpha = 0;
-    [self addSubview:self.overlayView];
+    if (self) {
+        [self setBackgroundColor:[UIColor clearColor]];
+        [self drawGrid:frame];
+        self.overlayView = [[OverlayView alloc] initWithFrame:self.bounds];
+        self.overlayView.alpha = 0;
+        [self addSubview:self.overlayView];
+    }
     
     return self;
 }
@@ -74,14 +75,13 @@
 - (void)drawGrid:(CGRect)frame {
     float width = frame.size.width / 4.0;
     float height = frame.size.height / 4.0;
-    float x = frame.origin.x;
-    float y = frame.origin.y;
+    float x = 0;
+    float y = 0;
     
     for (int row = 0; row < NUM_ROWS; row++) {
         for (int column = 0 ; column < NUM_COLUMNS; column++) {
             CGRect newCell = CGRectMake(x, y, width, height);
             UILabel *shapeLabel = [[UILabel alloc] initWithFrame:newCell];
-            //UILabel *shapeLabel = [[UILabel alloc] initWithFrame:newCell];
             [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 100.0f]];
             shapeLabel.text = @"●";
             shapeLabel.textAlignment = NSTextAlignmentCenter;
@@ -99,7 +99,7 @@
             x += width;
         }
         
-        x = frame.origin.x;
+        x = 0;
         y += height;
     }
  }
