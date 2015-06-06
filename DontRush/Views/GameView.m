@@ -49,29 +49,6 @@
 
 #pragma mark - Drawing
 
-- (CGFloat)cornerScaleFactor {
-    return self.bounds.size.height / CORNER_FONT_STANDARD_HEIGHT;
-}
-
-- (CGFloat)cornerRadius {
-    return CORNER_RADIUS * [self cornerScaleFactor];
-}
-
-- (CGFloat)cornerOffSet {
-    return [self cornerRadius] / 8.0;
-}
-
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-    UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:[self cornerRadius]];
-    
-    [roundedRect addClip]; // dont ever want to draw outside the rounded rect
-    [[self colorFromHexString:@"#dbc8b2"] setFill];
-    UIRectFill(self.bounds); //fills the rectangle
-}
-
 - (void)drawGrid:(CGRect)frame {
     float width = frame.size.width / 4.0;
     float height = frame.size.height / 4.0;

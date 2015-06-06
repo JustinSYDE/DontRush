@@ -86,6 +86,7 @@
     self.gameView.layer.borderColor = [[self colorFromHexString:@"#dbc8b2"] CGColor];
     self.gameView.layer.borderWidth = 4;
     self.gameView.layer.cornerRadius = 8;
+    self.gameView.backgroundColor = [self colorFromHexString:@"#dbc8b2"];
     [self.view insertSubview:self.gameView belowSubview:self.shadowView];
 }
 
