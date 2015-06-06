@@ -25,7 +25,7 @@
         self.text = textLabel;
         self.textAlignment = NSTextAlignmentCenter;
         self.numberOfLines = 2;
-        [self setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12]];
+        [self setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
         [self setTextColor:[UIColor whiteColor]];
         self.backgroundColor = [StatsLabel colorFromHexString:hexColor];
         self.layer.cornerRadius = 4;

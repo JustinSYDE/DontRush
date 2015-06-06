@@ -38,7 +38,7 @@
 @implementation GameViewController
 
 - (NSArray *) validFonts {
-    return @[@"HelveticaNeue", @"Palatino-Roman", @"AmericanTypewriter", @"HiraKakuProN-W3", @"MarkerFelt-Thin", @"TrebuchetMS", @"Courier"];
+    return @[@"HelveticaNeue"/*, @"Palatino-Roman", @"AmericanTypewriter", @"HiraKakuProN-W3", @"MarkerFelt-Thin", @"TrebuchetMS", @"Courier"*/];
 }
 
 // Assumes input like "#00FF00" (#RRGGBB).
@@ -114,7 +114,7 @@
 }
 
 - (float const)headerPadding {
-    return self.view.frame.size.height / 25.0;
+    return self.view.frame.size.height / 15.0;
 }
 
 - (QuestionView *)questionView {
