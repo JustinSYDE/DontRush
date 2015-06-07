@@ -7,33 +7,7 @@
 //
 
 #import "GameViewController.h"
-#import <MDCSwipeToChoose/MDCSwipeToChoose.h>
-#import "DontRushGame.h"
-#import "GameView.h"
-#import "StatsView.h"
-#import "PopupView.h"
-#import "ShadowView.h"
-#import "QuestionView.h"
 
-@interface GameViewController ()
-
-#pragma mark - Properties
-
-@property (nonatomic) DontRushGame *game;
-@property (nonatomic) GameView *gameView;
-@property (nonatomic) StatsView *statsView;
-@property (nonatomic) PopupView *popupView;
-@property (nonatomic) ShadowView *shadowView;
-@property (nonatomic) QuestionView *questionView;
-@property (nonatomic) NSTimer *timer;
-
-@property (nonatomic) float const headerPadding;
-
-@property (nonatomic) NSMutableDictionary *colorsOnCard;
-@property (nonatomic) NSArray *validFonts;
-
-@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
-@end
 
 @implementation GameViewController
 
@@ -62,6 +36,7 @@
     [self setupGameView];
     [self setupShadowView];
     [self setupPopupView];
+    [self setupGameTwistView];
     
     self.game.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
     self.statsView.highScoreLabel.text = [NSString stringWithFormat:@"BEST \n%ld", (long)self.game.highScore];
@@ -96,6 +71,10 @@
 
 - (void)setupQuestionView {
     [self.view addSubview:self.questionView];
+}
+
+- (void)setupGameTwistView {
+    [self.view addSubview:self.gameTwistView];
 }
 
 #pragma mark - Initializers
@@ -159,6 +138,19 @@
     }
     
     return _popupView;
+}
+
+- (GameTwistView *)gameTwistView {
+    if (!_gameTwistView) {
+        float const width = self.view.frame.size.width;
+        float const height = self.view.frame.size.height * (0.9) - self.headerPadding;
+        float const x = 0;
+        float const y = self.view.frame.size.height / 10.0 + self.headerPadding;
+        CGRect newFrame = CGRectMake(x, y, width, height);
+        _gameTwistView = [[GameTwistView alloc] initWithFrame:newFrame];
+    }
+    
+    return _gameTwistView;
 }
 
 - (NSMutableDictionary *)colorsOnCard {
@@ -249,6 +241,22 @@
 
 #pragma mark - Drag Gesture
 
+- (BOOL) matchEventUsingDistance:(CGFloat)distance forMode:(BOOL)reverse{
+    if (reverse) {
+        return distance < - (self.gameView.bounds.size.width * (2.5/5));
+    }
+    
+    return distance > (self.gameView.bounds.size.width * (2.5/5));
+}
+
+- (BOOL) rejectEventUsingDistance:(CGFloat)distance forMode:(BOOL)reverse{
+    if (reverse) {
+        return distance > (self.gameView.bounds.size.width * (2.5/5));
+    }
+    
+    return distance < - (self.gameView.bounds.size.width * (2.5/5));
+};
+
 - (void)dragged:(UIPanGestureRecognizer *)gestureRecognizer {
     CGFloat xDistance = [gestureRecognizer translationInView:self.gameView].x;
     CGFloat yDistance = [gestureRecognizer translationInView:self.gameView].y;
@@ -266,41 +274,22 @@
             [self.gameView dragFinishedEventWithxDistance:xDistance];
             
             // Swipe right to match
-            if (xDistance > (self.gameView.bounds.size.width * (2.5/5))) {
+            if ([self matchEventUsingDistance:xDistance forMode:self.game.reverse]) {
                 if ([self.game match]) {
-                    // Only reward points if player determined an answer in under 100 time units
-                    if ((100 - self.game.timeCount) > 0) {
-                        self.game.score += 100 - self.game.timeCount;
-                    }
-                    [self popNewQuestion];
-                    [self popNewCard];
-                    [self restartTimer];
+                    [self newRoundAfter:[self.game match]];
                 } else {
-                    // end game
-                    [self.timer invalidate];
-                    self.shadowView.hidden = NO;
-                    [self gameOver];
-                    self.popupView.hidden = NO;
+                    [self endGame];
                 }
                 
                 [self updateScoreUI];
             }
             
             // Swipe left for no match
-            else if (xDistance < - (self.gameView.bounds.size.width * (2.5/5))) {
+            else if ([self rejectEventUsingDistance:xDistance forMode:self.game.reverse]) {
                 if (![self.game match]) {
-                    // Only reward points if player determined an answer in under 100 time units
-                    if ((100 - self.game.timeCount) > 0) {
-                        self.game.score += 100 - self.game.timeCount;
-                    }
-                    [self popNewCard];
-                    [self restartTimer];
+                    [self newRoundAfter:[self.game match]];
                 } else {
-                    // end game
-                    [self.timer invalidate];
-                    self.shadowView.hidden = NO;
-                    [self gameOver];
-                    self.popupView.hidden = NO;
+                    [self endGame];
                 }
                 
                 [self updateScoreUI];
@@ -336,6 +325,31 @@
     
     NSAttributedString *newQuestion = [[NSAttributedString alloc] initWithString:number attributes:attributes];
     self.questionView.questionLabel.attributedText = newQuestion;
+}
+
+#pragma mark - Game Events
+
+- (void)newRoundAfter:(BOOL)match {
+    [self.game updateScore];
+    [self popNewCard];
+    [self restartTimer];
+    
+    if (self.game.score % 3 == 0) {
+        self.game.reverse = !self.game.reverse;
+        [self.gameTwistView updateGameTwistWithText:@"Reverse!"];
+    }
+    
+    if (match) {
+        [self popNewQuestion];
+    }
+}
+
+- (void)endGame {
+    [self.timer invalidate];
+    self.shadowView.hidden = NO;
+    [self gameOver];
+    self.popupView.hidden = NO;
+    self.game.reverse = NO;
 }
 
 @end

@@ -15,11 +15,13 @@
 @property (nonatomic) NSMutableArray *orderedListOfColors;
 @property (nonatomic) NSMutableDictionary *questionObject;
 @property (nonatomic) NSInteger timeCount;
+@property (nonatomic) BOOL reverse; // if true, user swipes left to match instead of right
 
 + (NSArray *)validColors;
 + (NSArray *)validNumberStrings;
 - (void) generateColorSet;
 - (NSDictionary *) generateNewQuestion;
 - (BOOL) match;
+- (void) updateScore;
 
 @end

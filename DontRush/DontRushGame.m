@@ -52,6 +52,14 @@
     return _collectionOfColors;
 }
 
+- (BOOL)reverse {
+    if (!_reverse) {
+        _reverse = NO;
+    }
+    
+    return _reverse;
+}
+
 #pragma mark - Question
 
 - (NSString *)drawRandomColor {
@@ -92,7 +100,7 @@
     NSString *questionNumber = self.questionObject[questionColor];
     int answeredNumber = [self.collectionOfColors[questionColor] intValue];
     
-    if (answeredNumber > 10)
+    if (answeredNumber > 9)
         return false;
     
     NSString *answeredNumberString = [DontRushGame validNumberStrings][answeredNumber];
@@ -101,6 +109,12 @@
         return true;
 
     return false;
+}
+
+- (void) updateScore {
+    if ((100 - self.timeCount) > 0) { // Only reward points if player determined an answer in under 100 time units
+        self.score += 100 - self.timeCount;
+    }
 }
 
 @end

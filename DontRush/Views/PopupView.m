@@ -103,7 +103,7 @@
 }
 
 - (void)setupPlayButtonWithFrame: (CGRect)frame {
-    float const horizontalPadding = 50.0;
+    float const horizontalPadding = 75.0;
     float const verticalPadding = 25.0;
     float const width = frame.size.width - 2*horizontalPadding;
     CGRect newFrame = CGRectMake(horizontalPadding, (frame.size.height *5.0/8.0) + verticalPadding , width, (frame.size.height * 3.0/8.0) - 2*verticalPadding);

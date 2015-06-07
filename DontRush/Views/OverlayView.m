@@ -9,11 +9,11 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (!self) return nil;
-
-    self.backgroundColor = [UIColor whiteColor];
-    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"reject"]];
-    [self addSubview:self.imageView];
+    if (self) {
+        self.backgroundColor = [UIColor whiteColor];
+        self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"reject"]];
+        [self addSubview:self.imageView];
+    }
 
     return self;
 }
