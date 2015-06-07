@@ -25,11 +25,7 @@
     if (self) {
         self.frame = frame;
         self.backgroundColor = [self colorFromHexString:@"#f2eedc"];
-        float const x = 0;
-        float const y = 0;
-        float const width = self.frame.size.width;
-        float const height = self.frame.size.height;
-        CGRect newFrame = CGRectMake(x, y, width, height);
+        CGRect newFrame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
         self.twistLabel.frame = newFrame;
         [self addSubview:self.twistLabel];
         self.alpha = 0;

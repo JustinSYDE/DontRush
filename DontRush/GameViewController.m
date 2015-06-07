@@ -142,11 +142,9 @@
 
 - (GameTwistView *)gameTwistView {
     if (!_gameTwistView) {
-        float const width = self.view.frame.size.width;
         float const height = self.view.frame.size.height * (0.9) - self.headerPadding;
-        float const x = 0;
         float const y = self.view.frame.size.height / 10.0 + self.headerPadding;
-        CGRect newFrame = CGRectMake(x, y, width, height);
+        CGRect newFrame = CGRectMake(0, y, self.view.frame.size.width, height);
         _gameTwistView = [[GameTwistView alloc] initWithFrame:newFrame];
     }
     
