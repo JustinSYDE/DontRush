@@ -205,7 +205,7 @@
 
 - (void)updatePopupToGameOver {
     self.popupView.subtitleLabel.text = @"Not too shabby.";
-    self.popupView.subtitleLabel.text = [NSString stringWithFormat:@"Your score: %ld\nYour best: %ld", (long)self.game.score, (long)self.game.highScore];
+    self.popupView.commentLabel.text = [NSString stringWithFormat:@"Your score: %ld\nYour best: %ld", (long)self.game.score, (long)self.game.highScore];
     [self.popupView.playButton setTitle:@"Again!" forState:UIControlStateNormal];
 
 }
@@ -334,7 +334,7 @@
     [self popNewCard];
     [self restartTimer];
     
-    if (self.game.score % 3 == 0) {
+    if (self.game.score % 7 == 0) {
         self.game.reverse = !self.game.reverse;
         [self.gameTwistView updateGameTwistWithText:@"Reverse!"];
     }

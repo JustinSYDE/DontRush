@@ -52,12 +52,11 @@
     self.twistLabel.text = text;
     self.twistLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:50.0f];
     self.twistLabel.textAlignment = NSTextAlignmentCenter;
-    NSTimer *gameTwistTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+    [NSTimer scheduledTimerWithTimeInterval:0.5
         target:self
         selector:@selector(fadeOut)
         userInfo:nil
         repeats:NO];
-    //[gameTwistTimer invalidate];
 }
 
 - (void)fadeOut {

@@ -18,7 +18,7 @@
 }
 
 + (NSArray *)validNumberStrings {
-    return @[@"Zero", @"One", @"Two", @"Three", @"Four", @"Five", @"Six", @"Seven", @"Eight", @"Nine"];
+    return @[@"One", @"Two", @"Three", @"Four", @"Five", @"Six", @"Seven", @"Eight", @"Nine"];
 }
 
 #pragma mark - Initializers
@@ -83,7 +83,8 @@
 }
 
 - (NSDictionary *)generateNewQuestion {
-    int i = arc4random() % 10;
+    int i = arc4random() % [DontRushGame.validColors count];
+    
     NSString *number = [[NSString alloc] initWithString:[DontRushGame validNumberStrings][i]];
     
     int randNum = arc4random() % 4;
@@ -98,13 +99,14 @@
 - (BOOL) match {
     NSString *questionColor = [self.questionObject allKeys][0];
     NSString *questionNumber = self.questionObject[questionColor];
+    //NSLog(@"question number: %@", questionNumber);
     int answeredNumber = [self.collectionOfColors[questionColor] intValue];
-    
-    if (answeredNumber > 9)
+    //NSLog(@"answered number: %i", answeredNumber);
+    if (answeredNumber > [DontRushGame.validColors count] || answeredNumber < 1)
         return false;
     
-    NSString *answeredNumberString = [DontRushGame validNumberStrings][answeredNumber];
-    
+    NSString *answeredNumberString = [DontRushGame validNumberStrings][--answeredNumber]; // because the array starts at index 0
+    //NSLog(@"answered number string: %@", answeredNumberString);
     if ([answeredNumberString isEqualToString:questionNumber])
         return true;
 
