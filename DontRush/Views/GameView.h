@@ -21,5 +21,5 @@
 - (void)resetViewPositionAndTransformations;
 - (void)dragBeganEvent;
 - (void)dragFinishedEventWithxDistance:(CGFloat)xDistance;
-- (void)draggingEventwithxDistance:(CGFloat)xDistance andWithYDistance:(CGFloat)yDistance;
+- (void)draggingEventwithxDistance:(CGFloat)xDistance andWithYDistance:(CGFloat)yDistance AndReverse:(BOOL)reverse;
 @end

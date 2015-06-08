@@ -107,7 +107,7 @@
     self.originalPoint = self.center;
 };
 
-- (void)draggingEventwithxDistance:(CGFloat)xDistance andWithYDistance:(CGFloat)yDistance {
+- (void)draggingEventwithxDistance:(CGFloat)xDistance andWithYDistance:(CGFloat)yDistance AndReverse:(BOOL)reverse {
     CGFloat rotationStrength = MIN(xDistance / 320, 1);
     CGFloat rotationAngel = (CGFloat) (2*M_PI * rotationStrength / 16);
     CGFloat scaleStrength = 1 - fabsf(rotationStrength) / 4;
@@ -116,7 +116,12 @@
     CGAffineTransform scaleTransform = CGAffineTransformScale(transform, scale, scale);
     self.transform = scaleTransform;
     self.center = CGPointMake(self.originalPoint.x + xDistance, self.originalPoint.y + yDistance);
-    [self updateOverlay:xDistance];
+    if (reverse){
+        [self updateOverlay:-xDistance];
+    } else {
+        [self updateOverlay:xDistance];
+    }
+    
 };
 
 - (void)dragFinishedEventWithxDistance:(CGFloat)xDistance {

@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DontRush/GameViewController.m"
-            timestampString = "455416084.358213"
+            timestampString = "455416832.56574"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
             landmarkName = "-popNewQuestion"
             landmarkType = "5">
          </BreakpointContent>

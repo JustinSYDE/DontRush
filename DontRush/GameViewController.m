@@ -280,9 +280,14 @@
             break;
         };
         case UIGestureRecognizerStateChanged:{
-            [self.gameView draggingEventwithxDistance:xDistance andWithYDistance:yDistance];
+            if (self.game.reverse) {
+                [self.gameView draggingEventwithxDistance:xDistance andWithYDistance:yDistance AndReverse:self.game.reverse];
+            } else {
+                [self.gameView draggingEventwithxDistance:xDistance andWithYDistance:yDistance AndReverse:self.game.reverse];
+            }
             break;
         };
+            
         case UIGestureRecognizerStateEnded: {
             [self.gameView dragFinishedEventWithxDistance:xDistance];
             
@@ -368,6 +373,7 @@
     self.shadowView.hidden = NO;
     [self gameOver];
     self.popupView.hidden = NO;
+    self.twistIconView.hidden = YES;
     self.game.reverse = NO;
 }
 
