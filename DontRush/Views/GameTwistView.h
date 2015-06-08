@@ -10,8 +10,6 @@
 
 @interface GameTwistView : UIView
 
-@property (nonatomic) UILabel *twistLabel;
-
 - (instancetype)initWithFrame:(CGRect)frame;
 - (void)updateGameTwistWithText:(NSString *)text;
 

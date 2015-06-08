@@ -8,6 +8,10 @@
 
 #import "QuestionView.h"
 
+@interface QuestionView()
+@property (nonatomic) UILabel *questionLabel;
+@end
+
 @implementation QuestionView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -30,12 +34,17 @@
 }
 
 - (void)setupQuestionLabelWithFrame:(CGRect)frame {
-    CGRect newFrame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+    CGRect newFrame = CGRectMake(25, 0, frame.size.width, frame.size.height);
     self.questionLabel.frame = newFrame;
-    self.questionLabel.textAlignment = NSTextAlignmentCenter;
+    self.questionLabel.textAlignment = NSTextAlignmentLeft;
     self.questionLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:50.0f];
     self.backgroundColor = [UIColor clearColor];
     [self addSubview:self.questionLabel];
+}
+
+- (void)updateQuestionLabel:(NSAttributedString *)text {
+    if (!text) return;
+    self.questionLabel.attributedText = text;
 }
 
 @end

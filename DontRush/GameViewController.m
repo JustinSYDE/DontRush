@@ -32,12 +32,11 @@
     self.view.backgroundColor = [self colorFromHexString:@"#f2eedc"];
     [self setupStatsView];
     [self setupQuestionView];
-    
+    [self setupTwistIconView];
     [self setupGameView];
     [self setupShadowView];
     [self setupPopupView];
     [self setupGameTwistView];
-    
     self.game.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
     self.statsView.highScoreLabel.text = [NSString stringWithFormat:@"BEST \n%ld", (long)self.game.highScore];
 }
@@ -77,14 +76,18 @@
     [self.view addSubview:self.gameTwistView];
 }
 
+- (void)setupTwistIconView {
+    [self.view addSubview:self.twistIconView];
+}
 #pragma mark - Initializers
+
 
 - (GameView *)gameView {
     if (!_gameView) {
         float const height = self.view.frame.size.height / 2.0;
         float const width = height;
         float const padding = self.view.frame.size.width - width;
-        float const x = self.view.frame.origin.x + (padding/2.0);
+        float const x = padding / 2.0;
         float const y = (self.view.frame.size.height * 7 / 20.0) + self.headerPadding;
         CGRect newFrame = CGRectMake(x, y, width, height);
         _gameView = [[GameView alloc] initWithFrame:newFrame];
@@ -99,7 +102,8 @@
 
 - (QuestionView *)questionView {
     if (!_questionView) {
-        float const x = self.view.frame.origin.x;
+        float const padding = self.view.frame.size.width / 20.0;
+        float const x = padding / 2.0;
         float const y = self.view.frame.size.height / 10.0 + self.headerPadding;
         float const width = self.view.frame.size.width;
         float const height = self.view.frame.size.height / 4.0;
@@ -149,6 +153,17 @@
     }
     
     return _gameTwistView;
+}
+
+- (TwistIconView *)twistIconView {
+    if (!_twistIconView) {
+        float const y = (self.view.frame.size.height * 4 / 20.0) + self.headerPadding;
+        float const x = (self.view.frame.size.width - (self.view.frame.size.width / 5.0));
+        CGRect newFrame = CGRectMake(x, y, 30, self.view.frame.size.height/20.0);
+        _twistIconView = [[TwistIconView alloc] initWithFrame:newFrame];
+    }
+    
+    return _twistIconView;
 }
 
 - (NSMutableDictionary *)colorsOnCard {
@@ -322,7 +337,7 @@
                                  NSFontAttributeName : font};
     
     NSAttributedString *newQuestion = [[NSAttributedString alloc] initWithString:number attributes:attributes];
-    self.questionView.questionLabel.attributedText = newQuestion;
+    [self.questionView updateQuestionLabel:newQuestion];
 }
 
 #pragma mark - Game Events
@@ -335,6 +350,12 @@
     if (self.game.score % 7 == 0) {
         self.game.reverse = !self.game.reverse;
         [self.gameTwistView updateGameTwistWithText:@"Reverse!"];
+        if (self.game.reverse) {
+            [self.twistIconView updateTwistIconLabelWithIcon:@"reverse"];
+            self.twistIconView.hidden = NO;
+        } else {
+            self.twistIconView.hidden = YES;
+        }
     }
     
     if (match) {

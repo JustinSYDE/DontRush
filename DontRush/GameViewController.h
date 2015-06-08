@@ -16,6 +16,7 @@
 #import "ShadowView.h"
 #import "QuestionView.h"
 #import "GameTwistView.h"
+#import "TwistIconView.h"
 
 @interface GameViewController : UIViewController
 
@@ -26,6 +27,7 @@
 @property (nonatomic) ShadowView *shadowView;
 @property (nonatomic) QuestionView *questionView;
 @property (nonatomic) GameTwistView *gameTwistView;
+@property (nonatomic) TwistIconView *twistIconView;
 @property (nonatomic) NSTimer *timer;
 
 @property (nonatomic) float const headerPadding;

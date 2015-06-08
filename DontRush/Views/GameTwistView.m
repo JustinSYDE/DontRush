@@ -8,6 +8,10 @@
 
 #import "GameTwistView.h"
 
+@interface GameTwistView()
+@property (nonatomic) UILabel *twistLabel;
+@end
+
 @implementation GameTwistView
 
 // Assumes input like "#00FF00" (#RRGGBB).
