@@ -28,7 +28,6 @@
 
 - (void)updateTwistIconLabelWithIcon:(NSString *)iconName {
     self.iconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconName]];
-    float const x = (self.frame.size.width - 35) / 2.0;
     CGRect newFrame = CGRectMake(0, 0, 25, self.frame.size.height);
     self.iconImage.frame = newFrame;
     [self addSubview:self.iconImage];

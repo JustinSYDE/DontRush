@@ -181,24 +181,14 @@
     return _game;
 }
 
-- (void) startTimer {
-    self.game.timeCount = 0;
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0/10.0
-                                                 target:self
-                                               selector:@selector(updateTimer)
-                                               userInfo:nil
-                                                repeats:YES];
-}
-
 - (void)restartTimer {
     [self.timer invalidate];
-    self.game.timeCount = 0;
+    self.game.timeCount = 20; // Users only have 2 seconds to determine an answer
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0/10.0
                                                   target:self
                                                 selector:@selector(updateTimer)
                                                 userInfo:nil
                                                  repeats:YES];
-    
 }
 
 #pragma mark - UI
@@ -224,8 +214,11 @@
 }
 
 - (void)updateTimer {
-    self.game.timeCount++;
+    self.game.timeCount--;
     self.statsView.timerLabel.text = [NSString stringWithFormat:@"TIME\n%ld", (long)self.game.timeCount];
+    if (self.game.timeCount <= 0) {
+        [self endGame];
+    }
 }
 
 - (void)gameOver {
@@ -248,7 +241,7 @@
     [self updateScoreUI];
     
     [self popNewQuestion];
-    [self popNewCard];
+    [self popNewCard:NO];
     [self restartTimer];
 }
 
@@ -326,8 +319,8 @@
     }
 }
 
-- (void)popNewCard {
-    [self.game generateColorSet];
+- (void)popNewCard:(BOOL)tonedCard {
+    [self.game generateColorSet:tonedCard];
     [self applyColorToShapesInList: self.gameView.listOfShapes];
 }
 
@@ -349,22 +342,36 @@
 
 - (void)newRoundAfter:(BOOL)match {
     [self.game updateScore];
-    [self popNewCard];
     [self restartTimer];
     
+    // GAME TWIST: Reverse
     if (self.game.score % 7 == 0) {
-        self.game.reverse = !self.game.reverse;
-        [self.gameTwistView updateGameTwistWithText:@"Reverse!"];
-        if (self.game.reverse) {
-            [self.twistIconView updateTwistIconLabelWithIcon:@"reverse"];
-            self.twistIconView.hidden = NO;
-        } else {
-            self.twistIconView.hidden = YES;
-        }
+        [self popNewCard:NO];
+        [self toggleReverseGameTwist];
+    } else if (self.game.score % 11 == 0) {
+        [self toggleTonesGameTwist];
+        [self popNewCard:YES];
+    } else {
+        [self popNewCard:NO];
     }
     
     if (match) {
         [self popNewQuestion];
+    }
+}
+
+- (void)toggleTonesGameTwist {
+    
+}
+
+- (void)toggleReverseGameTwist {
+    self.game.reverse = !self.game.reverse;
+    [self.gameTwistView updateGameTwistWithText:@"Reverse!"];
+    if (self.game.reverse) {
+        [self.twistIconView updateTwistIconLabelWithIcon:@"reverse"];
+        self.twistIconView.hidden = NO;
+    } else {
+        self.twistIconView.hidden = YES;
     }
 }
 

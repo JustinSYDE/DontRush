@@ -52,6 +52,19 @@
     return _collectionOfColors;
 }
 
+- (NSMutableDictionary *)collectionOfTones {
+    if (!_collectionOfTones) {
+        NSMutableArray *initCount = [[NSMutableArray alloc] init];
+        for (int i = 0; i < [[DontRushGame validColors] count]; i++) {
+            initCount[i] = @0;
+        }
+        
+        //_collectionOfTones = [NSMutableDictionary alloc] initWithObjects:initCount forKeys:<#(NSArray *)#>
+    }
+    
+    return _collectionOfTones;
+}
+
 - (BOOL)reverse {
     if (!_reverse) {
         _reverse = NO;
@@ -70,7 +83,7 @@
     return DontRushGame.validColors[random];
 }
 
-- (void) generateColorSet {
+- (void) generateColorSet:(BOOL)tonedCard {
     [self.orderedListOfColors removeAllObjects];
     [self.collectionOfColors removeAllObjects];
     for (int i = 0; i < 16; i++) {
@@ -114,8 +127,8 @@
 }
 
 - (void) updateScore {
-    if ((100 - self.timeCount) > 0) { // Only reward points if player determined an answer in under 100 time units
-        self.score += 100 - self.timeCount;
+    if (self.timeCount > 0) { // Only reward points if player determined an answer in under 100 time units
+        self.score += self.timeCount;
     }
 }
 
