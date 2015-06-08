@@ -110,8 +110,8 @@
     self.playButton.frame = newFrame;
     [self.playButton setTitle:@"Play" forState:UIControlStateNormal];
     self.playButton.font = [UIFont fontWithName:@"Helvetica-Bold" size:24.0f];
-    self.playButton.backgroundColor = [self colorFromHexString:@"#6dac76"];
-    self.playButton.layer.borderColor = [[self colorFromHexString:@"6dac76"] CGColor];
+    self.playButton.backgroundColor = [self colorFromHexString:@"#17b287"];
+    self.playButton.layer.borderColor = [[self colorFromHexString:@"17b287"] CGColor];
     self.playButton.layer.borderWidth = 1;
     self.playButton.layer.cornerRadius = 8;
     self.playButton.clipsToBounds = YES;
