@@ -233,7 +233,7 @@
         answeredNumber = [self.collectionOfColors[questionColor] intValue];
     }
     
-    if (answeredNumber > [DontRushGame.validColors count] || answeredNumber < 1)
+    if (answeredNumber > [DontRushGame.validNumberStrings count] || answeredNumber < 1)
         return false;
     
     NSString *answeredNumberString = [DontRushGame validNumberStrings][--answeredNumber]; // because the array starts at index 0
