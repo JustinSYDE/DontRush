@@ -393,6 +393,7 @@
     self.twistIconView.hidden = YES;
     self.game.reverse = NO;
     self.game.toned = NO;
+    self.game.timeLimit = 20;
 }
 
 @end
