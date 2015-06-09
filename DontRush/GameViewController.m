@@ -37,6 +37,7 @@
     [self setupShadowView];
     [self setupPopupView];
     [self setupGameTwistView];
+
     self.game.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
     self.statsView.highScoreLabel.text = [NSString stringWithFormat:@"BEST \n%ld", (long)self.game.highScore];
 }
@@ -183,7 +184,7 @@
 
 - (void)restartTimer {
     [self.timer invalidate];
-    self.game.timeCount = 20; // Users only have 2 seconds to determine an answer
+    self.game.timeCount = self.game.timeLimit; // Users only have 2 seconds to determine an answer
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0/10.0
                                                   target:self
                                                 selector:@selector(updateTimer)
@@ -240,8 +241,9 @@
     self.game.score = 0;
     [self updateScoreUI];
     
+    [self.game setupNewTone];
+    [self popNewCard];
     [self popNewQuestion];
-    [self popNewCard:NO];
     [self restartTimer];
 }
 
@@ -319,8 +321,13 @@
     }
 }
 
-- (void)popNewCard:(BOOL)tonedCard {
-    [self.game generateColorSet:tonedCard];
+- (void)popNewCard {
+    if (self.game.toned) {
+        [self.game generateToneSet];
+    } else {
+        [self.game generateColorSet];
+    }
+    
     [self applyColorToShapesInList: self.gameView.listOfShapes];
 }
 
@@ -342,18 +349,16 @@
 
 - (void)newRoundAfter:(BOOL)match {
     [self.game updateScore];
-    [self restartTimer];
     
     // GAME TWIST: Reverse
     if (self.game.score % 7 == 0) {
-        [self popNewCard:NO];
         [self toggleReverseGameTwist];
-    } else if (self.game.score % 11 == 0) {
+    } else if (self.game.score % 2 == 0 && match) {
         [self toggleTonesGameTwist];
-        [self popNewCard:YES];
-    } else {
-        [self popNewCard:NO];
     }
+    
+    [self restartTimer];
+    [self popNewCard];
     
     if (match) {
         [self popNewQuestion];
@@ -361,7 +366,12 @@
 }
 
 - (void)toggleTonesGameTwist {
-    
+    self.game.toned = !self.game.toned;
+    if (self.game.toned) {
+        self.game.timeLimit = 40;
+    } else {
+        self.game.timeLimit = 20;
+    }
 }
 
 - (void)toggleReverseGameTwist {
@@ -382,6 +392,7 @@
     self.popupView.hidden = NO;
     self.twistIconView.hidden = YES;
     self.game.reverse = NO;
+    self.game.toned = NO;
 }
 
 @end
