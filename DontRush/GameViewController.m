@@ -203,7 +203,12 @@
 }
 
 - (void)updatePopupToGameOver {
-    self.popupView.subtitleLabel.text = @"Not too shabby.";
+    if (self.game.timeCount <= 0) {
+        self.popupView.subtitleLabel.text = @"But you were too slow!";
+    } else {
+        self.popupView.subtitleLabel.text = @"Missed it!";
+    }
+
     self.popupView.commentLabel.text = [NSString stringWithFormat:@"Your score: %ld\nYour best: %ld", (long)self.game.score, (long)self.game.highScore];
     [self.popupView.playButton setTitle:@"Again!" forState:UIControlStateNormal];
 
