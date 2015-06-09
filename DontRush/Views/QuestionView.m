@@ -37,7 +37,7 @@
     CGRect newFrame = CGRectMake(25, 0, frame.size.width, frame.size.height);
     self.questionLabel.frame = newFrame;
     self.questionLabel.textAlignment = NSTextAlignmentLeft;
-    self.questionLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:50.0f];
+    self.questionLabel.font = [UIFont fontWithName:@"Helvetica" size:75.0f];
     self.backgroundColor = [UIColor clearColor];
     [self addSubview:self.questionLabel];
 }

@@ -29,12 +29,8 @@
 @property (nonatomic) GameTwistView *gameTwistView;
 @property (nonatomic) TwistIconView *twistIconView;
 @property (nonatomic) NSTimer *timer;
-
 @property (nonatomic) float const headerPadding;
-
 @property (nonatomic) NSMutableDictionary *colorsOnCard;
-@property (nonatomic) NSArray *validFonts;
-
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 
 @end

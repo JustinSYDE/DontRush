@@ -8,12 +8,7 @@
 
 #import "GameViewController.h"
 
-
 @implementation GameViewController
-
-- (NSArray *) validFonts {
-    return @[@"HelveticaNeue"/*, @"Palatino-Roman", @"AmericanTypewriter", @"HiraKakuProN-W3", @"MarkerFelt-Thin", @"TrebuchetMS", @"Courier"*/];
-}
 
 // Assumes input like "#00FF00" (#RRGGBB).
 - (UIColor *)colorFromHexString:(NSString *)hexString {
@@ -335,11 +330,7 @@
     NSDictionary *questionObject = [self.game generateNewQuestion];
     NSString *color = [questionObject allKeys][0];
     NSString *number = questionObject[color];
-    int randNum = arc4random() % [self.validFonts count];
-    NSString *randomFont = self.validFonts[randNum];
-    UIFont *font = [UIFont fontWithName:randomFont size:75.0];
-    NSDictionary *attributes = @{NSForegroundColorAttributeName : [self colorFromHexString:color],
-                                 NSFontAttributeName : font};
+    NSDictionary *attributes = @{NSForegroundColorAttributeName : [self colorFromHexString:color]};
     
     NSAttributedString *newQuestion = [[NSAttributedString alloc] initWithString:number attributes:attributes];
     [self.questionView updateQuestionLabel:newQuestion];
