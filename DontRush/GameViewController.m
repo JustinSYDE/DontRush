@@ -306,7 +306,7 @@
             [self.gameView dragFinishedEventWithxDistance:xDistance];
             
             // Swipe right to match
-            if ([self matchEventUsingDistance:xDistance forMode:self.game.reverse] && self.popupView.hidden) {
+            if ([self matchEventUsingDistance:xDistance forMode:self.game.reverse] && ![self gameEnded]) {
                 if ([self.game match]) {
                     [self newRoundAfter:[self.game match]];
                 } else {
@@ -366,9 +366,9 @@
     [self.game updateScore];
     
     // GAME TWIST: Reverse
-    if (self.game.score % 7 == 0 && self.popupView.hidden) {
+    if (self.game.score % 7 == 0 && ![self gameEnded]) {
         [self toggleReverseGameTwist];
-    } else if (self.game.score % 2 == 0 && match && self.popupView.hidden) {
+    } else if (self.game.score % 2 == 0 && match && ![self gameEnded]) {
         [self toggleTonesGameTwist];
     }
     
@@ -400,6 +400,10 @@
     } else {
         self.twistIconView.hidden = YES;
     }
+}
+
+- (BOOL)gameEnded {
+    return !self.popupView.hidden;
 }
 
 - (void)endGame {
