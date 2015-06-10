@@ -268,7 +268,7 @@
 
 #pragma mark - Drag Gesture
 
-- (BOOL) matchEventUsingDistance:(CGFloat)distance forMode:(BOOL)reverse{
+- (BOOL)matchEventUsingDistance:(CGFloat)distance forMode:(BOOL)reverse{
     if (reverse) {
         return distance < - (self.gameView.bounds.size.width * (2.5/5));
     }
@@ -276,7 +276,7 @@
     return distance > (self.gameView.bounds.size.width * (2.5/5));
 }
 
-- (BOOL) rejectEventUsingDistance:(CGFloat)distance forMode:(BOOL)reverse{
+- (BOOL)rejectEventUsingDistance:(CGFloat)distance forMode:(BOOL)reverse{
     if (reverse) {
         return distance > (self.gameView.bounds.size.width * (2.5/5));
     }
@@ -306,7 +306,7 @@
             [self.gameView dragFinishedEventWithxDistance:xDistance];
             
             // Swipe right to match
-            if ([self matchEventUsingDistance:xDistance forMode:self.game.reverse]) {
+            if ([self matchEventUsingDistance:xDistance forMode:self.game.reverse] && self.popupView.hidden) {
                 if ([self.game match]) {
                     [self newRoundAfter:[self.game match]];
                 } else {
