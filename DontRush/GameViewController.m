@@ -175,7 +175,7 @@
 
 - (NSArray *)validFeedbackStrings {
     if (!_validFeedbackStrings) {
-        _validFeedbackStrings = @[@"YASS GAGA!", @"MMHMM!", @"WOO!", @"AYY!", @"SLAY MAMA!"];
+        _validFeedbackStrings = @[@"YASS!", @"MMHMM!", @"LEGGO!", @"AYY!", @"SLAY!"];
     }
     
     return _validFeedbackStrings;
@@ -191,6 +191,7 @@
 
 - (void)restartTimer {
     [self.timer invalidate];
+    [self.statsView updateTimerToStartState];
     self.game.timeCount = self.game.timeLimit; // Users only have 2 seconds to determine an answer
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0/10.0
                                                   target:self
@@ -229,8 +230,13 @@
 - (void)updateTimer {
     self.game.timeCount--;
     self.statsView.timerLabel.text = [NSString stringWithFormat:@"TIME\n%ld", (long)self.game.timeCount];
+    
     if (self.game.timeCount <= 0) {
         [self endGame];
+    } else if (self.game.timeCount <= 3) {
+        [self.statsView updateTimerToEndState];
+    } else if (self.game.timeCount <= 10) {
+        [self.statsView updateTimerToWarningState];
     }
 }
 
@@ -252,6 +258,7 @@
     self.shadowView.hidden = YES;
     self.game.score = 0;
     [self updateScoreUI];
+    [self.statsView updateTimerToStartState];
     
     [self.game setupNewTone];
     [self popNewCard];

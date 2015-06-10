@@ -36,7 +36,7 @@
 }
 
 + (NSArray *)validNumberStrings {
-    return @[@"One", @"Two", @"Three", @"Four", @"Five", @"Six", @"Seven", @"Eight", @"Nine"];
+    return @[@"One", @"Two", @"Three", @"Four", @"Five", @"Six", @"Seven", @"Eight", /*@"Nine"*/];
 }
 
 #pragma mark - Initializers

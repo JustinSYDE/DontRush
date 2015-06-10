@@ -17,5 +17,8 @@
 @property (nonatomic) NSMutableArray *listOfStatsLabels;
 
 - (instancetype)initWithFrame:(CGRect)frame;
+- (void)updateTimerToWarningState;
+- (void)updateTimerToEndState;
+- (void)updateTimerToStartState;
 
 @end

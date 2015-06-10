@@ -10,6 +10,15 @@
 
 @implementation StatsView
 
+// Assumes input like "#00FF00" (#RRGGBB).
+- (UIColor *)colorFromHexString:(NSString *)hexString {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -31,7 +40,7 @@
 }
 
 - (void)setupStatsLabels {
-    self.timerLabel = [[StatsLabel alloc] initWithText:@"TIME \n0" withBackgroundColor:@"#f6ac6a"];
+    self.timerLabel = [[StatsLabel alloc] initWithText:@"TIME \n20" withBackgroundColor:@"#17b287"];
     self.highScoreLabel = [[StatsLabel alloc] initWithText:@"BEST \n0" withBackgroundColor:@"#475358"];
     self.scoreLabel = [[StatsLabel alloc] initWithText:@"SCORE \n0" withBackgroundColor:@"#475358"];
     [self.listOfStatsLabels addObject:self.timerLabel];
@@ -54,6 +63,21 @@
         [self addSubview:statsLabel];
         x = x + gapBetweenLabels + widthOfLabel;
     }
+}
+
+- (void)updateTimerToWarningState {
+    self.timerLabel.backgroundColor = [self colorFromHexString:@"#f6ac6a"];
+    self.timerLabel.layer.borderColor = [[self colorFromHexString:@"#f6ac6a"] CGColor];
+}
+
+- (void)updateTimerToEndState {
+    self.timerLabel.backgroundColor = [self colorFromHexString:@"#dd465f"];
+    self.timerLabel.layer.borderColor = [[self colorFromHexString:@"#dd465f"] CGColor];
+}
+
+- (void)updateTimerToStartState {
+    self.timerLabel.backgroundColor = [self colorFromHexString:@"#17b287"];
+    self.timerLabel.layer.borderColor = [[self colorFromHexString:@"#17b287"] CGColor];
 }
 
 @end
