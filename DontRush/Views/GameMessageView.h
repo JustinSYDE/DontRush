@@ -1,5 +1,5 @@
 //
-//  GameTwistView.h
+//  GameMessageView.h
 //  DontRush
 //
 //  Created by Justin Wong on 2015-06-06.
@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GameTwistView : UIView
+@interface GameMessageView : UIView
 
 - (instancetype)initWithFrame:(CGRect)frame;
-- (void)updateGameTwistWithText:(NSString *)text;
+- (void)updateGameMessageWithText:(NSString *)text;
 
 @end

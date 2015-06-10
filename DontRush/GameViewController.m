@@ -8,6 +8,10 @@
 
 #import "GameViewController.h"
 
+@interface GameViewController()
+@property (nonatomic) NSArray *validFeedbackStrings;
+@end
+
 @implementation GameViewController
 
 // Assumes input like "#00FF00" (#RRGGBB).
@@ -69,7 +73,7 @@
 }
 
 - (void)setupGameTwistView {
-    [self.view addSubview:self.gameTwistView];
+    [self.view addSubview:self.gameMessageView];
 }
 
 - (void)setupTwistIconView {
@@ -140,15 +144,15 @@
     return _popupView;
 }
 
-- (GameTwistView *)gameTwistView {
-    if (!_gameTwistView) {
+- (GameMessageView *)gameMessageView {
+    if (!_gameMessageView) {
         float const height = self.view.frame.size.height * (0.9) - self.headerPadding;
         float const y = self.view.frame.size.height / 10.0 + self.headerPadding;
         CGRect newFrame = CGRectMake(0, y, self.view.frame.size.width, height);
-        _gameTwistView = [[GameTwistView alloc] initWithFrame:newFrame];
+        _gameMessageView = [[GameMessageView alloc] initWithFrame:newFrame];
     }
     
-    return _gameTwistView;
+    return _gameMessageView;
 }
 
 - (TwistIconView *)twistIconView {
@@ -167,6 +171,14 @@
         _colorsOnCard = [[NSMutableDictionary alloc] init];
     }
     return _colorsOnCard;
+}
+
+- (NSArray *)validFeedbackStrings {
+    if (!_validFeedbackStrings) {
+        _validFeedbackStrings = @[@"YASS GAGA!", @"MMHMM!", @"WOO!", @"AYY!", @"SLAY MAMA!"];
+    }
+    
+    return _validFeedbackStrings;
 }
 
 - (DontRushGame *)game {
@@ -347,9 +359,9 @@
     [self.game updateScore];
     
     // GAME TWIST: Reverse
-    if (self.game.score % 7 == 0) {
+    if (self.game.score % 7 == 0 && self.popupView.hidden) {
         [self toggleReverseGameTwist];
-    } else if (self.game.score % 2 == 0 && match) {
+    } else if (self.game.score % 2 == 0 && match && self.popupView.hidden) {
         [self toggleTonesGameTwist];
     }
     
@@ -357,6 +369,8 @@
     [self popNewCard];
     
     if (match) {
+        int randNum = arc4random() % [self.validFeedbackStrings count];
+        [self.gameMessageView updateGameMessageWithText:self.validFeedbackStrings[randNum]];
         [self popNewQuestion];
     }
 }
@@ -372,7 +386,7 @@
 
 - (void)toggleReverseGameTwist {
     self.game.reverse = !self.game.reverse;
-    [self.gameTwistView updateGameTwistWithText:@"Reverse!"];
+    [self.gameMessageView updateGameMessageWithText:@"Reverse!"];
     if (self.game.reverse) {
         [self.twistIconView updateTwistIconLabelWithIcon:@"reverse"];
         self.twistIconView.hidden = NO;

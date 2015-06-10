@@ -1,18 +1,18 @@
 //
-//  GameTwistView.m
+//  GameMessageView.m
 //  DontRush
 //
 //  Created by Justin Wong on 2015-06-06.
 //  Copyright (c) 2015 justinSYDE. All rights reserved.
 //
 
-#import "GameTwistView.h"
+#import "GameMessageView.h"
 
-@interface GameTwistView()
+@interface GameMessageView()
 @property (nonatomic) UILabel *twistLabel;
 @end
 
-@implementation GameTwistView
+@implementation GameMessageView
 
 // Assumes input like "#00FF00" (#RRGGBB).
 - (UIColor *)colorFromHexString:(NSString *)hexString {
@@ -46,11 +46,11 @@
     return _twistLabel;
 }
 
-- (void)updateGameTwistWithText:(NSString *)text {
+- (void)updateGameMessageWithText:(NSString *)text {
     self.alpha = 1;
     self.twistLabel.alpha = 1;
     self.twistLabel.text = text;
-    self.twistLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:50.0f];
+    self.twistLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:25.0f];
     self.twistLabel.textAlignment = NSTextAlignmentCenter;
     [NSTimer scheduledTimerWithTimeInterval:0.5
         target:self
