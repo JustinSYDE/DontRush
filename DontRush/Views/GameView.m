@@ -98,6 +98,7 @@
         self.center = self.originalPoint;
         self.transform = CGAffineTransformMakeRotation(0);
         self.overlayView.alpha = 0;
+        self.layer.borderColor = [[self colorFromHexString:@"#dbc8b2"] CGColor];
     }];
 }
 
@@ -108,6 +109,12 @@
 };
 
 - (void)draggingEventwithxDistance:(CGFloat)xDistance andWithYDistance:(CGFloat)yDistance AndReverse:(BOOL)reverse {
+    if (self.frame.origin.x > self.frame.size.width / 19.0) {
+        self.layer.borderColor = [[self colorFromHexString:@"#17b287"] CGColor];
+    } else if (self.frame.origin.x < self.frame.size.width / 19.0) {
+        self.layer.borderColor = [[self colorFromHexString:@"#dd465f"] CGColor];
+    }
+    
     CGFloat rotationStrength = MIN(xDistance / 320, 1);
     CGFloat rotationAngel = (CGFloat) (2*M_PI * rotationStrength / 16);
     CGFloat scaleStrength = 1 - fabsf(rotationStrength) / 4;
@@ -152,6 +159,7 @@
     for (UILabel *shapeLabel in self.listOfShapes) {
         shapeLabel.backgroundColor = [self colorFromHexString:@"#e3d4c3"];
     }
+    self.layer.borderColor = [[self colorFromHexString:@"#dbc8b2"] CGColor];
 }
 
 @end

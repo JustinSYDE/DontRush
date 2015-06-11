@@ -215,6 +215,7 @@
 
 - (void)highlightMissedShapes {
     self.gameView.userInteractionEnabled = NO;
+    self.gameView.layer.borderColor = [[self colorFromHexString:@"#dbc8b2"] CGColor];
     [self.questionView updateQuestionLabel:[[NSAttributedString alloc] initWithString:@"Lol"]];
     NSString *questionColor = [self.game.questionObject allKeys][0];
     int i = 0;
@@ -376,6 +377,7 @@
 }
 
 - (void)popNewCard {
+    [self.gameView resetGrid];
     if (self.game.toned) {
         [self.game generateToneSet];
     } else {
