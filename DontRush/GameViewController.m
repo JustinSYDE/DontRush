@@ -253,7 +253,7 @@
         if ([self.game missedMatch]) {
             [self highlightMissedShapes];
             [self.timer invalidate];
-            [NSTimer scheduledTimerWithTimeInterval:2.0
+            [NSTimer scheduledTimerWithTimeInterval:1.5
                                              target:self
                                            selector:@selector(endGame)
                                            userInfo:nil
@@ -353,7 +353,7 @@
                 } else {
                     [self highlightMissedShapes];
                     [self.timer invalidate];
-                    [NSTimer scheduledTimerWithTimeInterval:3.0
+                    [NSTimer scheduledTimerWithTimeInterval:1.5
                                                      target:self
                                                    selector:@selector(endGame)
                                                    userInfo:nil

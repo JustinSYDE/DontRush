@@ -109,11 +109,6 @@
 };
 
 - (void)draggingEventwithxDistance:(CGFloat)xDistance andWithYDistance:(CGFloat)yDistance AndReverse:(BOOL)reverse {
-    if (self.frame.origin.x > self.frame.size.width / 19.0) {
-        self.layer.borderColor = [[self colorFromHexString:@"#17b287"] CGColor];
-    } else if (self.frame.origin.x < self.frame.size.width / 19.0) {
-        self.layer.borderColor = [[self colorFromHexString:@"#dd465f"] CGColor];
-    }
     
     CGFloat rotationStrength = MIN(xDistance / 320, 1);
     CGFloat rotationAngel = (CGFloat) (2*M_PI * rotationStrength / 16);
@@ -124,8 +119,20 @@
     self.transform = scaleTransform;
     self.center = CGPointMake(self.originalPoint.x + xDistance, self.originalPoint.y + yDistance);
     if (reverse){
+        if (self.frame.origin.x > self.frame.size.width / 19.0) {
+            self.layer.borderColor = [[self colorFromHexString:@"#dd465f"] CGColor];
+        } else if (self.frame.origin.x < self.frame.size.width / 19.0) {
+            self.layer.borderColor = [[self colorFromHexString:@"#17b287"] CGColor];
+        }
+
         [self updateOverlay:-xDistance];
     } else {
+        if (self.frame.origin.x > self.frame.size.width / 19.0) {
+            self.layer.borderColor = [[self colorFromHexString:@"#17b287"] CGColor];
+        } else if (self.frame.origin.x < self.frame.size.width / 19.0) {
+            self.layer.borderColor = [[self colorFromHexString:@"#dd465f"] CGColor];
+        }
+
         [self updateOverlay:xDistance];
     }
     
