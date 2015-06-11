@@ -147,4 +147,11 @@
     }
 };
 
+- (void)resetGrid {
+    self.userInteractionEnabled = YES;
+    for (UILabel *shapeLabel in self.listOfShapes) {
+        shapeLabel.backgroundColor = [self colorFromHexString:@"#e3d4c3"];
+    }
+}
+
 @end

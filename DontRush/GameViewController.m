@@ -202,11 +202,26 @@
 
 #pragma mark - UI
 
-- (void)applyColorToShapesInList:(NSMutableArray *)list {
+- (void)applyColorToShapes {
+    [UIView animateWithDuration:1 animations:^{
+        int i = 0;
+        for (UILabel *shapeLabel in self.gameView.listOfShapes) {
+            UIColor *color = [self colorFromHexString:self.game.orderedListOfColors[i]];
+            [shapeLabel setTextColor:color];
+            i++;
+        }
+    }];
+}
+
+- (void)highlightMissedShapes {
+    self.gameView.userInteractionEnabled = NO;
+    [self.questionView updateQuestionLabel:[[NSAttributedString alloc] initWithString:@"Lol"]];
+    NSString *questionColor = [self.game.questionObject allKeys][0];
     int i = 0;
-    for (UILabel *shapeLabel in list) {
-        UIColor *color = [self colorFromHexString:self.game.orderedListOfColors[i]];
-        [shapeLabel setTextColor:color];
+    for (UILabel *shapeLabel in self.gameView.listOfShapes) {
+        if ([self.game.orderedListOfColors[i] isEqualToString:questionColor]) {
+            shapeLabel.backgroundColor = [self colorFromHexString:@"#cbaf8f"];
+        }
         i++;
     }
 }
@@ -217,9 +232,11 @@
 
 - (void)updatePopupToGameOver {
     if (self.game.timeCount <= 0) {
-        self.popupView.subtitleLabel.text = @"But you were too slow!";
+        self.popupView.subtitleLabel.text = @"But don't be a snail.";
+    } else if ([self.game missedMatch]) {
+        self.popupView.subtitleLabel.text = @"Missed it.";
     } else {
-        self.popupView.subtitleLabel.text = @"Missed it!";
+        self.popupView.subtitleLabel.text = @"You rushed.";
     }
 
     self.popupView.commentLabel.text = [NSString stringWithFormat:@"Your score: %ld\nYour best: %ld", (long)self.game.score, (long)self.game.highScore];
@@ -232,7 +249,19 @@
     self.statsView.timerLabel.text = [NSString stringWithFormat:@"TIME\n%ld", (long)self.game.timeCount];
     
     if (self.game.timeCount <= 0) {
-        [self endGame];
+        if ([self.game missedMatch]) {
+            [self highlightMissedShapes];
+            [self.timer invalidate];
+            [NSTimer scheduledTimerWithTimeInterval:2.0
+                                             target:self
+                                           selector:@selector(endGame)
+                                           userInfo:nil
+                                            repeats:NO];
+        } else {
+            [self endGame];
+        }
+        
+
     } else if (self.game.timeCount <= 3) {
         [self.statsView updateTimerToEndState];
     } else if (self.game.timeCount <= 10) {
@@ -321,7 +350,13 @@
                 if (![self.game match]) {
                     [self newRoundAfter:[self.game match]];
                 } else {
-                    [self endGame];
+                    [self highlightMissedShapes];
+                    [self.timer invalidate];
+                    [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                     target:self
+                                                   selector:@selector(endGame)
+                                                   userInfo:nil
+                                                    repeats:NO];
                 }
                 
                 [self updateScoreUI];
@@ -347,7 +382,7 @@
         [self.game generateColorSet];
     }
     
-    [self applyColorToShapesInList: self.gameView.listOfShapes];
+    [self applyColorToShapes];
 }
 
 - (void)popNewQuestion {
@@ -415,6 +450,7 @@
     self.game.reverse = NO;
     self.game.toned = NO;
     self.game.timeLimit = 20;
+    [self.gameView resetGrid];
 }
 
 @end

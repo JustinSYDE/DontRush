@@ -22,11 +22,11 @@
 
 + (NSArray *)validColors;
 + (NSArray *)validNumberStrings;
-- (void) generateColorSet;
+- (void)generateColorSet;
 - (void)generateToneSet;
 - (void)setupNewTone;
 - (NSDictionary *) generateNewQuestion;
-- (BOOL) match;
-- (void) updateScore;
-
+- (BOOL)match;
+- (void)updateScore;
+- (BOOL)missedMatch;
 @end

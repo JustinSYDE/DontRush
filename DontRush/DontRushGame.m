@@ -243,6 +243,22 @@
     return false;
 }
 
+- (BOOL) missedMatch {
+    NSString *questionColor = [self.questionObject allKeys][0];
+    NSString *questionNumber = self.questionObject[questionColor];
+    int num;
+    NSString *numberString;
+    
+    if (self.toned) {
+        num = [self.collectionOfTones[questionColor] intValue];
+    } else {
+        num = [self.collectionOfColors[questionColor] intValue];
+    }
+    
+    numberString = DontRushGame.validNumberStrings[num - 1];
+    return [numberString isEqualToString:questionNumber];
+}
+
 - (void) updateScore {
     if (self.timeCount > 0) {
         self.score += self.timeCount;
