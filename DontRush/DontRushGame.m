@@ -250,7 +250,7 @@
     NSString *numberString;
     
     if (self.toned) {
-        num = [self.collectionOfTones[questionColor] intValue];
+        num = [self.tones[questionColor] intValue];
     } else {
         num = [self.collectionOfColors[questionColor] intValue];
     }

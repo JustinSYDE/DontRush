@@ -232,7 +232,7 @@
 }
 
 - (void)updatePopupToGameOver {
-    if (self.game.timeCount <= 0) {
+    if (self.game.timeCount <= (NSInteger)0) {
         self.popupView.subtitleLabel.text = @"But don't be a snail.";
     } else if ([self.game missedMatch]) {
         self.popupView.subtitleLabel.text = @"Missed it.";
@@ -262,7 +262,6 @@
             [self endGame];
         }
         
-
     } else if (self.game.timeCount <= 3) {
         [self.statsView updateTimerToEndState];
     } else if (self.game.timeCount <= 10) {
@@ -283,14 +282,12 @@
 #pragma mark - Touch Gesture
 
 - (void)touchStartButton {
-    
     self.popupView.hidden = YES;
     self.shadowView.hidden = YES;
     self.game.score = 0;
     [self updateScoreUI];
     [self.statsView updateTimerToStartState];
     
-    [self.game setupNewTone];
     [self popNewCard];
     [self popNewQuestion];
     [self restartTimer];
@@ -402,11 +399,15 @@
 - (void)newRoundAfter:(BOOL)match {
     [self.game updateScore];
     
-    // GAME TWIST: Reverse
+    // GAME TWIST:
     if (self.game.score % 7 == 0 && ![self gameEnded]) {
         [self toggleReverseGameTwist];
     } else if (self.game.score % 2 == 0 && match && ![self gameEnded]) {
         [self toggleTonesGameTwist];
+    }
+    
+    if (match && self.game.toned) {
+        [self.game setupNewTone];
     }
     
     [self restartTimer];
@@ -422,6 +423,7 @@
 - (void)toggleTonesGameTwist {
     self.game.toned = !self.game.toned;
     if (self.game.toned) {
+        [self.game setupNewTone];
         self.game.timeLimit = 40;
     } else {
         self.game.timeLimit = 20;
