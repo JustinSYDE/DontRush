@@ -135,6 +135,14 @@
     return _smallCircles;
 }
 
+- (BOOL)circleQuestion {
+    if (!_circleQuestion) {
+        _circleQuestion = NO;
+    }
+    
+    return _circleQuestion;
+}
+
 - (NSInteger)timeLimit {
     if (!_timeLimit) {
         _timeLimit = 21;
@@ -217,13 +225,11 @@
     if (self.toned && [self.tones count] == [DontRushGame.validColors count]) {
         NSArray *keys = [self.tones allKeys];
         NSString *randomTone = keys[randNum];
-        self.questionObject =  (NSMutableDictionary *)@{randomTone: number};
+        self.questionObject =  (NSMutableDictionary *)@{randomTone: number, @"count": [[NSNumber alloc] initWithInt:++i]};
     } else {
         NSString *randomColor = [DontRushGame validColors][randNum];
-        self.questionObject =  (NSMutableDictionary *)@{randomColor: number};
+        self.questionObject =  (NSMutableDictionary *)@{randomColor: number, @"count": [[NSNumber alloc] initWithInt:++i]};
     }
-    
-    
     
     return self.questionObject;
 }
@@ -245,32 +251,22 @@
         return false;
     
     NSString *answeredNumberString = [DontRushGame validNumberStrings][--answeredNumber]; // because the array starts at index 0
-    if ([answeredNumberString isEqualToString:questionNumber])
-        return true;
-
-    return false;
-}
-
-- (BOOL) missedMatch {
-    NSString *questionColor = [self.questionObject allKeys][0];
-    NSString *questionNumber = self.questionObject[questionColor];
-    int num;
-    NSString *numberString;
-    
-    if (self.toned) {
-        num = [self.tones[questionColor] intValue];
-    } else {
-        num = [self.collectionOfColors[questionColor] intValue];
-    }
-    
-    numberString = DontRushGame.validNumberStrings[num - 1];
-    return [numberString isEqualToString:questionNumber];
+    return [answeredNumberString isEqualToString:questionNumber];
 }
 
 - (void) updateScore {
     if (self.timeCount > 0) {
         self.score += self.timeCount;
     }
+}
+
+- (void)resetCurrentGameData {
+    self.score = 0;
+    self.reverse = NO;
+    self.toned = NO;
+    self.smallCircles = NO;
+    self.circleQuestion = NO;
+    self.timeLimit = 21;
 }
 
 @end
