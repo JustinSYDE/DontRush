@@ -129,7 +129,7 @@
 
 - (NSInteger)timeLimit {
     if (!_timeLimit) {
-        _timeLimit = 20;;
+        _timeLimit = 21;
     }
     
     return _timeLimit;

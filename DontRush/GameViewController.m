@@ -440,9 +440,9 @@
     self.game.toned = !self.game.toned;
     if (self.game.toned) {
         [self.game setupNewTone];
-        self.game.timeLimit = 40;
+        self.game.timeLimit = 41;
     } else {
-        self.game.timeLimit = 20;
+        self.game.timeLimit = 21;
     }
 }
 
@@ -469,7 +469,7 @@
     self.twistIconView.hidden = YES;
     self.game.reverse = NO;
     self.game.toned = NO;
-    self.game.timeLimit = 20;
+    self.game.timeLimit = 21;
     [self.gameView resetGrid];
 }
 

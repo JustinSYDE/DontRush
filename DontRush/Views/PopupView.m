@@ -139,6 +139,7 @@
     self.homeButton.layer.borderWidth = 1;
     self.homeButton.layer.cornerRadius = 8;
     self.homeButton.clipsToBounds = YES;
+    [self.homeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self addSubview:self.homeButton];
 }
 @end
