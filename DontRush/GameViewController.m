@@ -7,6 +7,7 @@
 //
 
 #import "GameViewController.h"
+#import "LandingViewController.h"
 
 @interface GameViewController()
 @property (nonatomic) NSArray *validFeedbackStrings;
@@ -57,6 +58,7 @@
 - (void)setupPopupView {
     [self.view addSubview:self.popupView];
     [self.popupView.playButton addTarget:self action:@selector(touchStartButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.popupView.homeButton addTarget:self action:@selector(touchHomeButton) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupStatsView {
@@ -143,7 +145,7 @@
 - (PopupView *)popupView {
     if (!_popupView) {
         float const width = self.view.frame.size.width * 0.9;
-        float const height = self.view.frame.size.height * 0.8;
+        float const height = self.view.frame.size.height * 0.6;
         float const x = (self.view.frame.size.width - width) / 2.0;
         float const y = (self.view.frame.size.height - height) / 2.0;
         CGRect newFrame = CGRectMake(x, y, width, height);
@@ -300,6 +302,11 @@
     [self popNewCard];
     [self popNewQuestion];
     [self restartTimer];
+}
+
+- (void)touchHomeButton {
+    LandingViewController *landingViewController = [[LandingViewController alloc] init];
+    [self presentViewController:landingViewController animated:NO completion:NULL];
 }
 
 #pragma mark - Drag Gesture

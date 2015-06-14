@@ -92,7 +92,7 @@
 }
 
 - (void)setupCommentLabelWithFrame: (CGRect)frame {
-    float const padding = 15.0;
+    float const padding = 25.0;
     float const width = frame.size.width - 2*padding;
     CGRect newFrame = CGRectMake(padding, frame.size.height *3.0/8.0, width, frame.size.height / 4.0);
     self.commentLabel.frame = newFrame;
@@ -109,11 +109,11 @@
 }
 
 - (void)setupPlayButtonWithFrame: (CGRect)frame {
-    float const padding = 15.0;
-    float const horizontalPadding = 75.0;
+    float const padding = 25.0;
+    //float const horizontalPadding = 75.0;
     float const verticalPadding = 25.0;
-    float const width = frame.size.width / 2.3;
-    CGRect newFrame = CGRectMake(padding, (frame.size.height *5.0/8.0) + verticalPadding , width, (frame.size.height * 3.0/8.0) - 4*verticalPadding);
+    float const width = (frame.size.width - 3*padding) / 2.0;
+    CGRect newFrame = CGRectMake(padding, (frame.size.height *5.0/8.0) + verticalPadding , width, (2.0/3)*width);
     self.playButton.frame = newFrame;
     [self.playButton setTitle:@"Play" forState:UIControlStateNormal];
     self.playButton.font = [UIFont fontWithName:@"Helvetica-Bold" size:24.0f];
@@ -126,11 +126,11 @@
 }
 
 - (void)setupHomeButtonWithFrame: (CGRect)frame {
-    float const padding = 15.0;
-    float const horizontalPadding = 75.0;
+    float const padding = 25.0;
+    //float const horizontalPadding = 75.0;
     float const verticalPadding = 25.0;
-    float const width = frame.size.width / 2.3;
-    CGRect newFrame = CGRectMake(2*padding + width, (frame.size.height *5.0/8.0) + verticalPadding , width, (frame.size.height * 3.0/8.0) - 4*verticalPadding);
+    float const width = (frame.size.width - 3*padding) / 2.0;
+    CGRect newFrame = CGRectMake(2*padding + width, (frame.size.height *5.0/8.0) + verticalPadding , width, (2.0/3)*width);
     self.homeButton.frame = newFrame;
     [self.homeButton setTitle:@"Exit" forState:UIControlStateNormal];
     self.homeButton.font = [UIFont fontWithName:@"Helvetica-Bold" size:24.0f];
