@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface QuestionView : UIView
-
+@property (nonatomic) UILabel *questionLabel;
 - (instancetype)initWithFrame:(CGRect)frame;
 - (void)updateQuestionLabel:(NSAttributedString *)text;
 

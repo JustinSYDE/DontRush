@@ -9,7 +9,7 @@
 #import "QuestionView.h"
 
 @interface QuestionView()
-@property (nonatomic) UILabel *questionLabel;
+
 @end
 
 @implementation QuestionView

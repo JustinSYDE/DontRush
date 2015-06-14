@@ -28,7 +28,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.view.backgroundColor = [self colorFromHexString:@"#f2eedc"];
     [self setupStatsView];
     [self setupQuestionView];
@@ -40,7 +39,7 @@
 
     self.game.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
     self.statsView.highScoreLabel.text = [NSString stringWithFormat:@"BEST \n%ld", (long)self.game.highScore];
-    [self touchStartButton];
+    [self newGame];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -49,7 +48,7 @@
 
 - (void)setupPopupView {
     [self.view addSubview:self.popupView];
-    [self.popupView.playButton addTarget:self action:@selector(touchStartButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.popupView.playButton addTarget:self action:@selector(newGame) forControlEvents:UIControlEventTouchUpInside];
     [self.popupView.homeButton addTarget:self action:@selector(touchHomeButton) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -246,7 +245,7 @@
     [self.gameView resetGrid];
     if (self.game.timeCount <= (NSInteger)0) {
         self.popupView.subtitleLabel.text = @"But don't be a snail.";
-    } else if ([self.game missedMatch]) {
+    } else if ([self.game match]) {
         self.popupView.subtitleLabel.text = @"Missed it.";
     } else {
         self.popupView.subtitleLabel.text = @"You rushed.";
@@ -262,7 +261,7 @@
     self.statsView.timerLabel.text = [NSString stringWithFormat:@"TIME\n%ld", (long)self.game.timeCount];
     
     if (self.game.timeCount <= 0) {
-        if ([self.game missedMatch]) {
+        if ([self.game match]) {
             [self highlightMissedShapes];
             [self.timer invalidate];
             [NSTimer scheduledTimerWithTimeInterval:1.5
@@ -294,10 +293,10 @@
 
 #pragma mark - Touch Gesture
 
-- (void)touchStartButton {
+- (void)newGame {
+    [self.game resetCurrentGameData];
     self.popupView.hidden = YES;
     self.shadowView.hidden = YES;
-    self.game.score = 0;
     [self updateScoreUI];
     [self.statsView updateTimerToStartState];
     
@@ -403,12 +402,25 @@
 }
 
 - (void)popNewQuestion {
+    NSAttributedString *newQuestion;
     NSDictionary *questionObject = [self.game generateNewQuestion];
     NSString *color = [questionObject allKeys][0];
-    NSString *number = questionObject[color];
+    NSString *numberString = questionObject[color];
+    NSInteger count = [questionObject[@"count"] intValue];
     NSDictionary *attributes = @{NSForegroundColorAttributeName : [self colorFromHexString:color]};
     
-    NSAttributedString *newQuestion = [[NSAttributedString alloc] initWithString:number attributes:attributes];
+    if (self.game.circleQuestion) {
+        NSMutableString *str = [[NSMutableString alloc] init];
+        for (int i = 0; i < count; i++) {
+            [str appendString:@"●"];
+        }
+        newQuestion = [[NSAttributedString alloc] initWithString:str attributes:attributes];
+       self.questionView.questionLabel.font = [UIFont fontWithName:@"Helvetica" size:50.0f];
+    } else {
+        newQuestion = [[NSAttributedString alloc] initWithString:numberString attributes:attributes];
+        self.questionView.questionLabel.font = [UIFont fontWithName:@"Helvetica" size:75.0f];
+    }
+    
     [self.questionView updateQuestionLabel:newQuestion];
 }
 
@@ -419,27 +431,32 @@
     
     // GAME TWIST:
     if (![self gameEnded]) {
-        if (self.game.score % 7 == 0) {
-            [self toggleReverseGameTwist];
-        } else if (self.game.score % 2 == 0 && match) {
-            [self toggleTonesGameTwist];
-        } else if (self.game.score % 3 == 0) {
-            [self toggleSmallCirclesGameTwist];
+        if (match) {
+            if (self.game.toned) {
+                [self.game setupNewTone];
+            }
+            
+            if (self.game.score % 2 == 0 && match) {
+                [self toggleTonesGameTwist];
+            } else if (self.game.score % 3 == 0 && match) {
+                [self toggleCircleQuestionGameTwist];
+            } else {
+                int randNum = arc4random() % [self.validFeedbackStrings count];
+                [self.gameMessageView updateGameMessageWithText:self.validFeedbackStrings[randNum]];
+            }
+            
+            [self popNewQuestion];
+        } else {
+            if (self.game.score % 7 == 0 && !match) {
+                [self toggleReverseGameTwist];
+            } else if (self.game.score % 3 == 0 && !match) {
+                [self toggleSmallCirclesGameTwist];
+            }
         }
-    }
-    
-    if (match && self.game.toned) {
-        [self.game setupNewTone];
     }
     
     [self restartTimer];
     [self popNewCard];
-    
-    if (match) {
-        int randNum = arc4random() % [self.validFeedbackStrings count];
-        [self.gameMessageView updateGameMessageWithText:self.validFeedbackStrings[randNum]];
-        [self popNewQuestion];
-    }
 }
 
 - (void)toggleTonesGameTwist {
@@ -473,21 +490,23 @@
         [self.gameMessageView updateGameMessageWithText:@"Great Squinting."];
     }
 }
+
+- (void)toggleCircleQuestionGameTwist {
+    self.game.circleQuestion = !self.game.circleQuestion;
+    if (self.game.circleQuestion) {
+        [self.gameMessageView updateGameMessageWithText:@"I can't read!"];
+    } else {
+        [self.gameMessageView updateGameMessageWithText:@"I can read."];
+    }
+}
+
 - (BOOL)gameEnded {
     return !self.popupView.hidden;
 }
 
 - (void)endGame {
     [self gameOver];
-    [self resetCurrentGameData];
-}
-
-- (void)resetCurrentGameData {
-    self.game.reverse = NO;
-    self.game.toned = NO;
-    self.game.smallCircles = NO;
-    self.game.timeLimit = 21;
-
+    [self.game resetCurrentGameData];
 }
 
 @end
