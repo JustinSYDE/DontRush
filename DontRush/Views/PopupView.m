@@ -133,7 +133,7 @@
     CGRect newFrame = CGRectMake(2*padding + width, (frame.size.height *5.0/8.0) + verticalPadding , width, (2.0/3)*width);
     self.homeButton.frame = newFrame;
     [self.homeButton setTitle:@"Exit" forState:UIControlStateNormal];
-    self.homeButton.font = [UIFont fontWithName:@"Helvetica-Bold" size:24.0f];
+    self.homeButton.font = [UIFont fontWithName:@"Helvetica" size:24.0f];
     self.homeButton.backgroundColor = [self colorFromHexString:@"#d3d3d3"];
     self.homeButton.layer.borderColor = [[self colorFromHexString:@"#d3d3d3"] CGColor];
     self.homeButton.layer.borderWidth = 1;
