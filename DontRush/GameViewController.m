@@ -240,6 +240,10 @@
 }
 
 - (void)updatePopupToGameOver {
+    self.shadowView.hidden = NO;
+    self.popupView.hidden = NO;
+    self.twistIconView.hidden = YES;
+    [self.gameView resetGrid];
     if (self.game.timeCount <= (NSInteger)0) {
         self.popupView.subtitleLabel.text = @"But don't be a snail.";
     } else if ([self.game missedMatch]) {
@@ -278,6 +282,7 @@
 }
 
 - (void)gameOver {
+    [self.timer invalidate];
     if (self.game.score > self.game.highScore) {
         [[NSUserDefaults standardUserDefaults] setInteger:self.game.score forKey:@"HighScoreSaved"];
         self.statsView.highScoreLabel.text = [NSString stringWithFormat: @"BEST\n%ld", (long)self.game.score];
@@ -473,16 +478,16 @@
 }
 
 - (void)endGame {
-    [self.timer invalidate];
-    self.shadowView.hidden = NO;
     [self gameOver];
-    self.popupView.hidden = NO;
-    self.twistIconView.hidden = YES;
+    [self resetCurrentGameData];
+}
+
+- (void)resetCurrentGameData {
     self.game.reverse = NO;
     self.game.toned = NO;
     self.game.smallCircles = NO;
     self.game.timeLimit = 21;
-    [self.gameView resetGrid];
+
 }
 
 @end
