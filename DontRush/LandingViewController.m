@@ -88,7 +88,7 @@
     [self.playButton setBackgroundColor:[self colorFromHexString:@"#17b287"]];
     self.playButton.layer.cornerRadius = 8.0;
     
-    [self.howToButton setTitle:@"How-To" forState:UIControlStateNormal];
+    [self.howToButton setTitle:@"Instructions" forState:UIControlStateNormal];
     self.howToButton.font = [UIFont fontWithName:@"Helvetica" size:24.0f];
     [self.howToButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.howToButton setBackgroundColor:[self colorFromHexString:@"#bdc3c7"]];
