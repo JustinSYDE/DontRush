@@ -221,7 +221,6 @@
 }
 
 - (void)highlightMissedShapes {
-    self.gameView.userInteractionEnabled = NO;
     self.gameView.layer.borderColor = [[self colorFromHexString:@"#dbc8b2"] CGColor];
     [self.questionView updateQuestionLabel:[[NSAttributedString alloc] initWithString:@"Lol"]];
     NSString *questionColor = [self.game.questionObject allKeys][0];
@@ -294,6 +293,7 @@
 #pragma mark - Touch Gesture
 
 - (void)newGame {
+    self.gameView.userInteractionEnabled = YES;
     [self.game resetCurrentGameData];
     self.popupView.hidden = YES;
     self.shadowView.hidden = YES;
@@ -505,6 +505,8 @@
 }
 
 - (void)endGame {
+    [self.gameView resetViewPositionAndTransformations];
+    self.gameView.userInteractionEnabled = NO;
     [self gameOver];
     [self.game resetCurrentGameData];
 }
