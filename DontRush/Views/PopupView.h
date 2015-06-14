@@ -14,6 +14,7 @@
 @property (nonatomic) UILabel *subtitleLabel;
 @property (nonatomic) UILabel *commentLabel;
 @property (nonatomic) UIButton *playButton;
+@property (nonatomic) UIButton *homeButton;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 

@@ -32,6 +32,7 @@
         [self setupSubtitleLabelWithFrame:frame];
         [self setupCommentLabelWithFrame:frame];
         [self setupPlayButtonWithFrame:frame];
+        [self setupHomeButtonWithFrame:frame];
     }
     
     return self;
@@ -61,6 +62,11 @@
 - (UIButton *)playButton {
     if (!_playButton) _playButton = [[UIButton alloc] init];
     return _playButton;
+}
+
+- (UIButton *)homeButton {
+    if (!_homeButton) _homeButton = [[UIButton alloc] init];
+    return _homeButton;
 }
 
 - (void)setupTitleLabelWithFrame:(CGRect)frame {
@@ -103,19 +109,36 @@
 }
 
 - (void)setupPlayButtonWithFrame: (CGRect)frame {
+    float const padding = 15.0;
     float const horizontalPadding = 75.0;
     float const verticalPadding = 25.0;
-    float const width = frame.size.width - 2*horizontalPadding;
-    CGRect newFrame = CGRectMake(horizontalPadding, (frame.size.height *5.0/8.0) + verticalPadding , width, (frame.size.height * 3.0/8.0) - 2*verticalPadding);
+    float const width = frame.size.width / 2.3;
+    CGRect newFrame = CGRectMake(padding, (frame.size.height *5.0/8.0) + verticalPadding , width, (frame.size.height * 3.0/8.0) - 4*verticalPadding);
     self.playButton.frame = newFrame;
     [self.playButton setTitle:@"Play" forState:UIControlStateNormal];
     self.playButton.font = [UIFont fontWithName:@"Helvetica-Bold" size:24.0f];
     self.playButton.backgroundColor = [self colorFromHexString:@"#17b287"];
-    self.playButton.layer.borderColor = [[self colorFromHexString:@"17b287"] CGColor];
+    self.playButton.layer.borderColor = [[self colorFromHexString:@"#17b287"] CGColor];
     self.playButton.layer.borderWidth = 1;
     self.playButton.layer.cornerRadius = 8;
     self.playButton.clipsToBounds = YES;
     [self addSubview:self.playButton];
 }
 
+- (void)setupHomeButtonWithFrame: (CGRect)frame {
+    float const padding = 15.0;
+    float const horizontalPadding = 75.0;
+    float const verticalPadding = 25.0;
+    float const width = frame.size.width / 2.3;
+    CGRect newFrame = CGRectMake(2*padding + width, (frame.size.height *5.0/8.0) + verticalPadding , width, (frame.size.height * 3.0/8.0) - 4*verticalPadding);
+    self.homeButton.frame = newFrame;
+    [self.homeButton setTitle:@"Exit" forState:UIControlStateNormal];
+    self.homeButton.font = [UIFont fontWithName:@"Helvetica-Bold" size:24.0f];
+    self.homeButton.backgroundColor = [self colorFromHexString:@"#d3d3d3"];
+    self.homeButton.layer.borderColor = [[self colorFromHexString:@"#d3d3d3"] CGColor];
+    self.homeButton.layer.borderWidth = 1;
+    self.homeButton.layer.cornerRadius = 8;
+    self.homeButton.clipsToBounds = YES;
+    [self addSubview:self.homeButton];
+}
 @end

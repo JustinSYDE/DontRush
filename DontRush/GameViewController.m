@@ -39,6 +39,15 @@
 
     self.game.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
     self.statsView.highScoreLabel.text = [NSString stringWithFormat:@"BEST \n%ld", (long)self.game.highScore];
+    self.popupView.hidden = YES;
+    self.shadowView.hidden = YES;
+    self.game.score = 0;
+    [self updateScoreUI];
+    [self.statsView updateTimerToStartState];
+    [self popNewCard];
+    [self popNewQuestion];
+    [self restartTimer];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -133,8 +142,8 @@
 
 - (PopupView *)popupView {
     if (!_popupView) {
-        float const width = self.view.frame.size.width * 0.8;
-        float const height = self.view.frame.size.height * 0.6;
+        float const width = self.view.frame.size.width * 0.9;
+        float const height = self.view.frame.size.height * 0.8;
         float const x = (self.view.frame.size.width - width) / 2.0;
         float const y = (self.view.frame.size.height - height) / 2.0;
         CGRect newFrame = CGRectMake(x, y, width, height);

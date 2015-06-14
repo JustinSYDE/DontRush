@@ -27,6 +27,7 @@
 		E88222B21B2503AA00C0E65C /* reverse.png in Resources */ = {isa = PBXBuildFile; fileRef = E88222B11B2503AA00C0E65C /* reverse.png */; };
 		E8A56B761B1A56650076AF38 /* accept.png in Resources */ = {isa = PBXBuildFile; fileRef = E8A56B741B1A56650076AF38 /* accept.png */; };
 		E8A56B771B1A56650076AF38 /* reject.png in Resources */ = {isa = PBXBuildFile; fileRef = E8A56B751B1A56650076AF38 /* reject.png */; };
+		E8AA38F41B2BB7FD00159C7B /* LandingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AA38F31B2BB7FD00159C7B /* LandingViewController.m */; };
 		E8BF26541B0C5053009E6446 /* DontRushGame.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BF26531B0C5053009E6446 /* DontRushGame.m */; };
 		E8E021491B23ED2B0068F2DA /* GameMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E021481B23ED2B0068F2DA /* GameMessageView.m */; };
 /* End PBXBuildFile section */
@@ -78,6 +79,8 @@
 		E88222B11B2503AA00C0E65C /* reverse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reverse.png; sourceTree = "<group>"; };
 		E8A56B741B1A56650076AF38 /* accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accept.png; sourceTree = "<group>"; };
 		E8A56B751B1A56650076AF38 /* reject.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reject.png; sourceTree = "<group>"; };
+		E8AA38F21B2BB7FD00159C7B /* LandingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandingViewController.h; sourceTree = "<group>"; };
+		E8AA38F31B2BB7FD00159C7B /* LandingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandingViewController.m; sourceTree = "<group>"; };
 		E8BF26521B0C5053009E6446 /* DontRushGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DontRushGame.h; sourceTree = "<group>"; };
 		E8BF26531B0C5053009E6446 /* DontRushGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DontRushGame.m; sourceTree = "<group>"; };
 		E8E021471B23ED2B0068F2DA /* GameMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameMessageView.h; path = Views/GameMessageView.h; sourceTree = "<group>"; };
@@ -140,6 +143,8 @@
 				E81C36441B0AFFB90090F79E /* GameViewController.h */,
 				E81C36451B0AFFB90090F79E /* GameViewController.m */,
 				E81C36471B0AFFB90090F79E /* Main.storyboard */,
+				E8AA38F21B2BB7FD00159C7B /* LandingViewController.h */,
+				E8AA38F31B2BB7FD00159C7B /* LandingViewController.m */,
 				E824B34C1B13BB0700B71F11 /* Images */,
 				E824B34B1B13BA2400B71F11 /* Views */,
 				E81C364A1B0AFFB90090F79E /* Images.xcassets */,
@@ -377,6 +382,7 @@
 				E81C36401B0AFFB90090F79E /* main.m in Sources */,
 				E824B3491B13BA1000B71F11 /* GameView.m in Sources */,
 				E8E021491B23ED2B0068F2DA /* GameMessageView.m in Sources */,
+				E8AA38F41B2BB7FD00159C7B /* LandingViewController.m in Sources */,
 				E88222B01B24FB0B00C0E65C /* TwistIconView.m in Sources */,
 				E83F2D0C1B2001B20073E60C /* StatsLabel.m in Sources */,
 				E83F2D091B1FFCEF0073E60C /* StatsView.m in Sources */,
