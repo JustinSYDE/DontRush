@@ -40,15 +40,7 @@
 
     self.game.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
     self.statsView.highScoreLabel.text = [NSString stringWithFormat:@"BEST \n%ld", (long)self.game.highScore];
-    self.popupView.hidden = YES;
-    self.shadowView.hidden = YES;
-    self.game.score = 0;
-    [self updateScoreUI];
-    [self.statsView updateTimerToStartState];
-    [self popNewCard];
-    [self popNewQuestion];
-    [self restartTimer];
-
+    [self touchStartButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -214,14 +206,19 @@
 #pragma mark - UI
 
 - (void)applyColorToShapes {
-    [UIView animateWithDuration:1 animations:^{
-        int i = 0;
-        for (UILabel *shapeLabel in self.gameView.listOfShapes) {
-            UIColor *color = [self colorFromHexString:self.game.orderedListOfColors[i]];
-            [shapeLabel setTextColor:color];
-            i++;
+    int i = 0;
+    for (UILabel *shapeLabel in self.gameView.listOfShapes) {
+        UIColor *color = [self colorFromHexString:self.game.orderedListOfColors[i]];
+        [shapeLabel setTextColor:color];
+        
+        if (self.game.smallCircles) {
+            [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 25.0f]];
+        } else {
+            [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 100.0f]];
         }
-    }];
+        
+        i++;
+    }
 }
 
 - (void)highlightMissedShapes {
@@ -416,10 +413,14 @@
     [self.game updateScore];
     
     // GAME TWIST:
-    if (self.game.score % 7 == 0 && ![self gameEnded]) {
-        [self toggleReverseGameTwist];
-    } else if (self.game.score % 2 == 0 && match && ![self gameEnded]) {
-        [self toggleTonesGameTwist];
+    if (![self gameEnded]) {
+        if (self.game.score % 7 == 0) {
+            [self toggleReverseGameTwist];
+        } else if (self.game.score % 2 == 0 && match) {
+            [self toggleTonesGameTwist];
+        } else if (self.game.score % 3 == 0) {
+            [self toggleSmallCirclesGameTwist];
+        }
     }
     
     if (match && self.game.toned) {
@@ -439,9 +440,11 @@
 - (void)toggleTonesGameTwist {
     self.game.toned = !self.game.toned;
     if (self.game.toned) {
+        [self.gameMessageView updateGameMessageWithText:@"Tones!"];
         [self.game setupNewTone];
         self.game.timeLimit = 41;
     } else {
+        [self.gameMessageView updateGameMessageWithText:@"Back to colors."];
         self.game.timeLimit = 21;
     }
 }
@@ -457,6 +460,14 @@
     }
 }
 
+- (void)toggleSmallCirclesGameTwist {
+    self.game.smallCircles = !self.game.smallCircles;
+    if (self.game.smallCircles) {
+        [self.gameMessageView updateGameMessageWithText:@"Squint friend, Squint!"];
+    } else {
+        [self.gameMessageView updateGameMessageWithText:@"Great Squinting."];
+    }
+}
 - (BOOL)gameEnded {
     return !self.popupView.hidden;
 }
@@ -469,6 +480,7 @@
     self.twistIconView.hidden = YES;
     self.game.reverse = NO;
     self.game.toned = NO;
+    self.game.smallCircles = NO;
     self.game.timeLimit = 21;
     [self.gameView resetGrid];
 }

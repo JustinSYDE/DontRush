@@ -127,6 +127,14 @@
     return _toned;
 }
 
+- (BOOL)smallCircles {
+    if (!_smallCircles) {
+        _smallCircles = NO;
+    }
+    
+    return _smallCircles;
+}
+
 - (NSInteger)timeLimit {
     if (!_timeLimit) {
         _timeLimit = 21;

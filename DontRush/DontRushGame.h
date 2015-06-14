@@ -18,7 +18,8 @@
 @property (nonatomic) NSInteger timeCount;
 @property (nonatomic) NSInteger timeLimit;
 @property (nonatomic) BOOL reverse; // if true, user swipes left to match instead of right
-@property (nonatomic) BOOL toned; // if true, user plays with tones rather than with distinct colors
+@property (nonatomic) BOOL toned; // if true, user plays with tones rather than with distinct
+@property (nonatomic) BOOL smallCircles; // if true, user plays with smaller circles
 
 + (NSArray *)validColors;
 + (NSArray *)validNumberStrings;
