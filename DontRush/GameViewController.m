@@ -45,7 +45,7 @@
     [self.view addSubview:self.shadowView];
     [self setupPopupView];
     [self.view addSubview:self.gameMessageView];
-
+    
     self.game.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
     self.statsView.highScoreLabel.text = [NSString stringWithFormat:@"BEST \n%ld", (long)self.game.highScore];
     [self newGame];

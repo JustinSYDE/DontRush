@@ -36,5 +36,7 @@
 - (void)resetCurrentGameData;
 - (void)unlockNewGameTwists;
 - (void)resetHighScore;
-
+- (void)resetGameTwists;
+- (void)masterReset;
+- (void)unlockAllGameTwists;
 @end

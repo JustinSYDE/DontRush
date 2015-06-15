@@ -256,16 +256,16 @@
 
 - (void)unlockNewGameTwists {
     if (self.highScore > 2000) {
-        [[NSUserDefaults standardUserDefaults] setBool:self.circleQuestionsUnlocked forKey:@"circleQuestionsUnlocked"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"circleQuestionsUnlocked"];
         self.circleQuestionsUnlocked = YES;
     } else if (self.highScore > 1500) {
-        [[NSUserDefaults standardUserDefaults] setBool:self.smallCirclesUnlocked forKey:@"smallCirclesUnlocked"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"smallCirclesUnlocked"];
         self.smallCirclesUnlocked = YES;
     } else if (self.highScore > 1000) {
-        [[NSUserDefaults standardUserDefaults] setBool:self.toneUnlocked forKey:@"toneUnlocked"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"toneUnlocked"];
         self.toneUnlocked = YES;
     } else if (self.highScore > 500) {
-        [[NSUserDefaults standardUserDefaults] setBool:self.reverseUnlocked forKey:@"reverseUnlocked"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"reverseUnlocked"];
         self.reverseUnlocked = YES;
     }
 }
@@ -274,6 +274,24 @@
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"HighScoreSaved"];
 }
 
+- (void)resetGameTwists {
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"circleQuestionsUnlocked"];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"smallCirclesUnlocked"];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"toneUnlocked"];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"reverseUnlocked"];
+}
+
+- (void)unlockAllGameTwists {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"circleQuestionsUnlocked"];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"smallCirclesUnlocked"];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"toneUnlocked"];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"reverseUnlocked"];
+}
+
+- (void)masterReset {
+    [self resetGameTwists];
+    [self resetHighScore];
+}
 - (void)resetCurrentGameData {
     self.score = 0;
     self.reverse = NO;
