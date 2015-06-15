@@ -221,7 +221,9 @@
     self.popupView.hidden = NO;
     self.twistIconView.hidden = YES;
     [self.gameView resetGrid];
-    if (self.game.timeCount <= (NSInteger)0) {
+    if ([self.game unlockNewGameTwists]) {
+        self.popupView.subtitleLabel.text = @"Unlocked new twist!";
+    } else if (self.game.timeCount <= (NSInteger)0) {
         self.popupView.subtitleLabel.text = @"But don't be a snail.";
     } else if ([self.game match]) {
         self.popupView.subtitleLabel.text = @"Missed it.";
@@ -482,7 +484,6 @@
     }
     
     [self updatePopupToGameOver];
-    [self.game unlockNewGameTwists];
     [self.game resetCurrentGameData];
 }
 

@@ -34,7 +34,7 @@
 - (BOOL)match;
 - (void)updateScore;
 - (void)resetCurrentGameData;
-- (void)unlockNewGameTwists;
+- (BOOL)unlockNewGameTwists;
 - (void)resetHighScore;
 - (void)resetGameTwists;
 - (void)masterReset;
