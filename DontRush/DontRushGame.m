@@ -270,6 +270,10 @@
     }
 }
 
+- (void)resetHighScore {
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"HighScoreSaved"];
+}
+
 - (void)resetCurrentGameData {
     self.score = 0;
     self.reverse = NO;
