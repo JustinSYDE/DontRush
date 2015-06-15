@@ -42,26 +42,17 @@
 #pragma mark - Initializers
 
 - (NSString *)randomColorForToneMode {
-    if (!_randomColorForToneMode) {
-        _randomColorForToneMode = [[NSString alloc] init];
-    }
-    
+    if (!_randomColorForToneMode) _randomColorForToneMode = [[NSString alloc] init];
     return _randomColorForToneMode;
 }
 
 - (NSMutableDictionary *)questionObject {
-    if (!_questionObject) {
-        _questionObject = [[NSMutableDictionary alloc] init];
-    }
-    
+    if (!_questionObject) _questionObject = [[NSMutableDictionary alloc] init];
     return _questionObject;
 }
 
 - (NSMutableArray *)orderedListOfColors {
-    if (!_orderedListOfColors) {
-        _orderedListOfColors = [[NSMutableArray alloc] init];
-    }
-    
+    if (!_orderedListOfColors) _orderedListOfColors = [[NSMutableArray alloc] init];
     return _orderedListOfColors;
 }
 
@@ -79,10 +70,7 @@
 }
 
 - (NSMutableDictionary *)tones {
-    if (!_tones) {
-        _tones = [[NSMutableDictionary alloc] init];
-    }
-    
+    if (!_tones) _tones = [[NSMutableDictionary alloc] init];
     return _tones;
 }
 
@@ -112,44 +100,50 @@
 }
 
 - (BOOL)reverse {
-    if (!_reverse) {
-        _reverse = NO;
-    }
-    
+    if (!_reverse) _reverse = NO;
     return _reverse;
 }
 
 - (BOOL)toned {
-    if (!_toned) {
-        _toned = NO;
-    }
-    
+    if (!_toned) _toned = NO;
     return _toned;
 }
 
 - (BOOL)smallCircles {
-    if (!_smallCircles) {
-        _smallCircles = NO;
-    }
-    
+    if (!_smallCircles) _smallCircles = NO;
     return _smallCircles;
 }
 
 - (BOOL)circleQuestion {
-    if (!_circleQuestion) {
-        _circleQuestion = NO;
-    }
-    
+    if (!_circleQuestion) _circleQuestion = NO;
     return _circleQuestion;
 }
 
 - (NSInteger)timeLimit {
-    if (!_timeLimit) {
-        _timeLimit = 21;
-    }
-    
+    if (!_timeLimit) _timeLimit = 21;
     return _timeLimit;
 }
+
+- (BOOL)reverseUnlocked {
+    if (!_reverseUnlocked) _reverseUnlocked = [[NSUserDefaults standardUserDefaults] boolForKey:@"reverseUnlocked"];
+    return _reverseUnlocked;
+}
+
+- (BOOL)toneUnlocked {
+    if (!_toneUnlocked) _toneUnlocked = [[NSUserDefaults standardUserDefaults] boolForKey:@"toneUnlocked"];
+    return _toneUnlocked;
+}
+
+- (BOOL)circleQuestionsUnlocked {
+    if (!_circleQuestionsUnlocked) _circleQuestionsUnlocked = [[NSUserDefaults standardUserDefaults] boolForKey:@"circleQuestionsUnlocked"];
+    return _circleQuestionsUnlocked;
+}
+
+- (BOOL)smallCirclesUnlocked {
+    if (!_smallCirclesUnlocked) _smallCirclesUnlocked = [[NSUserDefaults standardUserDefaults] boolForKey:@"smallCirclesUnlocked"];
+    return _smallCirclesUnlocked;
+}
+
 
 #pragma mark - Question
 
@@ -236,7 +230,7 @@
 
 #pragma mark - Game Rules
 
-- (BOOL) match {
+- (BOOL)match {
     NSString *questionColor = [self.questionObject allKeys][0];
     NSString *questionNumber = self.questionObject[questionColor];
     int answeredNumber;
@@ -254,9 +248,25 @@
     return [answeredNumberString isEqualToString:questionNumber];
 }
 
-- (void) updateScore {
+- (void)updateScore {
     if (self.timeCount > 0) {
         self.score += self.timeCount;
+    }
+}
+
+- (void)unlockNewGameTwists {
+    if (self.highScore > 2000) {
+        [[NSUserDefaults standardUserDefaults] setBool:self.circleQuestionsUnlocked forKey:@"circleQuestionsUnlocked"];
+        self.circleQuestionsUnlocked = YES;
+    } else if (self.highScore > 1500) {
+        [[NSUserDefaults standardUserDefaults] setBool:self.smallCirclesUnlocked forKey:@"smallCirclesUnlocked"];
+        self.smallCirclesUnlocked = YES;
+    } else if (self.highScore > 1000) {
+        [[NSUserDefaults standardUserDefaults] setBool:self.toneUnlocked forKey:@"toneUnlocked"];
+        self.toneUnlocked = YES;
+    } else if (self.highScore > 500) {
+        [[NSUserDefaults standardUserDefaults] setBool:self.reverseUnlocked forKey:@"reverseUnlocked"];
+        self.reverseUnlocked = YES;
     }
 }
 

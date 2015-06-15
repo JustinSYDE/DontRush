@@ -21,6 +21,10 @@
 @property (nonatomic) BOOL toned; // if true, user plays with tones rather than with distinct
 @property (nonatomic) BOOL smallCircles; // if true, user plays with smaller circles
 @property (nonatomic) BOOL circleQuestion; // if true, question appears as colored dots rather than a colored string
+@property (nonatomic) BOOL reverseUnlocked;
+@property (nonatomic) BOOL toneUnlocked;
+@property (nonatomic) BOOL circleQuestionsUnlocked;
+@property (nonatomic) BOOL smallCirclesUnlocked;
 + (NSArray *)validColors;
 + (NSArray *)validNumberStrings;
 - (void)generateColorSet;
@@ -30,4 +34,7 @@
 - (BOOL)match;
 - (void)updateScore;
 - (void)resetCurrentGameData;
+- (void)unlockNewGameTwists;
+- (void)resetHighScore;
+
 @end

@@ -13,6 +13,15 @@
 @property (nonatomic) NSArray *validFeedbackStrings;
 @end
 
+/* KEYS
+ =======
+ * (int) HighScoreSaved // stores the record high score
+ * (BOOL) reverseUnlocked
+ * (BOOL) toneUnlocked
+ * (BOOL) circleQuestionsUnlocked
+ * (BOOL) smallCirclesUnlocked
+ */
+
 @implementation GameViewController
 
 // Assumes input like "#00FF00" (#RRGGBB).
@@ -30,20 +39,16 @@
     [super viewDidLoad];
     self.view.backgroundColor = [self colorFromHexString:@"#f2eedc"];
     [self setupStatsView];
-    [self setupQuestionView];
-    [self setupTwistIconView];
+    [self.view addSubview:self.questionView];
+    [self.view addSubview:self.twistIconView];
     [self setupGameView];
-    [self setupShadowView];
+    [self.view addSubview:self.shadowView];
     [self setupPopupView];
-    [self setupGameTwistView];
+    [self.view addSubview:self.gameMessageView];
 
     self.game.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
     self.statsView.highScoreLabel.text = [NSString stringWithFormat:@"BEST \n%ld", (long)self.game.highScore];
     [self newGame];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [self setupGameView]; // want to use the frame bounds of the newly constrained gameView, not the one from the main.storyboard
 }
 
 - (void)setupPopupView {
@@ -66,23 +71,7 @@
     [self.view insertSubview:self.gameView belowSubview:self.shadowView];
 }
 
-- (void)setupShadowView {
-    [self.view addSubview:self.shadowView];
-}
-
-- (void)setupQuestionView {
-    [self.view addSubview:self.questionView];
-}
-
-- (void)setupGameTwistView {
-    [self.view addSubview:self.gameMessageView];
-}
-
-- (void)setupTwistIconView {
-    [self.view addSubview:self.twistIconView];
-}
 #pragma mark - Initializers
-
 
 - (GameView *)gameView {
     if (!_gameView) {
@@ -126,10 +115,7 @@
 }
 
 - (ShadowView *)shadowView {
-    if (!_shadowView) {
-        _shadowView = [[ShadowView alloc] initWithFrame:self.view.frame];
-    }
-    
+    if (!_shadowView) _shadowView = [[ShadowView alloc] initWithFrame:self.view.frame];
     return _shadowView;
 }
 
@@ -169,25 +155,17 @@
 }
 
 - (NSMutableDictionary *)colorsOnCard {
-    if (!_colorsOnCard) {
-        _colorsOnCard = [[NSMutableDictionary alloc] init];
-    }
+    if (!_colorsOnCard) _colorsOnCard = [[NSMutableDictionary alloc] init];
     return _colorsOnCard;
 }
 
 - (NSArray *)validFeedbackStrings {
-    if (!_validFeedbackStrings) {
-        _validFeedbackStrings = @[@"YASS!", @"MMHMM!", @"LEGGO!", @"AYY!", @"SLAY!"];
-    }
-    
+    if (!_validFeedbackStrings) _validFeedbackStrings = @[@"YASS!", @"MMHMM!", @"LEGGO!", @"AYY!", @"SLAY!"];
     return _validFeedbackStrings;
 }
 
 - (DontRushGame *)game {
-    if (!_game) {
-        _game = [[DontRushGame alloc] init];
-    }
-    
+    if (!_game) _game = [[DontRushGame alloc] init];
     return _game;
 }
 
@@ -278,17 +256,6 @@
     } else if (self.game.timeCount <= 10) {
         [self.statsView updateTimerToWarningState];
     }
-}
-
-- (void)gameOver {
-    [self.timer invalidate];
-    if (self.game.score > self.game.highScore) {
-        [[NSUserDefaults standardUserDefaults] setInteger:self.game.score forKey:@"HighScoreSaved"];
-        self.statsView.highScoreLabel.text = [NSString stringWithFormat: @"BEST\n%ld", (long)self.game.score];
-        self.game.highScore = self.game.score;
-    }
-    
-    [self updatePopupToGameOver];
 }
 
 #pragma mark - Touch Gesture
@@ -437,9 +404,9 @@
                 [self.game setupNewTone];
             }
             
-            if (self.game.score % 2 == 0 && match) {
+            if (self.game.toneUnlocked && (self.game.score % 2 == 0) && match) {
                 [self toggleTonesGameTwist];
-            } else if (self.game.score % 3 == 0 && match) {
+            } else if (self.game.circleQuestionsUnlocked && (self.game.score % 3 == 0) && match) {
                 [self toggleCircleQuestionGameTwist];
             } else {
                 int randNum = arc4random() % [self.validFeedbackStrings count];
@@ -448,9 +415,9 @@
             
             [self popNewQuestion];
         } else {
-            if (self.game.score % 7 == 0 && !match) {
+            if (self.game.reverseUnlocked && (self.game.score % 7 == 0) && !match) {
                 [self toggleReverseGameTwist];
-            } else if (self.game.score % 3 == 0 && !match) {
+            } else if (self.game.smallCirclesUnlocked && (self.game.score % 3 == 0) && !match) {
                 [self toggleSmallCirclesGameTwist];
             }
         }
@@ -507,7 +474,15 @@
 
 - (void)endGame {
     self.gameView.userInteractionEnabled = NO;
-    [self gameOver];
+    [self.timer invalidate];
+    if (self.game.score > self.game.highScore) {
+        [[NSUserDefaults standardUserDefaults] setInteger:self.game.score forKey:@"HighScoreSaved"];
+        self.statsView.highScoreLabel.text = [NSString stringWithFormat: @"BEST\n%ld", (long)self.game.score];
+        self.game.highScore = self.game.score;
+    }
+    
+    [self updatePopupToGameOver];
+    [self.game unlockNewGameTwists];
     [self.game resetCurrentGameData];
 }
 
