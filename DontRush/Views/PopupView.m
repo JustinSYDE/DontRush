@@ -73,6 +73,7 @@
     CGRect newFrame = CGRectMake(0, 0, frame.size.width, frame.size.height / 4.0);
     self.titleLabel.frame = newFrame;
     self.titleLabel.text = @"Don't Rush!";
+    self.titleLabel.textColor = [self colorFromHexString:@"#4d4d4d"];
     self.titleLabel.font = [UIFont fontWithName:@"Courier-Bold" size:24.0f];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.backgroundColor = [UIColor clearColor];
@@ -84,6 +85,7 @@
     CGRect newFrame = CGRectMake(0, frame.size.height / 4.0, frame.size.width, frame.size.height / 8.0);
     self.subtitleLabel.frame = newFrame;
     self.subtitleLabel.text = @"Here's how to play:";
+    self.subtitleLabel.textColor = [self colorFromHexString:@"#4d4d4d"];
     self.subtitleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16.0f];
     self.subtitleLabel.textAlignment = NSTextAlignmentCenter;
     self.subtitleLabel.backgroundColor = [UIColor clearColor];
@@ -99,6 +101,7 @@
     self.commentLabel.text = @"Swipe ☜ to draw new card\nSwipe ☞ to match";
     self.commentLabel.numberOfLines = 2.0;
     self.commentLabel.font = [UIFont fontWithName:@"Courier" size:16.0f];
+    self.commentLabel.textColor = [self colorFromHexString:@"#4d4d4d"];
     self.commentLabel.textAlignment = NSTextAlignmentCenter;
     self.commentLabel.layer.cornerRadius = 8;
     self.commentLabel.layer.borderColor = [[self colorFromHexString:@"#f0f0f0"] CGColor];
@@ -133,6 +136,7 @@
     CGRect newFrame = CGRectMake(2*padding + width, (frame.size.height *5.0/8.0) + verticalPadding , width, (2.0/3)*width);
     self.homeButton.frame = newFrame;
     [self.homeButton setTitle:@"Exit" forState:UIControlStateNormal];
+    [self.homeButton setTitleColor:[self colorFromHexString:@"#4d4d4d"] forState:UIControlStateNormal];
     self.homeButton.font = [UIFont fontWithName:@"Helvetica" size:24.0f];
     self.homeButton.backgroundColor = [self colorFromHexString:@"#d3d3d3"];
     self.homeButton.layer.borderColor = [[self colorFromHexString:@"#d3d3d3"] CGColor];

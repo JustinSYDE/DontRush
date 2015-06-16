@@ -46,6 +46,7 @@
     titleLabel.text = @"Don't Rush!";
     titleLabel.font = [UIFont fontWithName:@"Courier-Bold" size:36.0f];
     titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.textColor = [self colorFromHexString:@"#4d4d4d"];
     [self.view addSubview:titleLabel];
 }
 
@@ -54,6 +55,7 @@
     UILabel *highScoreLabel = [[UILabel alloc] initWithFrame:newFrame];
     NSInteger highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
     highScoreLabel.text = [NSString stringWithFormat:@"Best: %li\n\nAchievements", (long)highScore];
+    highScoreLabel.textColor = [self colorFromHexString:@"#4d4d4d"];
     highScoreLabel.numberOfLines = 3;
     highScoreLabel.font = [UIFont fontWithName:@"Courier" size:16.0f];
     highScoreLabel.textAlignment = NSTextAlignmentCenter;
@@ -122,6 +124,7 @@
     self.howToButton.font = [UIFont fontWithName:@"Helvetica" size:24.0f];
     [self.howToButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.howToButton setBackgroundColor:[self colorFromHexString:@"#bdc3c7"]];
+    [self.howToButton setTitleColor:[self colorFromHexString:@"#4d4d4d"] forState:UIControlStateNormal];
     self.howToButton.layer.cornerRadius = 8.0;
     
     [buttonsView addSubview:self.howToButton];
