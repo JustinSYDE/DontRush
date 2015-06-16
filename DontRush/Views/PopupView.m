@@ -73,7 +73,7 @@
     CGRect newFrame = CGRectMake(0, 0, frame.size.width, frame.size.height / 4.0);
     self.titleLabel.frame = newFrame;
     self.titleLabel.text = @"Don't Rush!";
-    self.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:24.0f];
+    self.titleLabel.font = [UIFont fontWithName:@"Courier-Bold" size:24.0f];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.backgroundColor = [UIColor clearColor];
     self.titleLabel.clipsToBounds = YES;
@@ -98,7 +98,7 @@
     self.commentLabel.frame = newFrame;
     self.commentLabel.text = @"Swipe ☜ to draw new card\nSwipe ☞ to match";
     self.commentLabel.numberOfLines = 2.0;
-    self.commentLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
+    self.commentLabel.font = [UIFont fontWithName:@"Courier" size:16.0f];
     self.commentLabel.textAlignment = NSTextAlignmentCenter;
     self.commentLabel.layer.cornerRadius = 8;
     self.commentLabel.layer.borderColor = [[self colorFromHexString:@"#f0f0f0"] CGColor];

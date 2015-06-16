@@ -44,7 +44,7 @@
     CGRect newFrame = CGRectMake(0, self.headerPadding, self.view.frame.size.width, self.view.frame.size.height / 5.0);
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:newFrame];
     titleLabel.text = @"Don't Rush!";
-    titleLabel.font = [UIFont fontWithName:@"Helvetica" size:36.0f];
+    titleLabel.font = [UIFont fontWithName:@"Courier-Bold" size:36.0f];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
 }
@@ -53,9 +53,9 @@
     CGRect newFrame = CGRectMake(0, self.headerPadding + self.view.frame.size.height / 5.0, self.view.frame.size.width, self.view.frame.size.height / 10.0);
     UILabel *highScoreLabel = [[UILabel alloc] initWithFrame:newFrame];
     NSInteger highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
-    highScoreLabel.text = [NSString stringWithFormat:@"Best: %li\n\nUnlocked:", (long)highScore];
+    highScoreLabel.text = [NSString stringWithFormat:@"Best: %li\n\nAchievements", (long)highScore];
     highScoreLabel.numberOfLines = 3;
-    highScoreLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
+    highScoreLabel.font = [UIFont fontWithName:@"Courier" size:16.0f];
     highScoreLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:highScoreLabel];
 }
@@ -69,16 +69,29 @@
 
 - (void)drawLocksInFrame:(CGRect)frame {
     CGRect newFrame;
-    float const width = 25;
-    float const height = frame.size.height/4.0;
-    float const padding = (frame.size.width - 7*width) / 2.0;
+    float const width = 40;
+    float const gap = 25;
+    float const height = width;
+    float const padding = (frame.size.width - 4*width - 3*gap) / 2.0;
     float x = padding;
     float const y = (frame.size.height - height) / 2.0;
     
     for (int i = 0; i < 4; i++) {
-        UIImageView *iconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock"]];
+        UIImageView *iconImage;
+        if (i == 0 && [[NSUserDefaults standardUserDefaults] boolForKey:@"reverseUnlocked"]) {
+            iconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"reverseUnlocked"]];
+        } else if (i == 1 && [[NSUserDefaults standardUserDefaults] boolForKey:@"toneUnlocked"]) {
+            iconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toneUnlocked"]];
+        } else if (i == 2 && [[NSUserDefaults standardUserDefaults] boolForKey:@"smallCirclesUnlocked"]) {
+            iconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smallCirclesUnlocked"]];
+        } else if (i == 3 && [[NSUserDefaults standardUserDefaults] boolForKey:@"circleQuestionsUnlocked"]) {
+            iconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"circleQuestionsUnlocked"]];
+        } else {
+            iconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock"]];
+        }
+        
         newFrame = CGRectMake(x, y, width, height);
-        x += 2*width;
+        x += width + gap;
         iconImage.frame = newFrame;
         [self.achievementsView addSubview:iconImage];
     }
