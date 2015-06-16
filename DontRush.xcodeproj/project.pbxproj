@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6C66F525265B8C331E94A76A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 282FAFBF2A229B4891ED9447 /* libPods.a */; };
+		E80133AB1B2FD4B000CB6735 /* lock.png in Resources */ = {isa = PBXBuildFile; fileRef = E80133AA1B2FD4B000CB6735 /* lock.png */; };
 		E81C36401B0AFFB90090F79E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C363F1B0AFFB90090F79E /* main.m */; };
 		E81C36431B0AFFB90090F79E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C36421B0AFFB90090F79E /* AppDelegate.m */; };
 		E81C36461B0AFFB90090F79E /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C36451B0AFFB90090F79E /* GameViewController.m */; };
@@ -46,6 +47,7 @@
 		282FAFBF2A229B4891ED9447 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E3434D3244D27D66C31108B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		CD453FB46A17196EFA51ED40 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		E80133AA1B2FD4B000CB6735 /* lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock.png; sourceTree = "<group>"; };
 		E81C363A1B0AFFB90090F79E /* DontRush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DontRush.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E81C363E1B0AFFB90090F79E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E81C363F1B0AFFB90090F79E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				E8A56B741B1A56650076AF38 /* accept.png */,
+				E80133AA1B2FD4B000CB6735 /* lock.png */,
 				E8A56B751B1A56650076AF38 /* reject.png */,
 				E88222B11B2503AA00C0E65C /* reverse.png */,
 			);
@@ -321,6 +324,7 @@
 				E83F2D061B1ED3000073E60C /* Entitlements.plist in Resources */,
 				E81C36491B0AFFB90090F79E /* Main.storyboard in Resources */,
 				E8A56B761B1A56650076AF38 /* accept.png in Resources */,
+				E80133AB1B2FD4B000CB6735 /* lock.png in Resources */,
 				E81C364E1B0AFFB90090F79E /* LaunchScreen.xib in Resources */,
 				E81C364B1B0AFFB90090F79E /* Images.xcassets in Resources */,
 				E8A56B771B1A56650076AF38 /* reject.png in Resources */,
