@@ -53,7 +53,8 @@
     CGRect newFrame = CGRectMake(0, self.headerPadding + self.view.frame.size.height / 5.0, self.view.frame.size.width, self.view.frame.size.height / 10.0);
     UILabel *highScoreLabel = [[UILabel alloc] initWithFrame:newFrame];
     NSInteger highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
-    highScoreLabel.text = [NSString stringWithFormat:@"Best: %li", (long)highScore];
+    highScoreLabel.text = [NSString stringWithFormat:@"Best: %li\n\nUnlocked:", (long)highScore];
+    highScoreLabel.numberOfLines = 3;
     highScoreLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
     highScoreLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:highScoreLabel];
@@ -62,9 +63,6 @@
 - (void)setAchievementsView {
     CGRect newFrame = CGRectMake(0, self.headerPadding + self.view.frame.size.height * 3.0/10, self.view.frame.size.width, self.view.frame.size.height / 5.0);
     self.achievementsView = [[UILabel alloc] initWithFrame:newFrame];
-    /*achievementsView.text = @"Unlocked:";
-    achievementsView.textAlignment = NSTextAlignmentCenter;
-    achievementsView.font = [UIFont fontWithName:@"Helvetica" size:16.0f];*/
     [self drawLocksInFrame:newFrame];
     [self.view addSubview:self.achievementsView];
 }
@@ -72,12 +70,14 @@
 - (void)drawLocksInFrame:(CGRect)frame {
     CGRect newFrame;
     float const width = 25;
+    float const height = frame.size.height/4.0;
     float const padding = (frame.size.width - 7*width) / 2.0;
     float x = padding;
+    float const y = (frame.size.height - height) / 2.0;
     
     for (int i = 0; i < 4; i++) {
         UIImageView *iconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock"]];
-        newFrame = CGRectMake(x, 0, width, frame.size.height/4.0);
+        newFrame = CGRectMake(x, y, width, height);
         x += 2*width;
         iconImage.frame = newFrame;
         [self.achievementsView addSubview:iconImage];
