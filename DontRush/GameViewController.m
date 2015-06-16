@@ -222,12 +222,16 @@
     self.twistIconView.hidden = YES;
     [self.gameView resetGrid];
     if ([self.game unlockNewGameTwists]) {
+        self.popupView.titleLabel.text = @"Congratulations!";
         self.popupView.subtitleLabel.text = @"Unlocked new twist!";
     } else if (self.game.timeCount <= (NSInteger)0) {
+        self.popupView.titleLabel.text = @"Don't Rush!";
         self.popupView.subtitleLabel.text = @"But don't be a snail.";
     } else if ([self.game match]) {
+        self.popupView.titleLabel.text = @"Don't Rush!";
         self.popupView.subtitleLabel.text = @"Missed it.";
     } else {
+        self.popupView.titleLabel.text = @"Don't Rush!";
         self.popupView.subtitleLabel.text = @"You rushed.";
     }
 
