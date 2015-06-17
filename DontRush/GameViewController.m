@@ -13,15 +13,6 @@
 @property (nonatomic) NSArray *validFeedbackStrings;
 @end
 
-/* KEYS
- =======
- * (int) HighScoreSaved // stores the record high score
- * (BOOL) reverseUnlocked
- * (BOOL) toneUnlocked
- * (BOOL) circleQuestionsUnlocked
- * (BOOL) smallCirclesUnlocked
- */
-
 @implementation GameViewController
 
 // Assumes input like "#00FF00" (#RRGGBB).
@@ -45,9 +36,6 @@
     [self.view addSubview:self.shadowView];
     [self setupPopupView];
     [self.view addSubview:self.gameMessageView];
-    
-    self.game.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
-    self.statsView.highScoreLabel.text = [NSString stringWithFormat:@"BEST \n%ld", (long)self.game.highScore];
     [self newGame];
 }
 
@@ -58,6 +46,7 @@
 }
 
 - (void)setupStatsView {
+    self.statsView.highScoreLabel.text = [NSString stringWithFormat:@"BEST \n%ld", (long)self.game.highScore];
     [self.view addSubview:self.statsView];
 }
 

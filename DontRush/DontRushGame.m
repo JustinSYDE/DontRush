@@ -13,6 +13,15 @@
 @property (nonatomic) NSMutableDictionary *tones;
 @end
 
+/* KEYS
+ =======
+ * (int) HighScoreSaved // stores the record high score
+ * (BOOL) reverseUnlocked
+ * (BOOL) toneUnlocked
+ * (BOOL) circleQuestionsUnlocked
+ * (BOOL) smallCirclesUnlocked
+ */
+
 @implementation DontRushGame
 
 + (NSArray *)validColors {
@@ -97,6 +106,11 @@
     }
     
     return _collectionOfTones;
+}
+
+- (NSInteger)highScore {
+    if (!_highScore) _highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScoreSaved"];
+    return _highScore;
 }
 
 - (BOOL)reverse {
