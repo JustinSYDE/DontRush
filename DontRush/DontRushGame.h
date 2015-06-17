@@ -25,6 +25,7 @@
 @property (nonatomic) BOOL toneUnlocked;
 @property (nonatomic) BOOL circleQuestionsUnlocked;
 @property (nonatomic) BOOL smallCirclesUnlocked;
+@property (nonatomic) BOOL tutorialFinished;
 + (NSArray *)validColors;
 + (NSArray *)validNumberStrings;
 - (void)generateColorSet;

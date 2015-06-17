@@ -17,5 +17,10 @@
 @property (nonatomic) UIButton *homeButton;
 
 - (instancetype)initWithFrame:(CGRect)frame;
+- (void)setupTitleLabelWithFrame:(CGRect)frame WithText: (NSString *)text;
+- (void)setupCommentLabelWithFrame:(CGRect)frame;
+- (void)setupPlayButtonWithFrame:(CGRect)frame WithText: (NSString *)text;
+- (void)setupHomeButtonWithFrame:(CGRect)frame WithText: (NSString *)text;
+- (UIColor *)colorFromHexString:(NSString *)hexString;
 
 @end

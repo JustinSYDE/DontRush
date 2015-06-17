@@ -20,6 +20,7 @@
  * (BOOL) toneUnlocked
  * (BOOL) circleQuestionsUnlocked
  * (BOOL) smallCirclesUnlocked
+ * (BOOL) neverPlayed
  */
 
 @implementation DontRushGame
@@ -136,6 +137,11 @@
 - (NSInteger)timeLimit {
     if (!_timeLimit) _timeLimit = 21;
     return _timeLimit;
+}
+
+- (BOOL)tutorialFinished {
+    if (!_tutorialFinished) _tutorialFinished = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialFinished"];
+    return _tutorialFinished;
 }
 
 - (BOOL)reverseUnlocked {

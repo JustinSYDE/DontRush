@@ -28,11 +28,11 @@
         self.layer.cornerRadius = 8;
         self.clipsToBounds = YES;
         
-        [self setupTitleLabelWithFrame:frame];
+        [self setupTitleLabelWithFrame:frame WithText:@"Don't Rush!"];
         [self setupSubtitleLabelWithFrame:frame];
         [self setupCommentLabelWithFrame:frame];
-        [self setupPlayButtonWithFrame:frame];
-        [self setupHomeButtonWithFrame:frame];
+        [self setupPlayButtonWithFrame:frame WithText:@"Play"];
+        [self setupHomeButtonWithFrame:frame WithText:@"Exit"];
     }
     
     return self;
@@ -69,10 +69,10 @@
     return _homeButton;
 }
 
-- (void)setupTitleLabelWithFrame:(CGRect)frame {
+- (void)setupTitleLabelWithFrame:(CGRect)frame WithText:(NSString *)text {
     CGRect newFrame = CGRectMake(0, 0, frame.size.width, frame.size.height / 4.0);
     self.titleLabel.frame = newFrame;
-    self.titleLabel.text = @"Don't Rush!";
+    self.titleLabel.text = text;
     self.titleLabel.textColor = [self colorFromHexString:@"#4d4d4d"];
     self.titleLabel.font = [UIFont fontWithName:@"Courier-Bold" size:24.0f];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -111,14 +111,14 @@
     [self addSubview:self.commentLabel];
 }
 
-- (void)setupPlayButtonWithFrame: (CGRect)frame {
+- (void)setupPlayButtonWithFrame: (CGRect)frame WithText:(NSString *)text{
     float const padding = 25.0;
     //float const horizontalPadding = 75.0;
     float const verticalPadding = 25.0;
     float const width = (frame.size.width - 3*padding) / 2.0;
     CGRect newFrame = CGRectMake(padding, (frame.size.height *5.0/8.0) + verticalPadding , width, (2.0/3)*width);
     self.playButton.frame = newFrame;
-    [self.playButton setTitle:@"Play" forState:UIControlStateNormal];
+    [self.playButton setTitle:text forState:UIControlStateNormal];
     self.playButton.font = [UIFont fontWithName:@"Helvetica-Bold" size:24.0f];
     self.playButton.backgroundColor = [self colorFromHexString:@"#17b287"];
     self.playButton.layer.borderColor = [[self colorFromHexString:@"#17b287"] CGColor];
@@ -128,14 +128,14 @@
     [self addSubview:self.playButton];
 }
 
-- (void)setupHomeButtonWithFrame: (CGRect)frame {
+- (void)setupHomeButtonWithFrame: (CGRect)frame WithText: (NSString *)text {
     float const padding = 25.0;
     //float const horizontalPadding = 75.0;
     float const verticalPadding = 25.0;
     float const width = (frame.size.width - 3*padding) / 2.0;
     CGRect newFrame = CGRectMake(2*padding + width, (frame.size.height *5.0/8.0) + verticalPadding , width, (2.0/3)*width);
     self.homeButton.frame = newFrame;
-    [self.homeButton setTitle:@"Exit" forState:UIControlStateNormal];
+    [self.homeButton setTitle:text forState:UIControlStateNormal];
     [self.homeButton setTitleColor:[self colorFromHexString:@"#4d4d4d"] forState:UIControlStateNormal];
     self.homeButton.font = [UIFont fontWithName:@"Helvetica" size:24.0f];
     self.homeButton.backgroundColor = [self colorFromHexString:@"#d3d3d3"];

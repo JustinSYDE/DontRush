@@ -229,6 +229,13 @@
 
 }
 
+- (void)updatePopupToTutorial {
+    self.shadowView.hidden = NO;
+    self.popupView.hidden = NO;
+    self.twistIconView.hidden = YES;
+    [self.gameView resetGrid];
+}
+
 - (void)updateTimer {
     self.game.timeCount--;
     self.statsView.timerLabel.text = [NSString stringWithFormat:@"TIME\n%ld", (long)self.game.timeCount];
@@ -265,7 +272,8 @@
     
     [self popNewCard];
     [self popNewQuestion];
-    [self restartTimer];
+    if (self.game.tutorialFinished)
+        [self restartTimer]; // if the user has never played before, don't start the timer - just let the tutorial run indefinitely
 }
 
 - (void)touchHomeButton {

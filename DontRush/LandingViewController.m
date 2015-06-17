@@ -109,7 +109,6 @@
     
     CGRect howToFrame = CGRectMake(x, y, width, height);
     CGRect playFrame = CGRectMake(x, y + height + self.headerPadding, width, height);
-
     
     self.howToButton = [[UIButton alloc] initWithFrame:howToFrame];
     self.playButton = [[UIButton alloc] initWithFrame:playFrame];

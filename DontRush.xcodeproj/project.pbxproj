@@ -13,6 +13,7 @@
 		E80133B11B2FEE1F00CB6735 /* reverseUnlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = E80133AD1B2FEE1F00CB6735 /* reverseUnlocked.png */; };
 		E80133B21B2FEE1F00CB6735 /* smallCirclesUnlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = E80133AE1B2FEE1F00CB6735 /* smallCirclesUnlocked.png */; };
 		E80133B31B2FEE1F00CB6735 /* toneUnlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = E80133AF1B2FEE1F00CB6735 /* toneUnlocked.png */; };
+		E80133B91B31481C00CB6735 /* TutorialPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = E80133B81B31481C00CB6735 /* TutorialPopupView.m */; };
 		E81C36401B0AFFB90090F79E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C363F1B0AFFB90090F79E /* main.m */; };
 		E81C36431B0AFFB90090F79E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C36421B0AFFB90090F79E /* AppDelegate.m */; };
 		E81C36461B0AFFB90090F79E /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C36451B0AFFB90090F79E /* GameViewController.m */; };
@@ -56,6 +57,8 @@
 		E80133AD1B2FEE1F00CB6735 /* reverseUnlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reverseUnlocked.png; sourceTree = "<group>"; };
 		E80133AE1B2FEE1F00CB6735 /* smallCirclesUnlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smallCirclesUnlocked.png; sourceTree = "<group>"; };
 		E80133AF1B2FEE1F00CB6735 /* toneUnlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toneUnlocked.png; sourceTree = "<group>"; };
+		E80133B71B31481C00CB6735 /* TutorialPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TutorialPopupView.h; path = Views/TutorialPopupView.h; sourceTree = "<group>"; };
+		E80133B81B31481C00CB6735 /* TutorialPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TutorialPopupView.m; path = Views/TutorialPopupView.m; sourceTree = "<group>"; };
 		E81C363A1B0AFFB90090F79E /* DontRush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DontRush.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E81C363E1B0AFFB90090F79E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E81C363F1B0AFFB90090F79E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 			children = (
 				E83F2D191B216C170073E60C /* QuestionView.h */,
 				E83F2D1A1B216C170073E60C /* QuestionView.m */,
+				E80133B71B31481C00CB6735 /* TutorialPopupView.h */,
+				E80133B81B31481C00CB6735 /* TutorialPopupView.m */,
 				E8E021471B23ED2B0068F2DA /* GameMessageView.h */,
 				E8E021481B23ED2B0068F2DA /* GameMessageView.m */,
 				E83F2D101B2151050073E60C /* PopupView.h */,
@@ -400,6 +405,7 @@
 				E824B3461B13B9FC00B71F11 /* OverlayView.m in Sources */,
 				E8BF26541B0C5053009E6446 /* DontRushGame.m in Sources */,
 				E81C36401B0AFFB90090F79E /* main.m in Sources */,
+				E80133B91B31481C00CB6735 /* TutorialPopupView.m in Sources */,
 				E824B3491B13BA1000B71F11 /* GameView.m in Sources */,
 				E8E021491B23ED2B0068F2DA /* GameMessageView.m in Sources */,
 				E8AA38F41B2BB7FD00159C7B /* LandingViewController.m in Sources */,
