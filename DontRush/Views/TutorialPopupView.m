@@ -87,4 +87,20 @@
     [self addSubview:self.homeButton];
 }
 
+- (void)slideTutorialViewIn {
+    [UIView animateWithDuration:1.0 animations:^{
+        CGRect screen = [[UIScreen mainScreen] bounds];
+        CGPoint point = CGPointMake(self.center.x, screen.size.height / 2.0);
+        self.center = point;
+    }];
+}
+
+- (void)slideTutorialViewOut {
+    [UIView animateWithDuration:1.0 animations:^{
+        CGRect screen = [[UIScreen mainScreen] bounds];
+        CGPoint point = CGPointMake(self.center.x, -screen.size.height);
+        self.center = point;
+    }];
+}
+
 @end

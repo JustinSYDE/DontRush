@@ -54,16 +54,12 @@
 }
 
 - (void)slideTutorialViewIn {
-    [UIView animateWithDuration:1.0 animations:^{
-        CGPoint point = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
-        self.tutorialPopupView.center = point;
-    }];
+    [self.tutorialPopupView slideTutorialViewIn];
 }
 
 - (void)slideTutorialViewOut {
+    [self.tutorialPopupView slideTutorialViewOut];
     [UIView animateWithDuration:1.0 animations:^{
-        CGPoint point = CGPointMake(self.view.frame.size.width / 2.0, -self.view.frame.size.height);
-        self.tutorialPopupView.center = point;
         self.shadowView.alpha = 0;
     }];
 }

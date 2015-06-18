@@ -11,5 +11,6 @@
 @interface TutorialPopupView : PopupView
 
 - (instancetype)initTutorialWithFrame:(CGRect)frame;
-
+- (void)slideTutorialViewIn;
+- (void)slideTutorialViewOut;
 @end
