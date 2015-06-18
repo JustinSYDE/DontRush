@@ -146,7 +146,7 @@
     GameViewController *gameViewController = [[GameViewController alloc] init];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"tutorialFinished"];
     gameViewController.game.tutorialFinished = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialFinished"];
-
+    
     [self presentViewController:gameViewController animated:NO completion:NULL];
 }
 

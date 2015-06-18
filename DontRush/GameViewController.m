@@ -352,7 +352,7 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"tutorialFinished"];
     self.game.tutorialFinished = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialFinished"];
     [self.popupView slidePopupViewOut];
-    [self.shadowView hideShadow];
+    [self slideTutorialViewOut];
     
     [NSTimer scheduledTimerWithTimeInterval:1.0
                                      target:self

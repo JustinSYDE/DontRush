@@ -98,7 +98,7 @@
 - (void)slideTutorialViewOut {
     [UIView animateWithDuration:1.0 animations:^{
         CGRect screen = [[UIScreen mainScreen] bounds];
-        CGPoint point = CGPointMake(self.center.x, -screen.size.height);
+        CGPoint point = CGPointMake(self.center.x, screen.size.height*1.5);
         self.center = point;
     }];
 }
