@@ -20,7 +20,7 @@
  * (BOOL) toneUnlocked
  * (BOOL) circleQuestionsUnlocked
  * (BOOL) smallCirclesUnlocked
- * (BOOL) neverPlayed
+ * (BOOL) tutorialFinished
  */
 
 @implementation DontRushGame

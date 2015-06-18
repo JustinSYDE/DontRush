@@ -131,12 +131,22 @@
     [self.view addSubview:buttonsView];
     
     [self.playButton addTarget:self action:@selector(touchPlayButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.howToButton addTarget:self action:@selector(touchHowToButton) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Touch events
 
 - (void)touchPlayButton {
     GameViewController *gameViewController = [[GameViewController alloc] init];
+    [self presentViewController:gameViewController animated:NO completion:NULL];
+}
+
+- (void)touchHowToButton {
+    
+    GameViewController *gameViewController = [[GameViewController alloc] init];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"tutorialFinished"];
+    gameViewController.game.tutorialFinished = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialFinished"];
+
     [self presentViewController:gameViewController animated:NO completion:NULL];
 }
 

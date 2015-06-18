@@ -39,6 +39,11 @@
     [self newGame];
     if (!self.game.tutorialFinished) {
         [self setupTutorialView];
+        [NSTimer scheduledTimerWithTimeInterval:0.5
+                                         target:self
+                                       selector:@selector(slideTutorialViewUp)
+                                       userInfo:nil
+                                        repeats:NO];
     }
 }
 
@@ -46,6 +51,13 @@
     [self.view addSubview:self.popupView];
     [self.popupView.playButton addTarget:self action:@selector(newGame) forControlEvents:UIControlEventTouchUpInside];
     [self.popupView.homeButton addTarget:self action:@selector(touchHomeButton) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)slideTutorialViewUp {
+    [UIView animateWithDuration:1.0 animations:^{
+        CGPoint point = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
+        self.tutorialPopupView.center = point;
+    }];
 }
 
 - (void)setupTutorialView {
@@ -137,7 +149,7 @@
         float const width = self.view.frame.size.width * 0.9;
         float const height = self.view.frame.size.height * 0.8;
         float const x = (self.view.frame.size.width - width) / 2.0;
-        float const y = (self.view.frame.size.height - height) / 2.0;
+        float const y = self.view.frame.size.height*0.85; /*(self.view.frame.size.height - height) / 2.0;*/
         CGRect newFrame = CGRectMake(x, y, width, height);
         _tutorialPopupView = [[TutorialPopupView alloc] initTutorialWithFrame:newFrame];
 
@@ -288,25 +300,36 @@
 #pragma mark - Touch Gesture
 
 - (void)newGame {
-    self.gameView.userInteractionEnabled = YES;
+    if (self.game.tutorialFinished) {
+        self.gameView.userInteractionEnabled = YES;
+    } else {
+        self.gameView.userInteractionEnabled = NO;
+    }
+    
     [self.game resetCurrentGameData];
     self.popupView.hidden = YES;
     self.shadowView.hidden = YES;
     [self updateScoreUI];
     [self.statsView updateTimerToStartState];
-    
     [self popNewCard];
     [self popNewQuestion];
-    [self restartTimer];
+    if (self.game.tutorialFinished) {
+        [self restartTimer];
+    }
 }
 
 - (void)continueGame {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"tutorialFinished"];
+    self.game.tutorialFinished = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialFinished"];
+    self.gameView.userInteractionEnabled = YES;
     self.shadowView.hidden = YES;
     self.tutorialPopupView.hidden = YES;
     [self restartTimer];
 }
 
 - (void)touchHomeButton {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"tutorialFinished"];
+    self.game.tutorialFinished = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialFinished"];
     LandingViewController *landingViewController = [[LandingViewController alloc] init];
     [self presentViewController:landingViewController animated:NO completion:NULL];
 }
@@ -352,7 +375,7 @@
             
             // Swipe right to match
             if ([self matchEventUsingDistance:xDistance forMode:self.game.reverse] && ![self gameEnded]) {
-                if ([self.game match]) {
+                if ([self.game match]  && ![self gameEnded]) {
                     [self newRoundAfter:[self.game match]];
                 } else {
                     [self endGame];
@@ -363,7 +386,7 @@
             
             // Swipe left for no match
             else if ([self rejectEventUsingDistance:xDistance forMode:self.game.reverse]) {
-                if (![self.game match]) {
+                if (![self.game match] && ![self gameEnded]) {
                     [self newRoundAfter:[self.game match]];
                 } else {
                     [self highlightMissedShapes];
@@ -502,12 +525,17 @@
 }
 
 - (BOOL)gameEnded {
-    return !self.popupView.hidden;
+    if (!self.game.timeCount || ![self.timer isValid]) {
+        return true;
+    }
+    
+    return false;
 }
 
 - (void)endGame {
     self.gameView.userInteractionEnabled = NO;
     [self.timer invalidate];
+    [self.gameView resetViewPositionAndTransformations];
     if (self.game.score > self.game.highScore) {
         [[NSUserDefaults standardUserDefaults] setInteger:self.game.score forKey:@"HighScoreSaved"];
         self.statsView.highScoreLabel.text = [NSString stringWithFormat: @"BEST\n%ld", (long)self.game.score];
@@ -515,7 +543,6 @@
     }
     
     [self updatePopupToGameOver];
-    [self.game resetCurrentGameData];
 }
 
 @end
