@@ -41,7 +41,7 @@
         [self setupTutorialView];
         [NSTimer scheduledTimerWithTimeInterval:0.5
                                          target:self
-                                       selector:@selector(slideTutorialViewUp)
+                                       selector:@selector(slideTutorialViewIn)
                                        userInfo:nil
                                         repeats:NO];
     }
@@ -53,10 +53,18 @@
     [self.popupView.homeButton addTarget:self action:@selector(touchHomeButton) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)slideTutorialViewUp {
+- (void)slideTutorialViewIn {
     [UIView animateWithDuration:1.0 animations:^{
         CGPoint point = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
         self.tutorialPopupView.center = point;
+    }];
+}
+
+- (void)slideTutorialViewOut {
+    [UIView animateWithDuration:1.0 animations:^{
+        CGPoint point = CGPointMake(self.view.frame.size.width / 2.0, -self.view.frame.size.height);
+        self.tutorialPopupView.center = point;
+        self.shadowView.alpha = 0;
     }];
 }
 
@@ -244,6 +252,7 @@
 
 - (void)updatePopupToGameOver {
     self.shadowView.hidden = NO;
+    self.shadowView.alpha = 0.6;
     self.popupView.hidden = NO;
     self.twistIconView.hidden = YES;
     [self.gameView resetGrid];
@@ -262,7 +271,7 @@
     }
 
     self.popupView.commentLabel.text = [NSString stringWithFormat:@"Your score: %ld\nYour best: %ld", (long)self.game.score, (long)self.game.highScore];
-    [self.popupView.playButton setTitle:@"Again!" forState:UIControlStateNormal];
+    [self.popupView.playButton setTitle:@"Again" forState:UIControlStateNormal];
 
 }
 
@@ -319,14 +328,23 @@
 }
 
 - (void)continueGame {
+    [self slideTutorialViewOut];
+    [NSTimer scheduledTimerWithTimeInterval:1.0
+                                     target:self
+                                   selector:@selector(continueGameSetup)
+                                   userInfo:nil
+                                    repeats:NO];
+    }
+
+- (void)continueGameSetup {
+    self.tutorialPopupView.hidden = YES;
+    self.shadowView.hidden = YES;
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"tutorialFinished"];
     self.game.tutorialFinished = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialFinished"];
     self.gameView.userInteractionEnabled = YES;
-    self.shadowView.hidden = YES;
-    self.tutorialPopupView.hidden = YES;
     [self restartTimer];
-}
 
+}
 - (void)touchHomeButton {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"tutorialFinished"];
     self.game.tutorialFinished = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialFinished"];
@@ -535,7 +553,6 @@
 - (void)endGame {
     self.gameView.userInteractionEnabled = NO;
     [self.timer invalidate];
-    [self.gameView resetViewPositionAndTransformations];
     if (self.game.score > self.game.highScore) {
         [[NSUserDefaults standardUserDefaults] setInteger:self.game.score forKey:@"HighScoreSaved"];
         self.statsView.highScoreLabel.text = [NSString stringWithFormat: @"BEST\n%ld", (long)self.game.score];
