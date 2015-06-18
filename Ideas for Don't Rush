@@ -1,0 +1,70 @@
+GAME TWISTS:
+=============
+
+* Unlocking of modes - after players get to a new highscore, unlock the next mode
+	* [DONE] Add lock images at the popup view to show user what modes they have unlocked
+
+	* [X] Wait! 1 .. 2 .. 3 .. // pretty stupid actually 
+	* [X] Shake! // this would make game play not repetitive and pretty difficult - user should only have to swipe to select 
+	* [X] Upside down! // pretty stupid 
+
+	* [DONE] Reverse! 
+		* [DONE] Add an icon=
+	* [DONE] Reverse mode
+	* [DONE] Shades mode
+	* [DONE] Smaller circles mode
+	* [DONE] Circle question mode (replace number question string with # circles with specified color in the question)
+	* +1, -1 mode
+	* B&W mode (everything is black and white)
+
+
+ANIMATIONS:
+===========
+
+* Better indication of score; maybe some type of rolling characters?
+* [DONE] highlight correct answers on lose event
+* [DONE] change border color of gameview on swipe left and swipe right
+
+
+GOAL TO ACHIEVE:
+=================
+
+* "How good are your eyes?"
+* Just use shades and lower the shading each time a round is won to see how far a player can get to
+
+
+TUTORIAL:
+=========
+
+* Better way to learn how to play: maybe go through a walk through?
+* Set a flag that is saved on the iphone to see if the user has played or not before
+* if the user has not played before, give the user 10 seconds a round
+* Popup: "Swipe left to reject the card. Swipe right to accept the card. Reject the card until you find five blue dots as indicated by the title."
+* Popup: "Swipe right now!"
+* Popup: "Notice the timer will change colors from green, yellow and red to indicate how much time is left"
+* Popup: "Achieve highscores to unlock new levels!"
+
+
+LEVELS:
+==========
+
+* User should be given more time to play at first - so that they can learn
+* Decrease time afterwards
+* [DONE] Levels are cool
+* Better animations to show what's going on
+* Sound effects
+
+GAME PLAY:
+============
+
+* [DONE] Make it so the user swipes less to register an accept/reject event
+* Better animations when card is swiped and not swiped
+
+BUGS:
+=====
+
+* user can still release the card after pop up displays
+* there seem sto be some out of range exceptions? happens with big numbers on the card
+* [DONE] on match, game twist message doens't display 
+	-> probably becuase the match! message is overriding it 
+* User should not be able to interact with the game view once the round is over

@@ -40,11 +40,7 @@
 }
 
 - (void)setupStatsLabels {
-    BOOL tutorialFinished = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialFinished"];
-    if (tutorialFinished)
-        self.timerLabel = [[StatsLabel alloc] initWithText:@"TIME \n20" withBackgroundColor:@"#17b287"];
-    else
-        self.timerLabel = [[StatsLabel alloc] initWithText:@"TIME \n∞" withBackgroundColor:@"#17b287"];
+    self.timerLabel = [[StatsLabel alloc] initWithText:@"TIME \n20" withBackgroundColor:@"#17b287"];
     self.highScoreLabel = [[StatsLabel alloc] initWithText:@"BEST \n0" withBackgroundColor:@"#475358"];
     self.scoreLabel = [[StatsLabel alloc] initWithText:@"SCORE \n0" withBackgroundColor:@"#475358"];
     [self.listOfStatsLabels addObject:self.timerLabel];

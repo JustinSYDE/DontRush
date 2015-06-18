@@ -10,6 +10,6 @@
 
 @interface TutorialPopupView : PopupView
 
-- (instancetype)initWithFrame:(CGRect)frame;
+- (instancetype)initTutorialWithFrame:(CGRect)frame;
 
 @end

@@ -19,10 +19,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     
-    if (self) {
-        self.frame = frame;
-    }
-    
+    if (self) self.frame = frame;
     return self;
 }
 

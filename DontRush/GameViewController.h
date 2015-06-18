@@ -17,6 +17,7 @@
 #import "QuestionView.h"
 #import "GameMessageView.h"
 #import "TwistIconView.h"
+#import "TutorialPopupView.h"
 
 @interface GameViewController : UIViewController
 
@@ -28,6 +29,7 @@
 @property (nonatomic) QuestionView *questionView;
 @property (nonatomic) GameMessageView *gameMessageView;
 @property (nonatomic) TwistIconView *twistIconView;
+@property (nonatomic) TutorialPopupView *tutorialPopupView;
 @property (nonatomic) NSTimer *timer;
 @property (nonatomic) float const headerPadding;
 @property (nonatomic) NSMutableDictionary *colorsOnCard;

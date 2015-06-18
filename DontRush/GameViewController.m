@@ -37,12 +37,23 @@
     [self setupPopupView];
     [self.view addSubview:self.gameMessageView];
     [self newGame];
+    if (!self.game.tutorialFinished) {
+        [self setupTutorialView];
+    }
 }
 
 - (void)setupPopupView {
     [self.view addSubview:self.popupView];
     [self.popupView.playButton addTarget:self action:@selector(newGame) forControlEvents:UIControlEventTouchUpInside];
     [self.popupView.homeButton addTarget:self action:@selector(touchHomeButton) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)setupTutorialView {
+    [self.timer invalidate];
+    [self.view addSubview:self.tutorialPopupView];
+    self.shadowView.hidden = NO;
+    [self.tutorialPopupView.playButton addTarget:self action:@selector(continueGame) forControlEvents:UIControlEventTouchUpInside];
+    [self.tutorialPopupView.homeButton addTarget:self action:@selector(touchHomeButton) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupStatsView {
@@ -119,6 +130,20 @@
     }
     
     return _popupView;
+}
+
+- (TutorialPopupView *)tutorialPopupView {
+    if (!_tutorialPopupView) {
+        float const width = self.view.frame.size.width * 0.9;
+        float const height = self.view.frame.size.height * 0.8;
+        float const x = (self.view.frame.size.width - width) / 2.0;
+        float const y = (self.view.frame.size.height - height) / 2.0;
+        CGRect newFrame = CGRectMake(x, y, width, height);
+        _tutorialPopupView = [[TutorialPopupView alloc] initTutorialWithFrame:newFrame];
+
+    }
+    
+    return _tutorialPopupView;
 }
 
 - (GameMessageView *)gameMessageView {
@@ -272,8 +297,13 @@
     
     [self popNewCard];
     [self popNewQuestion];
-    if (self.game.tutorialFinished)
-        [self restartTimer]; // if the user has never played before, don't start the timer - just let the tutorial run indefinitely
+    [self restartTimer];
+}
+
+- (void)continueGame {
+    self.shadowView.hidden = YES;
+    self.tutorialPopupView.hidden = YES;
+    [self restartTimer];
 }
 
 - (void)touchHomeButton {
