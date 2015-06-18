@@ -314,7 +314,7 @@
     }
     
     if (self.game.tutorialFinished) {
-        [NSTimer scheduledTimerWithTimeInterval:1.0
+        [NSTimer scheduledTimerWithTimeInterval:0.5
                                          target:self
                                        selector:@selector(restartTimer)
                                        userInfo:nil
@@ -347,9 +347,21 @@
     [self restartTimer];
 
 }
+
 - (void)touchHomeButton {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"tutorialFinished"];
     self.game.tutorialFinished = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialFinished"];
+    [self.popupView slidePopupViewOut];
+    [self.shadowView hideShadow];
+    
+    [NSTimer scheduledTimerWithTimeInterval:1.0
+                                     target:self
+                                   selector:@selector(navigateToLanding)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+- (void)navigateToLanding {
     LandingViewController *landingViewController = [[LandingViewController alloc] init];
     [self presentViewController:landingViewController animated:NO completion:NULL];
 }
