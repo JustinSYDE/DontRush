@@ -15,10 +15,25 @@
     if (self) {
         self.frame = frame;
         self.backgroundColor = [UIColor blackColor];
-        self.alpha = 0.6;
+        self.alpha = 0;
+        self.hidden = YES;
     }
     
     return self;
 }
 
+- (void)hideShadow {
+    self.hidden = YES;
+    [UIView animateWithDuration:1.0 animations:^{
+        self.alpha = 0;
+    }];
+}
+
+- (void)showShadow {
+    self.hidden = NO;
+    self.alpha = 0;
+    [UIView animateWithDuration:1.0 animations:^{
+        self.alpha = 0.6;
+    }];
+}
 @end

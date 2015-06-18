@@ -55,13 +55,12 @@
 
 - (void)slideTutorialViewIn {
     [self.tutorialPopupView slideTutorialViewIn];
+    [self.shadowView showShadow];
 }
 
 - (void)slideTutorialViewOut {
     [self.tutorialPopupView slideTutorialViewOut];
-    [UIView animateWithDuration:1.0 animations:^{
-        self.shadowView.alpha = 0;
-    }];
+    [self.shadowView hideShadow];
 }
 
 - (void)setupTutorialView {
@@ -138,9 +137,9 @@
 - (PopupView *)popupView {
     if (!_popupView) {
         float const width = self.view.frame.size.width * 0.9;
-        float const height = self.view.frame.size.height * 0.6;
+        float const height = self.view.frame.size.height *0.6;
         float const x = (self.view.frame.size.width - width) / 2.0;
-        float const y = (self.view.frame.size.height - height) / 2.0;
+        float const y = -self.view.frame.size.height/*(self.view.frame.size.height - height) / 2.0*/;
         CGRect newFrame = CGRectMake(x, y, width, height);
         _popupView = [[PopupView alloc] initWithFrame:newFrame];
     }
@@ -247,10 +246,7 @@
 }
 
 - (void)updatePopupToGameOver {
-    self.shadowView.hidden = NO;
-    self.shadowView.alpha = 0.6;
-    self.popupView.hidden = NO;
-    self.twistIconView.hidden = YES;
+    
     [self.gameView resetGrid];
     if ([self.game unlockNewGameTwists]) {
         self.popupView.titleLabel.text = @"Congratulations!";
@@ -268,14 +264,11 @@
 
     self.popupView.commentLabel.text = [NSString stringWithFormat:@"Your score: %ld\nYour best: %ld", (long)self.game.score, (long)self.game.highScore];
     [self.popupView.playButton setTitle:@"Again" forState:UIControlStateNormal];
-
-}
-
-- (void)updatePopupToTutorial {
-    self.shadowView.hidden = NO;
-    self.popupView.hidden = NO;
+    
+    
+    [self.popupView slidePopupViewIn];
+    [self.shadowView showShadow];
     self.twistIconView.hidden = YES;
-    [self.gameView resetGrid];
 }
 
 - (void)updateTimer {
@@ -311,16 +304,30 @@
         self.gameView.userInteractionEnabled = NO;
     }
     
+    if (!self.popupView.hidden && self.shadowView.alpha != 0) {
+        [self.popupView slidePopupViewOut];
+        [self.shadowView hideShadow];
+        
+        [self continueNewGameSetup];
+    } else {
+        [self continueNewGameSetup];
+    }
+    
+    if (self.game.tutorialFinished) {
+        [NSTimer scheduledTimerWithTimeInterval:1.0
+                                         target:self
+                                       selector:@selector(restartTimer)
+                                       userInfo:nil
+                                        repeats:NO];
+    }
+}
+
+- (void)continueNewGameSetup {
     [self.game resetCurrentGameData];
-    self.popupView.hidden = YES;
-    self.shadowView.hidden = YES;
     [self updateScoreUI];
     [self.statsView updateTimerToStartState];
     [self popNewCard];
     [self popNewQuestion];
-    if (self.game.tutorialFinished) {
-        [self restartTimer];
-    }
 }
 
 - (void)continueGame {
@@ -333,8 +340,7 @@
     }
 
 - (void)continueGameSetup {
-    self.tutorialPopupView.hidden = YES;
-    self.shadowView.hidden = YES;
+    
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"tutorialFinished"];
     self.game.tutorialFinished = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialFinished"];
     self.gameView.userInteractionEnabled = YES;

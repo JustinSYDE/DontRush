@@ -11,5 +11,6 @@
 @interface ShadowView : UIView
 
 - (instancetype)initWithFrame:(CGRect)frame;
-
+- (void)hideShadow;
+- (void)showShadow;
 @end

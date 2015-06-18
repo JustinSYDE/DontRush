@@ -146,4 +146,33 @@
     [self.homeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self addSubview:self.homeButton];
 }
+
+- (void)slidePopupViewIn {
+    self.hidden = NO;
+    [UIView animateWithDuration:1.0 animations:^{
+        CGRect screen = [[UIScreen mainScreen] bounds];
+        CGPoint point = CGPointMake(self.center.x, screen.size.height / 2.0);
+        self.center = point;
+    }];
+}
+
+- (void)slidePopupViewOut {
+    [UIView animateWithDuration:1.0 animations:^{
+        CGRect screen = [[UIScreen mainScreen] bounds];
+        CGPoint point = CGPointMake(self.center.x, -screen.size.height);
+        self.center = point;
+    }];
+    
+    [NSTimer scheduledTimerWithTimeInterval:1.0
+                                     target:self
+                                   selector:@selector(hideAndRestartPopup)
+                                   userInfo:nil
+                                    repeats:NO];
+    
+}
+
+- (void)hideAndRestartPopup {
+    self.hidden = YES;
+}
+
 @end

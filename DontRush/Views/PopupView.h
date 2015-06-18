@@ -22,5 +22,7 @@
 - (void)setupPlayButtonWithFrame:(CGRect)frame WithText: (NSString *)text;
 - (void)setupHomeButtonWithFrame:(CGRect)frame WithText: (NSString *)text;
 - (UIColor *)colorFromHexString:(NSString *)hexString;
+- (void)slidePopupViewIn;
+- (void)slidePopupViewOut;
 
 @end
