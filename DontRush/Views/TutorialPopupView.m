@@ -37,7 +37,7 @@
     
     CGRect otherFrame = CGRectMake(padding, 0, width*0.8, frame.size.height * 0.5);
     UILabel *comment = [[UILabel alloc] initWithFrame:otherFrame];
-    comment.text = @"Swipe ☞ if the game board has the same number of colored dots as specified by the colored word\n\nElse, swipe ☜ to draw a new card\n\nReach high scores to unlock game twists";
+    comment.text = @"Swipe ☞ if the board has the same number of colored dots as specified by the colored word\n\nElse, swipe ☜ to draw a new card\n\nReach high scores to unlock game twists";
     comment.numberOfLines = 15.0;
     comment.font = [UIFont fontWithName:@"Courier" size:16.0f];
     comment.textColor = [self colorFromHexString:@"#4d4d4d"];

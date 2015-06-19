@@ -39,7 +39,7 @@
     [self newGame];
     if (!self.game.tutorialFinished) {
         [self setupTutorialView];
-        [NSTimer scheduledTimerWithTimeInterval:0.5
+        [NSTimer scheduledTimerWithTimeInterval:0.1
                                          target:self
                                        selector:@selector(slideTutorialViewIn)
                                        userInfo:nil
@@ -152,7 +152,7 @@
         float const width = self.view.frame.size.width * 0.9;
         float const height = self.view.frame.size.height * 0.8;
         float const x = (self.view.frame.size.width - width) / 2.0;
-        float const y = self.view.frame.size.height*0.85; /*(self.view.frame.size.height - height) / 2.0;*/
+        float const y = self.view.frame.size.height;
         CGRect newFrame = CGRectMake(x, y, width, height);
         _tutorialPopupView = [[TutorialPopupView alloc] initTutorialWithFrame:newFrame];
 
