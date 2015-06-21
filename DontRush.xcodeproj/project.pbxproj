@@ -34,6 +34,8 @@
 		E8A56B761B1A56650076AF38 /* accept.png in Resources */ = {isa = PBXBuildFile; fileRef = E8A56B741B1A56650076AF38 /* accept.png */; };
 		E8A56B771B1A56650076AF38 /* reject.png in Resources */ = {isa = PBXBuildFile; fileRef = E8A56B751B1A56650076AF38 /* reject.png */; };
 		E8AA38F41B2BB7FD00159C7B /* LandingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AA38F31B2BB7FD00159C7B /* LandingViewController.m */; };
+		E8B496211B372C63006B98E2 /* dontRushLogo_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8B4961F1B372C63006B98E2 /* dontRushLogo_2x.png */; };
+		E8B496221B372C63006B98E2 /* dontRushLogo_3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8B496201B372C63006B98E2 /* dontRushLogo_3x.png */; };
 		E8BF26541B0C5053009E6446 /* DontRushGame.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BF26531B0C5053009E6446 /* DontRushGame.m */; };
 		E8E021491B23ED2B0068F2DA /* GameMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E021481B23ED2B0068F2DA /* GameMessageView.m */; };
 /* End PBXBuildFile section */
@@ -94,6 +96,8 @@
 		E8A56B751B1A56650076AF38 /* reject.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reject.png; sourceTree = "<group>"; };
 		E8AA38F21B2BB7FD00159C7B /* LandingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandingViewController.h; sourceTree = "<group>"; };
 		E8AA38F31B2BB7FD00159C7B /* LandingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandingViewController.m; sourceTree = "<group>"; };
+		E8B4961F1B372C63006B98E2 /* dontRushLogo_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dontRushLogo_2x.png; sourceTree = "<group>"; };
+		E8B496201B372C63006B98E2 /* dontRushLogo_3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dontRushLogo_3x.png; sourceTree = "<group>"; };
 		E8BF26521B0C5053009E6446 /* DontRushGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DontRushGame.h; sourceTree = "<group>"; };
 		E8BF26531B0C5053009E6446 /* DontRushGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DontRushGame.m; sourceTree = "<group>"; };
 		E8E021471B23ED2B0068F2DA /* GameMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameMessageView.h; path = Views/GameMessageView.h; sourceTree = "<group>"; };
@@ -225,6 +229,8 @@
 		E824B34C1B13BB0700B71F11 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E8B4961F1B372C63006B98E2 /* dontRushLogo_2x.png */,
+				E8B496201B372C63006B98E2 /* dontRushLogo_3x.png */,
 				E8A56B741B1A56650076AF38 /* accept.png */,
 				E80133AC1B2FEE1F00CB6735 /* circleQuestionsUnlocked.png */,
 				E80133AD1B2FEE1F00CB6735 /* reverseUnlocked.png */,
@@ -337,8 +343,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8B496221B372C63006B98E2 /* dontRushLogo_3x.png in Resources */,
 				E88222B21B2503AA00C0E65C /* reverse.png in Resources */,
 				E83F2D061B1ED3000073E60C /* Entitlements.plist in Resources */,
+				E8B496211B372C63006B98E2 /* dontRushLogo_2x.png in Resources */,
 				E80133B31B2FEE1F00CB6735 /* toneUnlocked.png in Resources */,
 				E80133B21B2FEE1F00CB6735 /* smallCirclesUnlocked.png in Resources */,
 				E81C36491B0AFFB90090F79E /* Main.storyboard in Resources */,

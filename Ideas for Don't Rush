@@ -26,23 +26,12 @@ ANIMATIONS:
 * [DONE] change border color of gameview on swipe left and swipe right
 
 
-GOAL TO ACHIEVE:
-=================
-
-* "How good are your eyes?"
-* Just use shades and lower the shading each time a round is won to see how far a player can get to
-
-
 TUTORIAL:
 =========
 
-* Better way to learn how to play: maybe go through a walk through?
-* Set a flag that is saved on the iphone to see if the user has played or not before
+* [DONE] Better way to learn how to play: maybe go through a walk through?
+* [DONE] Set a flag that is saved on the iphone to see if the user has played or not before
 * if the user has not played before, give the user 10 seconds a round
-* Popup: "Swipe left to reject the card. Swipe right to accept the card. Reject the card until you find five blue dots as indicated by the title."
-* Popup: "Swipe right now!"
-* Popup: "Notice the timer will change colors from green, yellow and red to indicate how much time is left"
-* Popup: "Achieve highscores to unlock new levels!"
 
 
 LEVELS:

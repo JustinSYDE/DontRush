@@ -2,12 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:DontRush/Views/TutorialPopupView.h">
-   </FileRef>
-   <FileRef
-      location = "group:DontRush/Views/TutorialPopupView.m">
-   </FileRef>
-   <FileRef
       location = "group:DontRush.xcodeproj">
    </FileRef>
    <FileRef
