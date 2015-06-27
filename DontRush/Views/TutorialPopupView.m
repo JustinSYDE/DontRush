@@ -59,7 +59,7 @@
     CGRect newFrame = CGRectMake(padding, (frame.size.height *6.0/8.0) + verticalPadding , width, (2.0/3)*width);
     self.playButton.frame = newFrame;
     [self.playButton setTitle:text forState:UIControlStateNormal];
-    self.playButton.font = [UIFont fontWithName:@"Helvetica-Bold" size:24.0f];
+    self.playButton.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:24.0f];
     self.playButton.backgroundColor = [self colorFromHexString:@"#17b287"];
     self.playButton.layer.borderColor = [[self colorFromHexString:@"#17b287"] CGColor];
     self.playButton.layer.borderWidth = 1;
@@ -77,7 +77,7 @@
     self.homeButton.frame = newFrame;
     [self.homeButton setTitle:text forState:UIControlStateNormal];
     [self.homeButton setTitleColor:[self colorFromHexString:@"#4d4d4d"] forState:UIControlStateNormal];
-    self.homeButton.font = [UIFont fontWithName:@"Helvetica" size:24.0f];
+    self.homeButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:24.0f];
     self.homeButton.backgroundColor = [self colorFromHexString:@"#d3d3d3"];
     self.homeButton.layer.borderColor = [[self colorFromHexString:@"#d3d3d3"] CGColor];
     self.homeButton.layer.borderWidth = 1;

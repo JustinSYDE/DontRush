@@ -246,7 +246,6 @@
 }
 
 - (void)updatePopupToGameOver {
-    
     [self.gameView resetGrid];
     if ([self.game unlockNewGameTwists]) {
         self.popupView.titleLabel.text = @"Congratulations!";
