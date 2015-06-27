@@ -275,7 +275,7 @@
 }
 
 - (BOOL)unlockNewGameTwists {
-    if ((self.highScore >= 2000) && ![[NSUserDefaults standardUserDefaults] boolForKey:@"circleQuestionUnlocked"]) {
+    if ((self.highScore >= 2000) && ![[NSUserDefaults standardUserDefaults] boolForKey:@"circleQuestionsUnlocked"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"circleQuestionsUnlocked"];
         self.circleQuestionsUnlocked = YES;
         return true;
