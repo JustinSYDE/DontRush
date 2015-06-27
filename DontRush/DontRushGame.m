@@ -239,10 +239,10 @@
     if (self.toned && [self.tones count] == [DontRushGame.validColors count]) {
         NSArray *keys = [self.tones allKeys];
         NSString *randomTone = keys[randNum];
-        self.questionObject =  (NSMutableDictionary *)@{randomTone: number, @"count": [[NSNumber alloc] initWithInt:++i]};
+        self.questionObject =  (NSMutableDictionary *)@{@"color":randomTone, @"countAsString": number, @"count": [[NSNumber alloc] initWithInt:++i]};
     } else {
         NSString *randomColor = [DontRushGame validColors][randNum];
-        self.questionObject =  (NSMutableDictionary *)@{randomColor: number, @"count": [[NSNumber alloc] initWithInt:++i]};
+        self.questionObject =  (NSMutableDictionary *)@{@"color":randomColor, @"countAsString": number, @"count": [[NSNumber alloc] initWithInt:++i]};
     }
     
     return self.questionObject;
@@ -251,8 +251,8 @@
 #pragma mark - Game Rules
 
 - (BOOL)match {
-    NSString *questionColor = [self.questionObject allKeys][0];
-    NSString *questionNumber = self.questionObject[questionColor];
+    NSString *questionColor = self.questionObject[@"color"];
+    NSString *questionNumber = self.questionObject[@"colorAsString"];
     int answeredNumber;
     
     if (self.toned) {

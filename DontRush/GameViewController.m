@@ -231,7 +231,7 @@
     self.gameView.userInteractionEnabled = NO;
     self.gameView.layer.borderColor = [[self colorFromHexString:@"#dbc8b2"] CGColor];
     [self.questionView updateQuestionLabel:@"Lol" WithColor:[UIColor blackColor]];
-    NSString *questionColor = [self.game.questionObject allKeys][0];
+    NSString *questionColor = self.game.questionObject[@"color"];
     int i = 0;
     for (UILabel *shapeLabel in self.gameView.listOfShapes) {
         if ([self.game.orderedListOfColors[i] isEqualToString:questionColor]) {
@@ -458,8 +458,8 @@
 
 - (void)popNewQuestion {
     NSDictionary *questionObject = [self.game generateNewQuestion];
-    NSString *color = [questionObject allKeys][0];
-    NSString *numberString = questionObject[color];
+    NSString *color = questionObject[@"color"];
+    NSString *numberString = questionObject[@"countAsString"];
     NSInteger count = [questionObject[@"count"] intValue];
     UIColor *newColor = [self colorFromHexString:color];
     
@@ -468,7 +468,8 @@
         for (int i = 0; i < count; i++) {
             [str appendString:@"●"];
         }
-        [self.questionView updateQuestionLabel:str WithColor:newColor];
+        NSString *string = [NSString stringWithString:str];
+        [self.questionView updateQuestionLabel:string WithColor:newColor];
     } else {
         [self.questionView updateQuestionLabel:numberString WithColor:newColor];
     }
