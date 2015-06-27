@@ -8,6 +8,7 @@
 
 #import "GameViewController.h"
 #import "LandingViewController.h"
+#import <sys/sysctl.h>
 
 @interface GameViewController()
 @property (nonatomic) NSArray *validFeedbackStrings;
@@ -163,8 +164,16 @@
 
 - (TutorialPopupView *)tutorialPopupView {
     if (!_tutorialPopupView) {
-        float const width = self.view.frame.size.width * 0.9;
-        float const height = self.view.frame.size.height * 0.8;
+        float width;
+        float height;
+        
+        if ([self isIPhone4]) {
+            width = self.view.frame.size.width * 0.9;
+            height = self.view.frame.size.height * 0.9;
+        } else {
+            width = self.view.frame.size.width * 0.9;
+            height = self.view.frame.size.height* 0.8;
+        }
         float const x = (self.view.frame.size.width - width) / 2.0;
         float const y = self.view.frame.size.height;
         CGRect newFrame = CGRectMake(x, y, width, height);
@@ -232,7 +241,11 @@
         [shapeLabel setTextColor:color];
         
         if (self.game.smallCircles) {
-            [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 25.0f]];
+            if ([self isIPhone4]) {
+                [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 15.0f]];
+            } else {
+                [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 25.0f]];
+            }
         } else if ([self isIPhone4]) {
             [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 75.0f]];
         } else {

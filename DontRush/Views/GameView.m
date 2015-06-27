@@ -7,7 +7,7 @@
 //
 
 #import "GameView.h"
-#import <sys/sysctl.h>
+
 @implementation GameView
 
 #define CORNER_FONT_STANDARD_HEIGHT 180.0

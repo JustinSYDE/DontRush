@@ -34,7 +34,6 @@
     float const width = frame.size.width - 2*padding;
     CGRect newFrame = CGRectMake(padding, frame.size.height * 0.2, width, frame.size.height * 0.55);
     self.commentLabel.frame = newFrame;
-    
     CGRect otherFrame = CGRectMake(padding, 0, width*0.8, frame.size.height * 0.5);
     UILabel *comment = [[UILabel alloc] initWithFrame:otherFrame];
     comment.text = @"Swipe ☞ if the board has the same number of colored dots as specified by the colored word\n\nElse, swipe ☜ to draw a new card\n\nReach high scores to unlock game twists";
