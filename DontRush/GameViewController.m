@@ -24,6 +24,20 @@
     return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 
+- (BOOL)isIPhone4 {
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    char *machine = malloc(size);
+    sysctlbyname("hw.machine", machine, &size, NULL, 0);
+    NSString *platform = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
+    free(machine);
+    
+    if ([platform isEqualToString:@"iPhone4,1"] || [platform isEqualToString:@"x86_64"]) {
+        return true;
+    }
+    return false;
+}
+
 #pragma mark - Setup
 
 - (void)viewDidLoad {
@@ -219,6 +233,8 @@
         
         if (self.game.smallCircles) {
             [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 25.0f]];
+        } else if ([self isIPhone4]) {
+            [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 75.0f]];
         } else {
             [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 100.0f]];
         }

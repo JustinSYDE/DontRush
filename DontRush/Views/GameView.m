@@ -7,14 +7,13 @@
 //
 
 #import "GameView.h"
-
+#import <sys/sysctl.h>
 @implementation GameView
 
 #define CORNER_FONT_STANDARD_HEIGHT 180.0
 #define CORNER_RADIUS 6.0
 #define NUM_COLUMNS 4
 #define NUM_ROWS 4
-
 #pragma mark - Initialization
 
 - (NSMutableArray *)listOfShapes {
@@ -59,7 +58,11 @@
         for (int column = 0 ; column < NUM_COLUMNS; column++) {
             CGRect newCell = CGRectMake(x, y, width, height);
             UILabel *shapeLabel = [[UILabel alloc] initWithFrame:newCell];
-            [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 100.0f]];
+            /*if ([self isIPhone4]) {
+                [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 50.0f]];
+            } else {
+                [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 100.0f]];
+            }*/
             shapeLabel.text = @"●";
             shapeLabel.textAlignment = NSTextAlignmentCenter;
             [shapeLabel setBackgroundColor:[self colorFromHexString:@"#e3d4c3"]];
