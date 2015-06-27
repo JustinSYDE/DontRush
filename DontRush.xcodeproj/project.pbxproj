@@ -14,6 +14,7 @@
 		E80133B21B2FEE1F00CB6735 /* smallCirclesUnlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = E80133AE1B2FEE1F00CB6735 /* smallCirclesUnlocked.png */; };
 		E80133B31B2FEE1F00CB6735 /* toneUnlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = E80133AF1B2FEE1F00CB6735 /* toneUnlocked.png */; };
 		E80133B91B31481C00CB6735 /* TutorialPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = E80133B81B31481C00CB6735 /* TutorialPopupView.m */; };
+		E806750C1B3A488B009E79E7 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = E806750B1B3A488B009E79E7 /* Entitlements.plist */; };
 		E81C36401B0AFFB90090F79E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C363F1B0AFFB90090F79E /* main.m */; };
 		E81C36431B0AFFB90090F79E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C36421B0AFFB90090F79E /* AppDelegate.m */; };
 		E81C36461B0AFFB90090F79E /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C36451B0AFFB90090F79E /* GameViewController.m */; };
@@ -23,7 +24,6 @@
 		E81C365A1B0AFFB90090F79E /* DontRushTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C36591B0AFFB90090F79E /* DontRushTests.m */; };
 		E824B3461B13B9FC00B71F11 /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = E824B3451B13B9FC00B71F11 /* OverlayView.m */; };
 		E824B3491B13BA1000B71F11 /* GameView.m in Sources */ = {isa = PBXBuildFile; fileRef = E824B3481B13BA1000B71F11 /* GameView.m */; };
-		E83F2D061B1ED3000073E60C /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = E83F2D051B1ED3000073E60C /* Entitlements.plist */; };
 		E83F2D091B1FFCEF0073E60C /* StatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E83F2D081B1FFCEF0073E60C /* StatsView.m */; };
 		E83F2D0C1B2001B20073E60C /* StatsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E83F2D0B1B2001B20073E60C /* StatsLabel.m */; };
 		E83F2D121B2151050073E60C /* PopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = E83F2D111B2151050073E60C /* PopupView.m */; };
@@ -61,6 +61,7 @@
 		E80133AF1B2FEE1F00CB6735 /* toneUnlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toneUnlocked.png; sourceTree = "<group>"; };
 		E80133B71B31481C00CB6735 /* TutorialPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TutorialPopupView.h; path = Views/TutorialPopupView.h; sourceTree = "<group>"; };
 		E80133B81B31481C00CB6735 /* TutorialPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TutorialPopupView.m; path = Views/TutorialPopupView.m; sourceTree = "<group>"; };
+		E806750B1B3A488B009E79E7 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		E81C363A1B0AFFB90090F79E /* DontRush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DontRush.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E81C363E1B0AFFB90090F79E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E81C363F1B0AFFB90090F79E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -78,7 +79,6 @@
 		E824B3451B13B9FC00B71F11 /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OverlayView.m; path = Views/OverlayView.m; sourceTree = "<group>"; };
 		E824B3471B13BA1000B71F11 /* GameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameView.h; path = Views/GameView.h; sourceTree = "<group>"; };
 		E824B3481B13BA1000B71F11 /* GameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameView.m; path = Views/GameView.m; sourceTree = "<group>"; };
-		E83F2D051B1ED3000073E60C /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		E83F2D071B1FFCEF0073E60C /* StatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatsView.h; path = Views/StatsView.h; sourceTree = "<group>"; };
 		E83F2D081B1FFCEF0073E60C /* StatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StatsView.m; path = Views/StatsView.m; sourceTree = "<group>"; };
 		E83F2D0A1B2001B20073E60C /* StatsLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatsLabel.h; path = Views/StatsLabel.h; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 		E81C36311B0AFFB90090F79E = {
 			isa = PBXGroup;
 			children = (
-				E83F2D051B1ED3000073E60C /* Entitlements.plist */,
+				E806750B1B3A488B009E79E7 /* Entitlements.plist */,
 				E81C363C1B0AFFB90090F79E /* DontRush */,
 				E81C36561B0AFFB90090F79E /* DontRushTests */,
 				E81C363B1B0AFFB90090F79E /* Products */,
@@ -312,6 +312,7 @@
 				TargetAttributes = {
 					E81C36391B0AFFB90090F79E = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = VND9P2JP45;
 					};
 					E81C36521B0AFFB90090F79E = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -345,9 +346,9 @@
 			files = (
 				E8B496221B372C63006B98E2 /* dontRushLogo_3x.png in Resources */,
 				E88222B21B2503AA00C0E65C /* reverse.png in Resources */,
-				E83F2D061B1ED3000073E60C /* Entitlements.plist in Resources */,
 				E8B496211B372C63006B98E2 /* dontRushLogo_2x.png in Resources */,
 				E80133B31B2FEE1F00CB6735 /* toneUnlocked.png in Resources */,
+				E806750C1B3A488B009E79E7 /* Entitlements.plist in Resources */,
 				E80133B21B2FEE1F00CB6735 /* smallCirclesUnlocked.png in Resources */,
 				E81C36491B0AFFB90090F79E /* Main.storyboard in Resources */,
 				E8A56B761B1A56650076AF38 /* accept.png in Resources */,
@@ -481,8 +482,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				CODE_SIGN_IDENTITY = "-";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "-";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -524,8 +525,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				CODE_SIGN_IDENTITY = "-";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "-";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -538,6 +539,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -548,6 +550,7 @@
 			baseConfigurationReference = CD453FB46A17196EFA51ED40 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "";
 				INFOPLIST_FILE = DontRush/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -559,6 +562,7 @@
 			baseConfigurationReference = 2E3434D3244D27D66C31108B /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "";
 				INFOPLIST_FILE = DontRush/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
