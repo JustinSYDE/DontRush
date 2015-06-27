@@ -42,9 +42,10 @@
     [self addSubview:self.questionLabel];
 }
 
-- (void)updateQuestionLabel:(NSAttributedString *)text {
+- (void)updateQuestionLabel:(NSString *)text WithColor:(UIColor *)color{
     if (!text) return;
-    self.questionLabel.attributedText = text;
+    self.questionLabel.text = text;
+    self.questionLabel.textColor = color;
 }
 
 @end

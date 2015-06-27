@@ -230,7 +230,7 @@
 - (void)highlightMissedShapes {
     self.gameView.userInteractionEnabled = NO;
     self.gameView.layer.borderColor = [[self colorFromHexString:@"#dbc8b2"] CGColor];
-    [self.questionView updateQuestionLabel:[[NSAttributedString alloc] initWithString:@"Lol"]];
+    [self.questionView updateQuestionLabel:@"Lol" WithColor:[UIColor blackColor]];
     NSString *questionColor = [self.game.questionObject allKeys][0];
     int i = 0;
     for (UILabel *shapeLabel in self.gameView.listOfShapes) {
@@ -457,26 +457,21 @@
 }
 
 - (void)popNewQuestion {
-    NSAttributedString *newQuestion;
     NSDictionary *questionObject = [self.game generateNewQuestion];
     NSString *color = [questionObject allKeys][0];
     NSString *numberString = questionObject[color];
     NSInteger count = [questionObject[@"count"] intValue];
-    NSDictionary *attributes = @{NSForegroundColorAttributeName : [self colorFromHexString:color]};
+    UIColor *newColor = [self colorFromHexString:color];
     
     if (self.game.circleQuestion) {
         NSMutableString *str = [[NSMutableString alloc] init];
         for (int i = 0; i < count; i++) {
             [str appendString:@"●"];
         }
-        newQuestion = [[NSAttributedString alloc] initWithString:str attributes:attributes];
-       self.questionView.questionLabel.font = [UIFont fontWithName:@"Helvetica" size:50.0f];
+        [self.questionView updateQuestionLabel:str WithColor:newColor];
     } else {
-        newQuestion = [[NSAttributedString alloc] initWithString:numberString attributes:attributes];
-        self.questionView.questionLabel.font = [UIFont fontWithName:@"Helvetica" size:75.0f];
+        [self.questionView updateQuestionLabel:numberString WithColor:newColor];
     }
-    
-    [self.questionView updateQuestionLabel:newQuestion];
 }
 
 #pragma mark - Game Events

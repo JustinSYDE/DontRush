@@ -11,6 +11,6 @@
 @interface QuestionView : UIView
 @property (nonatomic) UILabel *questionLabel;
 - (instancetype)initWithFrame:(CGRect)frame;
-- (void)updateQuestionLabel:(NSAttributedString *)text;
+- (void)updateQuestionLabel:(NSString *)text WithColor:(UIColor*) color;
 
 @end
