@@ -275,31 +275,34 @@
 }
 
 - (BOOL)unlockNewGameTwists {
+    BOOL unlockable = NO;
+    
     if ((self.highScore >= 2000) && ![[NSUserDefaults standardUserDefaults] boolForKey:@"circleQuestionsUnlocked"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"circleQuestionsUnlocked"];
         self.circleQuestionsUnlocked = YES;
-        return true;
+        unlockable = true;
     }
     
     if ((self.highScore >= 1500) && ![[NSUserDefaults standardUserDefaults] boolForKey:@"smallCirclesUnlocked"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"smallCirclesUnlocked"];
         self.smallCirclesUnlocked = YES;
-        return true;
+        unlockable = true;
     }
     
     if ((self.highScore >= 1000) && ![[NSUserDefaults standardUserDefaults] boolForKey:@"toneUnlocked"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"toneUnlocked"];
         self.toneUnlocked = YES;
-        return true;
+        unlockable = true;
     }
     
     if ((self.highScore >= 500) && ![[NSUserDefaults standardUserDefaults] boolForKey:@"reverseUnlocked"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"reverseUnlocked"];
         self.reverseUnlocked = YES;
-        return true;
+        unlockable = true;
     }
     
-    return false;
+    unlockable = NO;
+    return unlockable;
 }
 
 - (void)resetHighScore {
