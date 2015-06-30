@@ -252,7 +252,7 @@
 
 - (BOOL)match {
     NSString *questionColor = self.questionObject[@"color"];
-    NSString *questionNumber = self.questionObject[@"colorAsString"];
+    NSString *questionNumber = self.questionObject[@"countAsString"];
     int answeredNumber;
     
     if (self.toned) {
@@ -280,28 +280,27 @@
     if ((self.highScore >= 2000) && ![[NSUserDefaults standardUserDefaults] boolForKey:@"circleQuestionsUnlocked"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"circleQuestionsUnlocked"];
         self.circleQuestionsUnlocked = YES;
-        unlockable = true;
+        unlockable = YES;
     }
     
     if ((self.highScore >= 1500) && ![[NSUserDefaults standardUserDefaults] boolForKey:@"smallCirclesUnlocked"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"smallCirclesUnlocked"];
         self.smallCirclesUnlocked = YES;
-        unlockable = true;
+        unlockable = YES;
     }
     
     if ((self.highScore >= 1000) && ![[NSUserDefaults standardUserDefaults] boolForKey:@"toneUnlocked"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"toneUnlocked"];
         self.toneUnlocked = YES;
-        unlockable = true;
+        unlockable = YES;
     }
     
     if ((self.highScore >= 500) && ![[NSUserDefaults standardUserDefaults] boolForKey:@"reverseUnlocked"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"reverseUnlocked"];
         self.reverseUnlocked = YES;
-        unlockable = true;
+        unlockable = YES;
     }
     
-    unlockable = NO;
     return unlockable;
 }
 
