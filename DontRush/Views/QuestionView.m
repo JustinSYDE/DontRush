@@ -46,6 +46,7 @@
     if (!text) return;
     self.questionLabel.text = text;
     self.questionLabel.textColor = color;
+    self.questionLabel.font = [UIFont fontWithName:@"Helvetica" size:75.0f];
 }
 
 @end

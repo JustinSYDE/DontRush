@@ -242,9 +242,9 @@
         
         if (self.game.smallCircles) {
             if ([self isIPhone4]) {
-                [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 15.0f]];
+                [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 10.0f]];
             } else {
-                [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 25.0f]];
+                [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 20.0f]];
             }
         } else if ([self isIPhone4]) {
             [shapeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 75.0f]];
@@ -279,6 +279,9 @@
     if ([self.game unlockNewGameTwists]) {
         self.popupView.titleLabel.text = @"Congratulations!";
         self.popupView.subtitleLabel.text = @"Unlocked new twist!";
+    } else if (!self.game.score) {
+        self.popupView.titleLabel.text = @"D0n't Rush!";
+        self.popupView.subtitleLabel.text = @"R0fl";
     } else if (self.game.timeCount <= (NSInteger)0) {
         self.popupView.titleLabel.text = @"Don't Rush!";
         self.popupView.subtitleLabel.text = @"But don't be a snail.";
@@ -499,6 +502,7 @@
         }
         NSString *string = [NSString stringWithString:str];
         [self.questionView updateQuestionLabel:string WithColor:newColor];
+        self.questionView.questionLabel.font = [UIFont fontWithName:@"Helvetica" size:60.0f];
     } else {
         [self.questionView updateQuestionLabel:numberString WithColor:newColor];
     }
